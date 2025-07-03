@@ -1,10 +1,24 @@
 class Peekaboo < Formula
   desc "Lightning-fast macOS screenshots & AI vision analysis"
   homepage "https://github.com/steipete/peekaboo"
+<<<<<<< Updated upstream
   url "https://github.com/steipete/peekaboo/releases/download/v2.0.2/peekaboo-macos-universal.tar.gz"
   sha256 "1584741b8665530623138bf322e57c3401cca56c3202decacd82e203a9876184"
+||||||| Stash base
+  url "https://github.com/steipete/peekaboo/releases/download/v2.0.0/peekaboo-macos-universal.tar.gz"
+  sha256 "eb615dbec0ee6cedb7f5a2aedafc3499bcd86759706efb5d4a30db3d72b4da73"
+=======
+  url "https://github.com/steipete/peekaboo/releases/download/v2.0.3/peekaboo-macos-universal.tar.gz"
+  sha256 "f8eb7a896259128877b23b1fe6235fb540ea2ea97a5c982888e4c5d6dbb0c49c"
+>>>>>>> Stashed changes
   license "MIT"
+<<<<<<< Updated upstream
   version "2.0.2"
+||||||| Stash base
+  version "2.0.0"
+=======
+  version "2.0.3"
+>>>>>>> Stashed changes
 
   # macOS Sonoma (14.0) or later required
   depends_on macos: :sonoma
