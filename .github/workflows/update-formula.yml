@@ -1,0 +1,55 @@
+name: Update Formula
+
+on:
+  workflow_dispatch:
+    inputs:
+      formula:
+        description: 'Formula name (e.g., peekaboo)'
+        required: true
+        type: string
+      tag:
+        description: 'Release tag to update formula for'
+        required: true
+        type: string
+      repository:
+        description: 'Source repository (e.g., steipete/peekaboo)'
+        required: true
+        type: string
+
+jobs:
+  update-formula:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout tap repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Setup Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+      
+      - name: Update formula
+        run: |
+          FORMULA="${{ github.event.inputs.formula }}"
+          TAG="${{ github.event.inputs.tag }}"
+          REPO="${{ github.event.inputs.repository }}"
+          VERSION="${TAG#v}"
+          
+          # Download the release artifact
+          DOWNLOAD_URL="https://github.com/${REPO}/releases/download/${TAG}/${FORMULA}-macos-universal.tar.gz"
+          curl -L "${DOWNLOAD_URL}" -o "${FORMULA}.tar.gz"
+          
+          # Calculate SHA256
+          SHA256=$(shasum -a 256 "${FORMULA}.tar.gz" | awk '{print $1}')
+          
+          # Update the formula
+          sed -i '' "s/version \".*\"/version \"${VERSION}\"/" "Formula/${FORMULA}.rb"
+          sed -i '' "s/sha256 \".*\"/sha256 \"${SHA256}\"/" "Formula/${FORMULA}.rb"
+          sed -i '' "s|url \".*\"|url \"${DOWNLOAD_URL}\"|" "Formula/${FORMULA}.rb"
+          
+          # Commit and push
+          git add "Formula/${FORMULA}.rb"
+          git commit -m "Update ${FORMULA} to ${TAG}"
+          git push
