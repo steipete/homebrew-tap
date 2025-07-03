@@ -14,7 +14,7 @@ brew tap steipete/tap
 
 Lightning-fast macOS screenshot tool with AI vision analysis capabilities.
 
-**Version:** 2.0.0 (Released July 3, 2025)
+**Version:** 2.0.1 (Released July 3, 2025)
 
 ```bash
 brew install steipete/tap/peekaboo
