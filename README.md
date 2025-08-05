@@ -10,6 +10,40 @@ brew tap steipete/tap
 
 ## Available Formulas
 
+### Poltergeist
+
+Universal file watcher with auto-rebuild for any build system.
+
+**Version:** 1.4.0 (Released August 5, 2025)
+
+```bash
+brew install steipete/tap/poltergeist
+```
+
+#### Features
+
+- 👻 Auto-detects and rebuilds any project type
+- 🚀 Bun-compiled standalone binary (no Node.js required)
+- 🔨 Smart build queue with priority-based execution
+- 📦 Universal target system (executables, libraries, Docker, etc.)
+- 🎯 Intelligent focus detection for multi-project setups
+- ⚡ Powered by Facebook's Watchman for efficient file watching
+
+#### Quick Start
+
+```bash
+# Initialize configuration
+poltergeist init
+
+# Start watching and auto-building
+poltergeist haunt
+
+# Check build status
+polter status
+```
+
+For more information, see [Poltergeist on GitHub](https://github.com/steipete/poltergeist).
+
 ### Peekaboo
 
 Lightning-fast macOS screenshot tool with AI vision analysis capabilities.
