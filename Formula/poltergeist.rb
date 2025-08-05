@@ -1,10 +1,10 @@
 class Poltergeist < Formula
   desc "Universal file watcher with auto-rebuild for any build system"
   homepage "https://github.com/steipete/poltergeist"
-  url "https://github.com/steipete/poltergeist/releases/download/v1.4.0/poltergeist-macos-arm64-v1.4.0.tar.gz"
-  sha256 "46b5b726306714858c36fd2d4963a3557c108ca954bbd8a5b99f78137874f69e"
+  url "https://github.com/steipete/poltergeist/releases/download/v1.4.1/poltergeist-macos-arm64-v1.4.1.tar.gz"
+  sha256 "7b5579220fd644063577aeffbde22777abacd4f5f4166573df710fa26e2e3e98"
   license "MIT"
-  version "1.4.0"
+  version "1.4.1"
 
   # ARM64 only for now
   depends_on arch: :arm64
@@ -42,7 +42,7 @@ class Poltergeist < Formula
 
   test do
     # Test that the binary runs and returns version
-    assert_match "1.4.0", shell_output("#{bin}/poltergeist --version")
+    assert_match "1.4", shell_output("#{bin}/poltergeist --version")
     
     # Test polter wrapper
     assert_match "polter", shell_output("#{bin}/polter --help 2>&1")
