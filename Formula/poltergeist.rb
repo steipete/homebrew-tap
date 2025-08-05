@@ -1,14 +1,15 @@
 class Poltergeist < Formula
   desc "Universal file watcher with auto-rebuild for any build system"
   homepage "https://github.com/steipete/poltergeist"
-  url "https://github.com/steipete/poltergeist/releases/download/v1.4.3/poltergeist-macos-arm64-v1.4.3.tar.gz"
-  sha256 "5cf424e958c44cbffe18599d8446155f8822a623a0980eb199a9a90023ce17f0"
+  url "https://github.com/steipete/poltergeist/releases/download/v1.5.0/poltergeist-macos-arm64-v1.5.0.tar.gz"
+  sha256 "27eaf24e529e6a252e973b5e1388986383696e91ea154a90e6f8734d6e9fb331"
   license "MIT"
-  version "1.4.3"
+  version "1.5.0"
 
   # ARM64 only for now
   depends_on arch: :arm64
   depends_on macos: :monterey
+  depends_on "watchman"
 
   def install
     bin.install "poltergeist"
