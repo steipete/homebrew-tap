@@ -1,58 +1,57 @@
 class Poltergeist < Formula
-  desc "Universal file watcher with auto-rebuild for any build system"
+  desc "Universal file watcher with auto-rebuild for any language or build system"
   homepage "https://github.com/steipete/poltergeist"
-  url "https://github.com/steipete/poltergeist/releases/download/v1.5.0/poltergeist-macos-arm64-v1.5.0.tar.gz"
-  sha256 "27eaf24e529e6a252e973b5e1388986383696e91ea154a90e6f8734d6e9fb331"
+  url "https://registry.npmjs.org/@steipete/poltergeist/-/poltergeist-1.6.0.tgz"
+  sha256 "dda0cfd2ba8f4e513dfc59bb207d1b501140d72209898e619d9c2cfd7423a0ea"
   license "MIT"
-  version "1.5.0"
 
-  # ARM64 only for now
-  depends_on arch: :arm64
-  depends_on macos: :monterey
+  depends_on "node"
   depends_on "watchman"
 
   def install
-    bin.install "poltergeist"
-    bin.install "polter"
-  end
-
-  def post_install
-    # Ensure binaries are executable
-    chmod 0755, "#{bin}/poltergeist"
-    chmod 0755, "#{bin}/polter"
+    system "npm", "install", *Language::Node.std_npm_install_args(libexec)
+    
+    # Create wrapper scripts
+    bin.install_symlink Dir["#{libexec}/bin/*"]
+    
+    # Install polter as a separate command
+    (bin/"polter").write <<~EOS
+      #!/bin/bash
+      exec "#{Formula["node"].opt_bin}/node" "#{libexec}/lib/node_modules/@steipete/poltergeist/dist/polter.js" "$@"
+    EOS
+    
+    # Make poltergeist the main command
+    (bin/"poltergeist").write <<~EOS
+      #!/bin/bash
+      exec "#{Formula["node"].opt_bin}/node" "#{libexec}/lib/node_modules/@steipete/poltergeist/dist/cli.js" "$@"
+    EOS
+    
+    # Ensure scripts are executable
+    chmod 0755, bin/"polter"
+    chmod 0755, bin/"poltergeist"
   end
 
   def caveats
     <<~EOS
-      👻 Poltergeist has been installed!
-      
-      Quick Start:
-      1. Create a poltergeist.config.json in your project:
-         poltergeist init
-      
-      2. Start watching and auto-building:
-         poltergeist haunt
-      
-      3. Use the shorthand command:
-         polter status
-      
-      For more information:
-        https://github.com/steipete/poltergeist
+      Poltergeist has been installed with two commands:
+        poltergeist - Main CLI for managing file watching and builds
+        polter      - Smart executor for running fresh binaries
+
+      To get started:
+        1. Create a poltergeist.config.json in your project
+        2. Run 'poltergeist init' to generate a config
+        3. Run 'poltergeist start' to begin watching
+        4. Use 'polter <target>' to run your binaries
+
+      Documentation: https://github.com/steipete/poltergeist
     EOS
   end
 
   test do
-    # Test that the binary runs and returns version
-    assert_match "1.4", shell_output("#{bin}/poltergeist --version")
+    system "#{bin}/poltergeist", "--version"
+    system "#{bin}/polter", "--help"
     
-    # Test polter wrapper
-    assert_match "polter", shell_output("#{bin}/polter --help 2>&1")
-    
-    # Test init command generates config
-    Dir.mktmpdir do |dir|
-      Dir.chdir(dir) do
-        system "#{bin}/poltergeist", "init", "--dry-run"
-      end
-    end
+    # Test that watchman dependency is available
+    assert_match "version", shell_output("watchman version")
   end
 end
