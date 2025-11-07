@@ -85,6 +85,27 @@ peekaboo config edit
 
 For more information, see [Peekaboo on GitHub](https://github.com/steipete/peekaboo).
 
+### Mcporter
+
+TypeScript-based Model Context Protocol runtime and CLI generator.
+
+**Version:** 0.3.0 (Released November 7, 2025)
+
+```bash
+brew install steipete/tap/mcporter
+```
+
+#### Highlights
+
+- 🔌 Bun-compiled standalone binary (no Node.js runtime required)
+- 🔐 OAuth-friendly runtime that persists tokens and refreshes automatically
+- 🧱 Structured config loader with `${ENV}` expansion
+- 🛠️ Generates tailored MCP CLIs via `mcporter generate-cli`
+- 🌐 Call/list servers directly via `https://host/path.tool()` selectors with automatic reuse of configured entries
+- 🧰 New `mcporter emit-ts` command emits typed clients and `.d.ts` interfaces
+
+For more information, see [mcporter on GitHub](https://github.com/steipete/mcporter).
+
 ## Adding the Tap
 
 You only need to tap once:
