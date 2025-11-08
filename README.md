@@ -89,7 +89,7 @@ For more information, see [Peekaboo on GitHub](https://github.com/steipete/peeka
 
 TypeScript-based Model Context Protocol runtime and CLI generator.
 
-**Version:** 0.3.3 (Released November 7, 2025)
+**Version:** 0.4.1 (Released November 8, 2025)
 
 ```bash
 brew install steipete/tap/mcporter
@@ -99,7 +99,7 @@ brew install steipete/tap/mcporter
 
 - 🔌 Bun-compiled standalone binary (no Node.js runtime required)
 - 🎨 Generated CLIs inherit the same color-aware help layout as the main binary and reuse each MCP server’s own description/title automatically.
-- 🧰 `mcporter generate-cli` now supports `--bundler rolldown|bun` with automatic Bun bundling when the runtime resolves to Bun.
+- 🛠️ Restores the default config-import fallback so `mcporter list` works outside repos that ship a `config/mcporter.json`.
 - 🔐 OAuth-friendly runtime that persists tokens and refreshes automatically
 - 🧱 Structured config loader with `${ENV}` expansion
 - 🌐 Call/list servers directly via `https://host/path.tool()` selectors with automatic reuse of configured entries
