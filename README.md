@@ -89,7 +89,7 @@ For more information, see [Peekaboo on GitHub](https://github.com/steipete/peeka
 
 TypeScript-based Model Context Protocol runtime and CLI generator.
 
-**Version:** 0.4.3 (Released November 10, 2025)
+**Version:** 0.5.0 (Released November 10, 2025)
 
 ```bash
 brew install steipete/tap/mcporter
@@ -97,10 +97,10 @@ brew install steipete/tap/mcporter
 
 #### Highlights
 
-- 🛡️ Imports now cover OpenCode configs (project JSON/JSONC files, `OPENCODE_CONFIG` overrides, and user directories) out of the box.
-- ⚙️ Claude Code imports honor `.claude/settings.local.json` and `.claude/settings.json` ahead of legacy `mcp.json`, matching the editor's precedence.
+- 🔄 Per-login daemon keeps Chrome DevTools, Playwright, and other keep-alive MCP servers running between CLI invocations (with `mcporter daemon <start|status|stop>` controls).
+- 🪟 Windows/editor imports now sweep workspace and user `.cursor/mcp.json` plus VS Code, Windsurf, and Codeium directories automatically.
+- 🧰 `generate-cli --bundle` artifacts stay self-contained by bundling JSONC parser bits, so ad-hoc builds run cleanly from empty temp folders.
 - 🔌 Bun-compiled standalone binary (no Node.js runtime required)
-- 🎨 Generated CLIs inherit the same color-aware help layout as the main binary and reuse each MCP server’s own description/title automatically.
 - 🔐 OAuth-friendly runtime that persists tokens and refreshes automatically
 - 🧱 Structured config loader with `${ENV}` expansion
 - 🌐 Call/list servers directly via `https://host/path.tool()` selectors with automatic reuse of configured entries
