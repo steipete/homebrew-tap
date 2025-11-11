@@ -89,7 +89,7 @@ For more information, see [Peekaboo on GitHub](https://github.com/steipete/peeka
 
 TypeScript-based Model Context Protocol runtime and CLI generator.
 
-**Version:** 0.5.3 (Released November 10, 2025)
+**Version:** 0.5.6 (Released November 11, 2025)
 
 ```bash
 brew install steipete/tap/mcporter
@@ -97,10 +97,8 @@ brew install steipete/tap/mcporter
 
 #### Highlights
 
-- 🧩 Claude imports respect the active workspace `.claude.json` file and ignore metadata-only fields, so `mcporter list` mirrors Claude’s own server list.
-- 🗂️ OpenCode imports only read the documented `mcp` container, preventing stray metadata from masquerading as servers.
-- 🧰 Quoted stdio commands remain auto-detected (`mcporter call "npx -y vercel-domains-mcp"` works without flags) and single-tool servers still auto-select their only tool.
-- 🌱 STDIO transports inherit your shell environment automatically; use `--env` only for explicit overrides.
+- ♻️ Keep-alive STDIO connections (chrome-devtools, etc.) automatically reset when Chrome quits or the daemon restarts, so the next call spins up a fresh browser without manual cleanup.
+- 🔁 Daemon-routed calls print a restart notice and transparently retry once after closing stale transports, providing self-healing behavior when STDIO servers crash mid-call.
 - 🔌 Bun-compiled standalone binary (no Node.js runtime required)
 - 🔐 OAuth-friendly runtime that persists tokens and refreshes automatically
 - 🧱 Structured config loader with `${ENV}` expansion
