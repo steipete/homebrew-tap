@@ -1,4 +1,4 @@
-# steipete's Homebrew Tap
+# steipete's Homebrew Tap 🍺
 
 This is the official Homebrew tap for steipete's tools and utilities.
 
