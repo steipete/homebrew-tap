@@ -1,10 +1,10 @@
 class Peekaboo < Formula
   desc "Lightning-fast macOS screenshots & AI vision analysis"
   homepage "https://github.com/steipete/peekaboo"
-  url "https://github.com/steipete/peekaboo/releases/download/v2.0.3/peekaboo-macos-universal.tar.gz"
-  sha256 "f8eb7a896259128877b23b1fe6235fb540ea2ea97a5c982888e4c5d6dbb0c49c"
+  url "https://github.com/steipete/peekaboo/releases/download/v3.0.0-beta1/peekaboo-macos-universal.tar.gz"
+  sha256 "76a87266cfdc28b03f6eafb750e7b46a38b0d79f203d4f60b42421c4d3f58c36"
   license "MIT"
-  version "2.0.3"
+  version "3.0.0-beta1"
 
   # macOS Sonoma (14.0) or later required
   depends_on macos: :sonoma
