@@ -1,4 +1,4 @@
-# steipete's Homebrew Tap 🍺
+# steipete's Homebrew Tap 🍺 - Brew tap for shipping my CLI tools fast
 
 This is the official Homebrew tap for steipete's tools and utilities.
 
