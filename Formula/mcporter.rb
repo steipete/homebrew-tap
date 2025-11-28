@@ -1,8 +1,8 @@
 class Mcporter < Formula
   desc "Model Context Protocol runtime and CLI generator"
   homepage "https://github.com/steipete/mcporter"
-  url "https://github.com/steipete/mcporter/releases/download/v0.6.5/mcporter-macos-arm64-v0.6.5.tar.gz"
-  sha256 "df4a8dd3b1f35160ed2421b07d49a9884edb63fed308f0a2c26d6baf223f9274"
+  url "https://github.com/steipete/mcporter/releases/download/v0.6.6/mcporter-macos-arm64-v0.6.6.tar.gz"
+  sha256 "ecafbf932d5412645afdc7371513252df0647ce97580b0a4b512eada6c56ae7a"
   license "MIT"
 
   depends_on arch: :arm64
