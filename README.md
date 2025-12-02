@@ -14,7 +14,7 @@ brew tap steipete/tap
 
 Universal file watcher with auto-rebuild for any build system.
 
-**Version:** 1.4.0 (Released August 5, 2025)
+**Version:** 2.1.1 (Released November 25, 2025)
 
 ```bash
 brew install steipete/tap/poltergeist
