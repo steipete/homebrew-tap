@@ -10,6 +10,40 @@ brew tap steipete/tap
 
 ## Available Formulas
 
+### Camsnap
+
+One-command RTSP/ONVIF camera helper for snapshots, clips, and motion alerts.
+
+**Version:** 0.2.0 (Released December 4, 2025)
+
+```bash
+brew install steipete/tap/camsnap
+```
+
+#### Features
+
+- 📸 Grab snapshots or short clips from RTSP cameras (ffmpeg-powered)
+- 🔎 ONVIF discovery to locate cameras on your LAN
+- 🎯 Per-camera defaults for transport/client/audio; supports tokenized RTSP paths (UniFi Protect)
+- 🚨 Motion watch with action hooks and JSON logging
+
+#### Quick Start
+
+```bash
+# Discover cameras (ONVIF)
+camsnap discover
+
+# Add a camera with RTSP token (UniFi Protect)
+camsnap add --name livingroom --host 192.168.1.1 --port 7447 --protocol rtsp --path YOUR_TOKEN
+
+# Take a snapshot
+camsnap snap livingroom --out shot.jpg
+```
+
+#### Requirements
+
+- ffmpeg (installed automatically via dependency)
+
 ### Poltergeist
 
 Universal file watcher with auto-rebuild for any build system.
