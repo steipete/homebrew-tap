@@ -2,7 +2,7 @@ class Camsnap < Formula
   desc "One command to grab frames, clips, or motion alerts from RTSP/ONVIF cams"
   homepage "https://github.com/steipete/camsnap"
   url "https://github.com/steipete/camsnap.git",
-      tag: "v0.2.0",
+      tag:      "v0.2.0",
       revision: "27ac0345f07fadff10bdad079d226b65e1849dcd"
   license "MIT"
 
