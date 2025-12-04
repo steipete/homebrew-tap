@@ -1,17 +1,17 @@
 class Camsnap < Formula
   desc "One command to grab frames, clips, or motion alerts from RTSP/ONVIF cams"
   homepage "https://github.com/steipete/camsnap"
-  url "https://github.com/steipete/camsnap.git",
-      tag:      "v0.2.0",
-      revision: "27ac0345f07fadff10bdad079d226b65e1849dcd"
+  url "https://github.com/steipete/camsnap/releases/download/v0.2.0/camsnap-macos-arm64.tar.gz"
+  sha256 "61282790df47b923db602d22a11f796e59147dc1c4c9ee9a4125bb96a2b3833e"
   license "MIT"
 
-  depends_on "go" => :build
+  depends_on arch: :arm64
   depends_on "ffmpeg"
 
   def install
-    ldflags = "-s -w -X main.version=#{version}"
-    system "go", "build", *std_go_args(ldflags:, output: bin/"camsnap"), "./cmd/camsnap"
+    bin.install Dir["**/camsnap"].first
+    prefix.install Dir["**/LICENSE"].first => "LICENSE"
+    prefix.install Dir["**/README.md"].first => "README.md"
   end
 
   test do
