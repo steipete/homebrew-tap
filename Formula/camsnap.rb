@@ -3,7 +3,7 @@ class Camsnap < Formula
   homepage "https://github.com/steipete/camsnap"
   url "https://github.com/steipete/camsnap.git",
       tag: "v0.2.0",
-      revision: "edb5770fee2e204b799b9580def1e92bac7e27d5"
+      revision: "894cb41fe195437fa3702cd32be0ed137ba5ab41"
   license "MIT"
 
   depends_on "go" => :build
