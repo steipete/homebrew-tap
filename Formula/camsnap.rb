@@ -3,6 +3,7 @@ class Camsnap < Formula
   homepage "https://github.com/steipete/camsnap"
   url "https://github.com/steipete/camsnap/releases/download/v0.2.0/camsnap-macos-arm64.tar.gz"
   sha256 "61282790df47b923db602d22a11f796e59147dc1c4c9ee9a4125bb96a2b3833e"
+  version "0.2.0"
   license "MIT"
 
   depends_on arch: :arm64
