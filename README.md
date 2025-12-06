@@ -123,7 +123,7 @@ For more information, see [Peekaboo on GitHub](https://github.com/steipete/peeka
 
 TypeScript-based Model Context Protocol runtime and CLI generator.
 
-**Version:** 0.6.6 (Released November 28, 2025)
+**Version:** 0.7.0 (Released December 6, 2025)
 
 ```bash
 brew install steipete/tap/mcporter
@@ -131,13 +131,12 @@ brew install steipete/tap/mcporter
 
 #### Highlights
 
-- 🛠️ Prevents ENOENT crashes when running without any config file; implicit defaults now stay graceful across list/config/daemon flows.
-- 🧠 Daemon launches only pass explicit `--config` paths, avoiding child-process misfires while keeping keep-alive servers healthy.
-- ✅ Added regression coverage for empty environments to keep “no config” scenarios stable.
+- 📦 Centralized OAuth credentials in `~/.mcporter/credentials.json` with auto-migration and a reliable `mcporter auth --reset` cleanup path.
+- 🌐 StdIO servers can declare `oauthCommand.args`, so `mcporter auth <server>` runs the helper and waits for browser completion (Gmail-friendly).
+- 🖨️ Raw output now preserves full payloads (no 10k-character truncation) with regression coverage.
 - 🔌 Bun-compiled standalone binary (no Node.js runtime required)
 - 🔐 OAuth-friendly runtime that persists tokens and refreshes automatically
 - 🧱 Structured config loader with `${ENV}` expansion
-- 🌐 Call/list servers directly via `https://host/path.tool()` selectors with automatic reuse of configured entries
 
 For more information, see [mcporter on GitHub](https://github.com/steipete/mcporter).
 
