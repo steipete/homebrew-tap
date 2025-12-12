@@ -10,6 +10,16 @@ brew tap steipete/tap
 
 ## Available Formulas
 
+### Wacli
+
+WhatsApp CLI built on top of `whatsmeow`, with local sync + offline search.
+
+```bash
+brew install steipete/tap/wacli
+```
+
+Note: until the first tagged release, this formula tracks `main`.
+
 ### Camsnap
 
 One-command RTSP/ONVIF camera helper for snapshots, clips, and motion alerts.
