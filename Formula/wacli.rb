@@ -1,9 +1,9 @@
 class Wacli < Formula
   desc "WhatsApp CLI built on whatsmeow"
   homepage "https://github.com/steipete/wacli"
-  url "https://github.com/steipete/wacli/archive/refs/heads/main.tar.gz"
-  sha256 :no_check
-  version "0.0.0"
+  url "https://github.com/steipete/wacli/archive/6038f64.tar.gz"
+  sha256 "661ee3caa78435b0ccccb163b4b87ae4c5a79005158656c6dcbb98698e197f41"
+  version "0.0.0-6038f64"
   head "https://github.com/steipete/wacli.git", branch: "main"
   license "MIT"
 
