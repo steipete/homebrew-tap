@@ -10,6 +10,16 @@ brew tap steipete/tap
 
 ## Available Formulas
 
+### Sonoscli
+
+Control Sonos speakers from the command line (discovery, playback, grouping, Spotify).
+
+**Version:** 0.1.0 (Released December 13, 2025)
+
+```bash
+brew install steipete/tap/sonoscli
+```
+
 ### Wacli
 
 WhatsApp CLI built on top of `whatsmeow`, with local sync + offline search.
