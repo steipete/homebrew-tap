@@ -1,10 +1,10 @@
 class Gogcli < Formula
   desc "Google CLI for Gmail, Calendar, Drive, and Contacts"
   homepage "https://github.com/steipete/gogcli"
-  url "https://github.com/steipete/gogcli/archive/refs/tags/v0.1.0.tar.gz"
-  sha256 "73b679683a6c043d3196dcfc4e21cd054ed7748ac59ed69985390d0ac9600281"
+  url "https://github.com/steipete/gogcli/archive/refs/tags/v0.1.1.tar.gz"
+  sha256 "5ed777e0969a81e6208d881816a6a7f68eb76c7c20af77f31cdb33f8926e8da4"
   license "MIT"
-  version "0.1.0"
+  version "0.1.1"
 
   depends_on "go" => :build
 
@@ -16,4 +16,3 @@ class Gogcli < Formula
     assert_match "Google CLI", shell_output("#{bin}/gog --help")
   end
 end
-
