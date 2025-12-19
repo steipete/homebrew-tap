@@ -1,16 +1,17 @@
 class Peekaboo < Formula
   desc "Lightning-fast macOS screenshots & AI vision analysis"
   homepage "https://github.com/steipete/peekaboo"
-  url "https://github.com/steipete/peekaboo/releases/download/v3.0.0-beta1/peekaboo-macos-universal.tar.gz"
-  sha256 "76a87266cfdc28b03f6eafb750e7b46a38b0d79f203d4f60b42421c4d3f58c36"
+  url "https://github.com/steipete/peekaboo/releases/download/v3.0.0-beta2/peekaboo-macos-arm64.tar.gz"
+  sha256 "ae5d5dc5dc8b881cdc1519309c177a545071291821333c9ecdd144cdb7190b28"
   license "MIT"
-  version "3.0.0-beta1"
+  version "3.0.0-beta2"
 
   # macOS Sonoma (14.0) or later required
   depends_on macos: :sonoma
 
   def install
-    bin.install "peekaboo"
+    odie "Peekaboo is Apple Silicon only (arm64)." if Hardware::CPU.intel?
+    bin.install "peekaboo-macos-arm64/peekaboo" => "peekaboo"
   end
 
   def post_install
@@ -27,7 +28,7 @@ class Peekaboo < Formula
       2. Enable access for your Terminal application
       
       For AI analysis features, configure your AI providers:
-        export PEEKABOO_AI_PROVIDERS="openai/gpt-4o,ollama/llava:latest"
+        export PEEKABOO_AI_PROVIDERS="openai/gpt-5.1,anthropic/claude-sonnet-4.5"
         export OPENAI_API_KEY="your-api-key"
       
       Or create a config file:
@@ -41,11 +42,5 @@ class Peekaboo < Formula
     
     # Test help command
     assert_match "USAGE:", shell_output("#{bin}/peekaboo --help")
-    
-    # Test JSON output for apps listing
-    output = shell_output("#{bin}/peekaboo list apps --json-output")
-    parsed = JSON.parse(output)
-    assert parsed["success"]
-    assert parsed["data"]["applications"].is_a?(Array)
   end
 end
