@@ -1,9 +1,8 @@
 class Summarize < Formula
   desc "Link → clean text → summary"
   homepage "https://github.com/steipete/summarize"
-  # NOTE: placeholders; update url+sha256 when the GitHub Release asset is uploaded.
   url "https://github.com/steipete/summarize/releases/download/v0.1.0/summarize-macos-universal-v0.1.0.tar.gz"
-  sha256 "0000000000000000000000000000000000000000000000000000000000000000"
+  sha256 "2b0c540345afa0653a1c60b9c7d00a7457ebccdf5280819b8613f4c0656ecb67"
   license "MIT"
   version "0.1.0"
 
