@@ -12,4 +12,16 @@ cask "codexbar" do
   depends_on macos: ">= :sequoia"
 
   app "CodexBar.app"
+  
+  zap trash: [
+    "~/Library/Application Scripts/com.steipete.codexbar.widget",
+    "~/Library/Containers/com.steipete.codexbar.widget",
+    "~/Library/Caches/com.steipete.codexbar",
+    "~/Library/Caches/CodexBar",
+    "~/Library/HTTPStorages/com.steipete.codexbar",
+    "~/Library/HTTPStorages/com.steipete.codexbar.binarycookies",
+    "~/Library/Group Containers/group.com.steipete.codexbar",
+    "~/Library/Preferences/com.steipete.codexbar.plist",
+    "~/Library/WebKit/com.steipete.codexbar",
+  ]
 end
