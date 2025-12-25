@@ -9,6 +9,7 @@ class Oracle < Formula
   version "0.7.5"
 
   depends_on "node"
+  depends_on "pnpm" => :build
 
   def install
     system "npm", "install", *Language::Node.std_npm_install_args(libexec, ignore_scripts: false)
