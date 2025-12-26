@@ -1,10 +1,10 @@
 class Bird < Formula
   desc "Fast X CLI for tweeting, replying, and reading"
   homepage "https://github.com/steipete/bird"
-  url "https://github.com/steipete/bird/releases/download/v0.2.0/bird-macos-universal-v0.2.0.tar.gz"
-  sha256 "7a10066b6c3c30507920e2461ccf55b6046bdfb051e9baf69039f19c5f3c24ea"
+  url "https://github.com/steipete/bird/releases/download/v0.3.0/bird-macos-universal-v0.3.0.tar.gz"
+  sha256 "8b64ce93f32562ce823cef0f906d8104c00a39655766ebc441d2a0da7830b7b1"
   license "MIT"
-  version "0.2.0"
+  version "0.3.0"
 
   def install
     bin.install "bird"
@@ -13,7 +13,6 @@ class Bird < Formula
   def caveats
     <<~EOS
       bird uses X/Twitter GraphQL with local cookies by default.
-      Sweetistics API mode is available with SWEETISTICS_API_KEY.
 
       Quick start:
         bird whoami
@@ -22,6 +21,6 @@ class Bird < Formula
   end
 
   test do
-    assert_match "0.2.0", shell_output("#{bin}/bird --version")
+    assert_match "0.3.0", shell_output("#{bin}/bird --version")
   end
 end
