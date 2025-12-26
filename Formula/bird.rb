@@ -1,10 +1,10 @@
 class Bird < Formula
   desc "Fast X CLI for tweeting, replying, and reading"
   homepage "https://github.com/steipete/bird"
-  url "https://github.com/steipete/bird/releases/download/v0.1.0/bird-macos-universal-v0.1.0.tar.gz"
-  sha256 "55b68e41f004e3ade4cdafaa5e650af600f30a37ad1995ee0d91a96823b58a95"
+  url "https://github.com/steipete/bird/releases/download/v0.2.0/bird-macos-universal-v0.2.0.tar.gz"
+  sha256 "7a10066b6c3c30507920e2461ccf55b6046bdfb051e9baf69039f19c5f3c24ea"
   license "MIT"
-  version "0.1.0"
+  version "0.2.0"
 
   def install
     bin.install "bird"
@@ -22,6 +22,6 @@ class Bird < Formula
   end
 
   test do
-    assert_match "0.1.0", shell_output("#{bin}/bird --version")
+    assert_match "0.2.0", shell_output("#{bin}/bird --version")
   end
 end
