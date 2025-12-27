@@ -4,7 +4,6 @@ class Poltergeist < Formula
   url "https://github.com/steipete/poltergeist/releases/download/v2.1.1/poltergeist-macos-universal-v2.1.1.tar.gz"
   sha256 "a654108db074415ed463b53765d85f019b0063fe66d06d44d56120326f9e964f"
   license "MIT"
-  version "2.1.1"
 
   depends_on "watchman"
 
@@ -32,18 +31,18 @@ class Poltergeist < Formula
         4. Use 'polter <target>' to run your binaries
 
       Watchman is required and has been installed as a dependency.
-      
+
       Documentation: https://github.com/steipete/poltergeist
     EOS
   end
 
   test do
     # Test that the binary runs and returns version
-    assert_match "2.1.1", shell_output("#{bin}/poltergeist --version")
-    
+    assert_match version.to_s, shell_output("#{bin}/poltergeist --version")
+
     # Test polter wrapper
     assert_match "Poltergeist", shell_output("#{bin}/polter --help")
-    
+
     # Test that watchman dependency is available
     assert_match "version", shell_output("watchman version")
   end

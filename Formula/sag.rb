@@ -4,7 +4,6 @@ class Sag < Formula
   url "https://github.com/steipete/sag/archive/refs/tags/v0.2.0.tar.gz"
   sha256 "a505a5eb0d72ede07768e96f17574c37959dacdde03434360b1a74c60d9c11cc"
   license "MIT"
-  version "0.2.0"
 
   depends_on "go" => :build
 
