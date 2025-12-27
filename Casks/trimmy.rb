@@ -11,4 +11,16 @@ cask "trimmy" do
   depends_on macos: ">= :sequoia"
 
   app "Trimmy.app"
+
+  zap trash: [
+    "~/Library/Application Scripts/com.steipete.trimmy",
+    "~/Library/Application Support/Trimmy",
+    "~/Library/Caches/com.steipete.trimmy",
+    "~/Library/Containers/com.steipete.trimmy",
+    "~/Library/HTTPStorages/com.steipete.trimmy",
+    "~/Library/HTTPStorages/com.steipete.trimmy.binarycookies",
+    "~/Library/Preferences/com.steipete.trimmy.plist",
+    "~/Library/Saved Application State/com.steipete.trimmy.savedState",
+    "~/Library/WebKit/com.steipete.trimmy",
+  ]
 end
