@@ -17,6 +17,7 @@ cask "codexbar" do
     "~/Library/Application Scripts/com.steipete.codexbar",
     "~/Library/Application Scripts/com.steipete.codexbar.widget",
     "~/Library/Application Support/CodexBar",
+    "~/Library/Application Support/com.steipete.codexbar",
     "~/Library/Caches/CodexBar",
     "~/Library/Caches/com.steipete.codexbar",
     "~/Library/Containers/com.steipete.codexbar",
