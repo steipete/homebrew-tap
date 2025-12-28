@@ -1,9 +1,9 @@
 class Imsg < Formula
   desc "Send and read iMessage / SMS from the terminal"
   homepage "https://github.com/steipete/imsg"
-  url "https://github.com/steipete/imsg/releases/download/v0.2.0/imsg-macos.zip"
-  version "0.2.0"
-  sha256 "0f6533771b1e11851170d3dcf85b23e7c5d1d28d78d4c225c665435d51d6a8e9"
+  url "https://github.com/steipete/imsg/releases/download/v0.2.1/imsg-macos.zip"
+  version "0.2.1"
+  sha256 "38303153c892db51a64c8074948cbe1c66ecc2ffdfa9e96510b2e54bba6428ce"
   license "MIT"
 
   # macOS Sonoma (14.0) or later required
@@ -33,6 +33,7 @@ class Imsg < Formula
   end
 
   test do
+    assert_match version.to_s, shell_output("#{bin}/imsg --version")
     assert_match "Send and read iMessage", shell_output("#{bin}/imsg --help")
   end
 end
