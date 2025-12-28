@@ -1,9 +1,9 @@
 class Imsg < Formula
   desc "Send and read iMessage / SMS from the terminal"
   homepage "https://github.com/steipete/imsg"
-  url "https://github.com/steipete/imsg/releases/download/v0.2.4/imsg-macos.zip"
-  version "0.2.4"
-  sha256 "311c67d3073de3f2e688c0511aea3ec790d15a8937f50d836f6b454112f7388f"
+  url "https://github.com/steipete/imsg/releases/download/v0.2.0/imsg-macos.zip"
+  version "0.2.0"
+  sha256 "3131019d9326c94134af09d5b8b8e86fe38c79e5fd062c4bb6a288333e1300df"
   license "MIT"
 
   # macOS Sonoma (14.0) or later required
@@ -12,7 +12,6 @@ class Imsg < Formula
   def install
     odie "imsg is Apple Silicon only (arm64)." if Hardware::CPU.intel?
     bin.install "imsg"
-    bin.install "imsg_imsg.bundle"
   end
 
   def post_install
