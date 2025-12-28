@@ -3,7 +3,7 @@ class Imsg < Formula
   homepage "https://github.com/steipete/imsg"
   url "https://github.com/steipete/imsg/releases/download/v0.2.0/imsg-macos.zip"
   version "0.2.0"
-  sha256 "0dbbf3029b2a2843963c98c502efbfa670eade74102e5a8bbaef9e691195298f"
+  sha256 "11193311bd13d9747bbd320c733e9101e0b0617d104318ec3a9f5030c38b5767"
   license "MIT"
 
   # macOS Sonoma (14.0) or later required
