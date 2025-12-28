@@ -3,7 +3,7 @@ class Imsg < Formula
   homepage "https://github.com/steipete/imsg"
   url "https://github.com/steipete/imsg/releases/download/v0.2.0/imsg-macos.zip"
   version "0.2.0"
-  sha256 "3131019d9326c94134af09d5b8b8e86fe38c79e5fd062c4bb6a288333e1300df"
+  sha256 "81f929b9726e36cbadf99ebde02c300f3b622de2b23182864d2064892bb95ea3"
   license "MIT"
 
   # macOS Sonoma (14.0) or later required
@@ -12,6 +12,7 @@ class Imsg < Formula
   def install
     odie "imsg is Apple Silicon only (arm64)." if Hardware::CPU.intel?
     bin.install "imsg"
+    bin.install "PhoneNumberKit_PhoneNumberKit.bundle"
   end
 
   def post_install
