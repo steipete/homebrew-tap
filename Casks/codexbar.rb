@@ -12,6 +12,7 @@ cask "codexbar" do
   depends_on macos: ">= :sequoia"
 
   app "CodexBar.app"
+  binary "#{appdir}/CodexBar.app/Contents/Helpers/CodexBarCLI", target: "codexbar"
 
   zap trash: [
     "~/Library/Application Scripts/com.steipete.codexbar",
