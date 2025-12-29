@@ -1,8 +1,8 @@
 class Summarize < Formula
   desc "Link → clean text → summary"
   homepage "https://github.com/steipete/summarize"
-  url "https://github.com/steipete/summarize/releases/download/v0.6.1/summarize-macos-arm64-v0.6.1.tar.gz"
-  sha256 "e4e0750e8a60272181347528c6e0a07a296220cea3b30693fd7c2b4c5ba60944"
+  url "https://github.com/steipete/summarize/releases/download/v0.8.2/summarize-macos-arm64-v0.8.2.tar.gz"
+  sha256 "3bf11afb8378533c7018701104fd40288bf9792124b9d0c5a007a1e03f545e68"
   license "MIT"
 
   depends_on arch: :arm64
