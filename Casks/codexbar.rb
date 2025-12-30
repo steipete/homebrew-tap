@@ -1,6 +1,6 @@
 cask "codexbar" do
-  version "0.16.0"
-  sha256 "fd2a60744e59e27b53f1a2454ba9c4cc11241d0c0ca542d6297e7c4988c38309"
+  version "0.16.1"
+  sha256 "1bb5b334b34ffea56471da4719a41d3a687ad70128756543fd8c6893d442321a"
 
   url "https://github.com/steipete/CodexBar/releases/download/v#{version}/CodexBar-#{version}.zip",
       verified: "github.com/steipete/CodexBar/"
@@ -9,7 +9,7 @@ cask "codexbar" do
   homepage "https://codexbar.app/"
 
   depends_on arch: :arm64
-  depends_on macos: ">= :sequoia"
+  depends_on macos: ">= :sonoma"
 
   app "CodexBar.app"
   binary "#{appdir}/CodexBar.app/Contents/Helpers/CodexBarCLI", target: "codexbar"
