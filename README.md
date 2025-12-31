@@ -41,6 +41,7 @@ brew install --cask steipete/tap/<name>
 ### Casks
 
 - `codexbar` — Menu bar usage monitor for Codex and Claude
+- `repobar` — Menu bar GitHub repo status at a glance
 - `trimmy` — Paste-once, run-once clipboard cleaner for terminal snippets
 
 ## Update / Uninstall
