@@ -26,6 +26,7 @@ brew install --cask steipete/tap/<name>
 - `blucli` — Play, group, and automate BluOS
 - `camsnap` — One command to grab frames, clips, or motion alerts from RTSP/ONVIF cams
 - `gogcli` — Google CLI for Gmail, Calendar, Drive, and Contacts
+- `gifgrep` — Grep the GIF. Stick the landing.
 - `imsg` — Send and read iMessage / SMS from the terminal
 - `mcporter` — Model Context Protocol runtime and CLI generator
 - `oracle` — Bundle prompts + files for second-model review
