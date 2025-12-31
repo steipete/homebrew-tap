@@ -1,5 +1,5 @@
 class Gifgrep < Formula
-  desc "Grep the GIF. Stick the landing."
+  desc "Grep the GIF. Stick the landing"
   homepage "https://github.com/steipete/gifgrep"
   url "https://github.com/steipete/gifgrep/archive/refs/tags/v0.1.0.tar.gz"
   sha256 "241b473bf64f8d1318e6330269a20448eb24dfdef238dcd710c566d6817d0f5b"
