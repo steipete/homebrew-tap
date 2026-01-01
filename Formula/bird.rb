@@ -1,8 +1,8 @@
 class Bird < Formula
   desc "Fast X CLI for tweeting, replying, and reading"
   homepage "https://github.com/steipete/bird"
-  url "https://github.com/steipete/bird/releases/download/v0.5.0/bird-macos-universal-v0.5.0.tar.gz"
-  sha256 "dbfe85420f57a3fcfc05c397d55461fec64ebb794b230dd805bed3826c737fbe"
+  url "https://github.com/steipete/bird/releases/download/v0.5.1/bird-macos-universal-v0.5.1.tar.gz"
+  sha256 "7e95b1bd41bc9d9bbd55848dbe4cd9e72e6794b64ae8ef7b6b95160cf80d923d"
   license "MIT"
 
   def install
