@@ -1,8 +1,8 @@
 class Sag < Formula
   desc "Command-line ElevenLabs TTS with mac-style flags"
   homepage "https://github.com/steipete/sag"
-  url "https://github.com/steipete/sag/archive/refs/tags/v0.2.0.tar.gz"
-  sha256 "513bbd509e6bbcccb205a41f1656e6fc1e27d3cb89a3349c23a0d9e85eaf8472"
+  url "https://github.com/steipete/sag/archive/refs/tags/v0.2.1.tar.gz"
+  sha256 "8d2d7a15062c62b31224400b7c86414ecb21806bd6f386cd82bb72d0d281fd03"
   license "MIT"
 
   depends_on "go" => :build
