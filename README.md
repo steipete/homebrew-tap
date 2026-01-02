@@ -35,6 +35,7 @@ brew install --cask steipete/tap/<name>
 - `poltergeist` — Universal file watcher with auto-rebuild for any language or build system
 - `sag` — Command-line ElevenLabs TTS with mac-style flags
 - `sonoscli` — Control Sonos speakers from the command line
+- `songsee` — Spectral visualization CLI for audio files
 - `summarize` — Link → clean text → summary
 - `tmuxwatch` — Live tmux dashboard with Bubble Tea UI
 - `wacli` — WhatsApp CLI built on whatsmeow
