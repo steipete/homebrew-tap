@@ -1,18 +1,34 @@
 class Gogcli < Formula
   desc "Google CLI for Gmail, Calendar, Drive, and Contacts"
   homepage "https://github.com/steipete/gogcli"
-  url "https://github.com/steipete/gogcli/archive/refs/tags/v0.4.2.tar.gz"
-  sha256 "80534720574b2c24ce353ab86009056c70201f777a35be258e1c1de0c3a9a02a"
+  version "0.4.2"
   license "MIT"
 
-  depends_on "go" => :build
+  on_macos do
+    if Hardware::CPU.arm?
+      url "https://github.com/steipete/gogcli/releases/download/v#{version}/gogcli_#{version}_darwin_arm64.tar.gz"
+      sha256 "442d3c67f8813913efff5026b7b9ce345123f63e8e5e45cdd11b0336e47ca813"
+    else
+      url "https://github.com/steipete/gogcli/releases/download/v#{version}/gogcli_#{version}_darwin_amd64.tar.gz"
+      sha256 "9e46282e45478289482aa1161f92798dbadb499fdbd549875b510dc2318903bf"
+    end
+  end
+
+  on_linux do
+    if Hardware::CPU.arm?
+      url "https://github.com/steipete/gogcli/releases/download/v#{version}/gogcli_#{version}_linux_arm64.tar.gz"
+      sha256 "f18e1ac7463f58bac754f811d41e6577bf6e947b4dae95a2012088f3d55da627"
+    else
+      url "https://github.com/steipete/gogcli/releases/download/v#{version}/gogcli_#{version}_linux_amd64.tar.gz"
+      sha256 "764b55e6eb62fbf6afe60020ee16e5907b4c7fa23a81a1235cdfb6f4d9e91b6f"
+    end
+  end
 
   def install
-    ldflags = "-s -w -X github.com/steipete/gogcli/internal/cmd.version=v#{version}"
-    system "go", "build", *std_go_args(output: bin/"gog", ldflags:), "./cmd/gog"
+    bin.install "gog"
   end
 
   test do
-    assert_match "v#{version}", shell_output("#{bin}/gog --version")
+    assert_match "Google CLI", shell_output("#{bin}/gog --help")
   end
 end
