@@ -1,15 +1,31 @@
 class Tmuxwatch < Formula
   desc "Live tmux dashboard with Bubble Tea UI"
   homepage "https://github.com/steipete/tmuxwatch"
-  url "https://github.com/steipete/tmuxwatch/archive/refs/tags/v0.9.2.tar.gz"
-  sha256 "a3fb6a537082814dd52a472d71ef8d29693cef04f07f5b771b2c05529585464d"
+  version "0.9.2"
   license "MIT"
 
-  depends_on "go" => :build
+  on_macos do
+    if Hardware::CPU.arm?
+      url "https://github.com/steipete/tmuxwatch/releases/download/v#{version}/tmuxwatch_#{version}_darwin_arm64.tar.gz"
+      sha256 "5ce42b6b46c2890422c23b41d75af4a9675d21a81c47dacda708e41e78effb9e"
+    else
+      url "https://github.com/steipete/tmuxwatch/releases/download/v#{version}/tmuxwatch_#{version}_darwin_amd64.tar.gz"
+      sha256 "110c9427705bbb4ff05974eda78e1fe12b7caf9a2ffe977e14d08ddb90ba2f0f"
+    end
+  end
+
+  on_linux do
+    if Hardware::CPU.arm?
+      url "https://github.com/steipete/tmuxwatch/releases/download/v#{version}/tmuxwatch_#{version}_linux_arm64.tar.gz"
+      sha256 "34721d7754edc33e041ab82cb443f2becd1e8c14ca001c8a537a2c0775433d68"
+    else
+      url "https://github.com/steipete/tmuxwatch/releases/download/v#{version}/tmuxwatch_#{version}_linux_amd64.tar.gz"
+      sha256 "e66b817efa4255ca0d03b5ddbeda9f3291ac99f298799a4464a17bc14d114b98"
+    end
+  end
 
   def install
-    ldflags = "-s -w -X main.version=#{version}"
-    system "go", "build", *std_go_args(ldflags:), "./cmd/tmuxwatch"
+    bin.install "tmuxwatch"
   end
 
   test do
