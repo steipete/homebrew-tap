@@ -1,27 +1,27 @@
 class Gifgrep < Formula
   desc "Grep the GIF. Stick the landing"
   homepage "https://github.com/steipete/gifgrep"
-  version "0.1.0"
+  version "0.2.1"
   license "MIT"
 
   on_macos do
     if Hardware::CPU.arm?
       url "https://github.com/steipete/gifgrep/releases/download/v#{version}/gifgrep_#{version}_darwin_arm64.tar.gz"
-      sha256 "059e1947a2a983c8a53da3a71cee3837680d1a1b708f11c588260c9115af060c"
+      sha256 "0a50287c932f8820101e1c6444e37c659a6d78a542986cfcc8575f95cd694ec7"
     else
       url "https://github.com/steipete/gifgrep/releases/download/v#{version}/gifgrep_#{version}_darwin_amd64.tar.gz"
-      sha256 "07f8335d4cef1a68c8df5f97d164b17443bed2c336f5e5c60a67d22bc6b39632"
+      sha256 "2430c5daef05bfbb8c68080df61af2bac2bcd99027277c43c91e8dcd07190b77"
     end
   end
 
   on_linux do
     if Hardware::CPU.arm?
       url "https://github.com/steipete/gifgrep/archive/refs/tags/v#{version}.tar.gz"
-      sha256 "241b473bf64f8d1318e6330269a20448eb24dfdef238dcd710c566d6817d0f5b"
+      sha256 "01e41d84b9cf26d98445d86ed679dfcd507c68b662cf7b0d4fdeff69900cc792"
       depends_on "go" => :build
     else
       url "https://github.com/steipete/gifgrep/releases/download/v#{version}/gifgrep_#{version}_linux_amd64.tar.gz"
-      sha256 "8a0eca720fd6f00e52a76af4d1a3a40aa3325237e240f739561fa703c2a80bbc"
+      sha256 "03ec8e37993f7063c2f92fe33a62e287c75baf57140e189237be2914129b5b76"
     end
   end
 
