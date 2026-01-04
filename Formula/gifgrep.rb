@@ -16,9 +16,8 @@ class Gifgrep < Formula
 
   on_linux do
     if Hardware::CPU.arm?
-      url "https://github.com/steipete/gifgrep/archive/refs/tags/v#{version}.tar.gz"
-      sha256 "01e41d84b9cf26d98445d86ed679dfcd507c68b662cf7b0d4fdeff69900cc792"
-      depends_on "go" => :build
+      url "https://github.com/steipete/gifgrep/releases/download/v#{version}/gifgrep_#{version}_linux_arm64.tar.gz"
+      sha256 "978af89799aabfcf0bebad645e9bb2e480edce8db0d3884d93de3e33e03ac813"
     else
       url "https://github.com/steipete/gifgrep/releases/download/v#{version}/gifgrep_#{version}_linux_amd64.tar.gz"
       sha256 "03ec8e37993f7063c2f92fe33a62e287c75baf57140e189237be2914129b5b76"
@@ -26,11 +25,7 @@ class Gifgrep < Formula
   end
 
   def install
-    if File.exist?("gifgrep")
-      bin.install "gifgrep"
-    else
-      system "go", "build", *std_go_args(ldflags: "-s -w"), "./cmd/gifgrep"
-    end
+    bin.install "gifgrep"
   end
 
   test do
