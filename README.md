@@ -25,6 +25,7 @@ brew install --cask steipete/tap/<name>
 - `bird` — Fast X CLI for tweeting, replying, and reading
 - `blucli` — Play, group, and automate BluOS
 - `camsnap` — One command to grab frames, clips, or motion alerts from RTSP/ONVIF cams
+- `codexbar` — CodexBar CLI (Linuxbrew)
 - `gogcli` — Google CLI for Gmail, Calendar, Drive, and Contacts
 - `gifgrep` — Grep the GIF. Stick the landing.
 - `imsg` — Send and read iMessage / SMS from the terminal
