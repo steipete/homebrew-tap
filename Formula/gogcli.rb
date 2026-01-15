@@ -1,26 +1,26 @@
 class Gogcli < Formula
   desc "Google CLI for Gmail, Calendar, Drive, and Contacts"
   homepage "https://github.com/steipete/gogcli"
-  version "0.6.0"
+  version "0.6.1"
   license "MIT"
 
   on_macos do
     if Hardware::CPU.arm?
       url "https://github.com/steipete/gogcli/releases/download/v#{version}/gogcli_#{version}_darwin_arm64.tar.gz"
-      sha256 "2926341bafaba9480a9e5bf117438105b73a9a47b08dff7a08f6ef7903bac629"
+      sha256 "c76dc4058820264664e0bbae8dd4df93ae74a9c285643fa278666f38c1e60b1f"
     else
       url "https://github.com/steipete/gogcli/releases/download/v#{version}/gogcli_#{version}_darwin_amd64.tar.gz"
-      sha256 "0532327fb85f42eb011e450db75e63cc4c4018d66f476dd7a80e5721521a4070"
+      sha256 "d8bf0c96bf789f9c7aa66003d8bd5f58e15ba1a9f9db0b304a09281f8f331642"
     end
   end
 
   on_linux do
     if Hardware::CPU.arm?
       url "https://github.com/steipete/gogcli/releases/download/v#{version}/gogcli_#{version}_linux_arm64.tar.gz"
-      sha256 "2d0db130beb0fdd8e64715bd46cbc3d3f354f35f61e1adc87f521080ca1a09ed"
+      sha256 "5b13908c70dfb087a9171791c820a40f3e967496187f766a046b50e879cba8a0"
     else
       url "https://github.com/steipete/gogcli/releases/download/v#{version}/gogcli_#{version}_linux_amd64.tar.gz"
-      sha256 "97d95961ad836f0c07cdee369b287239823b9f4e430fea9777e59e8a5f55eb69"
+      sha256 "393647c76fa023c2b7ead4f97796002e685559065cac77d16a99f049f64b2243"
     end
   end
 
