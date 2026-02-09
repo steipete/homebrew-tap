@@ -22,7 +22,6 @@ brew install --cask steipete/tap/<name>
 
 ### Formulae
 
-- `bird` — Fast X CLI for tweeting, replying, and reading
 - `blucli` — Play, group, and automate BluOS
 - `camsnap` — One command to grab frames, clips, or motion alerts from RTSP/ONVIF cams
 - `codexbar` — CodexBar CLI (Linuxbrew)
@@ -69,7 +68,6 @@ brew uninstall --cask --zap steipete/tap/codexbar
 
 Homebrew formulae don’t support `--zap`. Delete these to “factory reset”:
 
-- `bird`: `~/.config/bird/`
 - `blucli`: `~/Library/Application Support/blu/` + `~/Library/Caches/blu/`
 - `camsnap`: `~/.config/camsnap/config.yaml`
 - `gogcli`: `~/Library/Application Support/gogcli/` (incl `keyring/`, `state/`)
