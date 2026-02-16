@@ -1,8 +1,8 @@
 class Imsg < Formula
   desc "Send and read iMessage / SMS from the terminal"
   homepage "https://github.com/steipete/imsg"
-  url "https://github.com/steipete/imsg/releases/download/v0.4.0/imsg-macos.zip"
-  sha256 "d0e5e333ee88192d595bfed9eece60e35ecad0300145966d5ad27458c33e407b"
+  url "https://github.com/steipete/imsg/releases/download/v0.5.0/imsg-macos.zip"
+  sha256 "ae2ac967ef1e41fd046b74570f86c7ad69634a91846fec2d6cc76bb04b473c0a"
   license "MIT"
 
   # macOS Sonoma (14.0) or later required
@@ -10,7 +10,9 @@ class Imsg < Formula
 
   def install
     libexec.install "imsg"
-    libexec.install "PhoneNumberKit_PhoneNumberKit.bundle"
+    Dir["*.bundle"].each do |bundle|
+      libexec.install bundle
+    end
     bin.write_exec_script libexec/"imsg"
   end
 
