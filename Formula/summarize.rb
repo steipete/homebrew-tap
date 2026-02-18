@@ -1,11 +1,25 @@
 class Summarize < Formula
   desc "Link → clean text → summary"
   homepage "https://github.com/steipete/summarize"
-  url "https://github.com/steipete/summarize/releases/download/v0.11.1/summarize-macos-arm64-v0.11.1.tar.gz"
-  sha256 "44935e0b159f6cc08eac3e80051e304802ddb65d6c2264b85a48f3d5374f9931"
   license "MIT"
 
-  depends_on arch: :arm64
+  on_macos do
+    on_arm do
+      url "https://github.com/steipete/summarize/releases/download/v0.11.1/summarize-macos-arm64-v0.11.1.tar.gz"
+      sha256 "44935e0b159f6cc08eac3e80051e304802ddb65d6c2264b85a48f3d5374f9931"
+    end
+  end
+
+  on_linux do
+    on_intel do
+      url "https://github.com/steipete/summarize/releases/download/v0.11.1/summarize-linux-x64-v0.11.1.tar.gz"
+      sha256 "0000000000000000000000000000000000000000000000000000000000000000"
+    end
+    on_arm do
+      url "https://github.com/steipete/summarize/releases/download/v0.11.1/summarize-linux-arm64-v0.11.1.tar.gz"
+      sha256 "0000000000000000000000000000000000000000000000000000000000000000"
+    end
+  end
 
   def install
     bin.install "summarize"
