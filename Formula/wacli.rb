@@ -22,6 +22,9 @@ class Wacli < Formula
       bin.install "wacli"
     else
       ldflags = "-s -w -X main.version=#{version}"
+      # GCC 15+ with glibc 2.42+ treats missing-braces in Go's runtime/cgo as errors.
+      # See: https://github.com/steipete/wacli/pull/8
+      ENV.append "CGO_CFLAGS", "-Wno-error=missing-braces"
       system "go", "build", "-tags", "sqlite_fts5", *std_go_args(ldflags: ldflags), "./cmd/wacli"
     end
   end
