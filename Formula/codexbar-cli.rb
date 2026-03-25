@@ -1,8 +1,10 @@
-class Codexbar < Formula
+class CodexBarCLI < Formula
   desc "CodexBar CLI for usage/status output"
   homepage "https://github.com/steipete/CodexBar"
   version "0.19.0"
   license "MIT"
+
+  depends_on :linux
 
   on_linux do
     if Hardware::CPU.arm?
