@@ -1,8 +1,15 @@
 class Codexbar < Formula
-  desc "CodexBar CLI for usage/status output"
+  desc "CodexBar CLI for usage/status output (Linux only)"
   homepage "https://github.com/steipete/CodexBar"
   version "0.19.0"
   license "MIT"
+
+  # Top-level URL required for formula import validation on macOS
+  # on_linux block below overrides these for actual downloads
+  url "https://github.com/steipete/CodexBar/releases/download/v#{version}/CodexBarCLI-v#{version}-linux-x86_64.tar.gz"
+  sha256 "7c048b3d2db81103a064d6d5dc3e5ee60f195ae773cac0438055c4f9fc4f6583"
+
+  depends_on :linux
 
   on_linux do
     if Hardware::CPU.arm?
