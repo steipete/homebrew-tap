@@ -28,6 +28,23 @@ class Discrawl < Formula
     bin.install "discrawl"
   end
 
+  def caveats
+    <<~EOS
+      discrawl stores local state under:
+        ~/.discrawl/config.toml
+        ~/.discrawl/discrawl.db
+
+      Fastest setup:
+        export DISCORD_BOT_TOKEN="your-bot-token"
+        discrawl doctor
+        discrawl init
+        discrawl sync --full
+
+      If you already use OpenClaw, discrawl can reuse:
+        ~/.openclaw/openclaw.json
+    EOS
+  end
+
   test do
     assert_match version.to_s, shell_output("#{bin}/discrawl --version")
   end

@@ -25,6 +25,7 @@ brew install --cask steipete/tap/<name>
 - `blucli` — Play, group, and automate BluOS
 - `camsnap` — One command to grab frames, clips, or motion alerts from RTSP/ONVIF cams
 - `codexbar` — CodexBar CLI (Linuxbrew)
+- `discrawl` — Discord archive CLI for local SQLite search and analysis
 - `gogcli` — Google CLI for Gmail, Calendar, Drive, and Contacts
 - `gifgrep` — Grep the GIF. Stick the landing.
 - `imsg` — Send and read iMessage / SMS from the terminal
@@ -70,6 +71,7 @@ Homebrew formulae don’t support `--zap`. Delete these to “factory reset”:
 
 - `blucli`: `~/Library/Application Support/blu/` + `~/Library/Caches/blu/`
 - `camsnap`: `~/.config/camsnap/config.yaml`
+- `discrawl`: `~/.discrawl/`
 - `gogcli`: `~/Library/Application Support/gogcli/` (incl `keyring/`, `state/`)
 - `mcporter`: `~/.mcporter/`
 - `oracle`: `~/.oracle/`
