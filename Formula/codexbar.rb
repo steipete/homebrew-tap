@@ -1,16 +1,16 @@
 class Codexbar < Formula
-  desc "CodexBar CLI for usage/status output"
+  desc "Menu bar usage and status CLI"
   homepage "https://github.com/steipete/CodexBar"
-  version "0.19.0"
+  version "0.21"
   license "MIT"
 
   on_linux do
     if Hardware::CPU.arm?
       url "https://github.com/steipete/CodexBar/releases/download/v#{version}/CodexBarCLI-v#{version}-linux-aarch64.tar.gz"
-      sha256 "36d3fb745174cb42699d93ac40787ffddb55482b00e9ec2ce4cf01f8ad0494f4"
+      sha256 "5a440eba41f113900879ca75b20074840b3032c1cb96cb5a832aafb8d3f33c40"
     else
       url "https://github.com/steipete/CodexBar/releases/download/v#{version}/CodexBarCLI-v#{version}-linux-x86_64.tar.gz"
-      sha256 "7c048b3d2db81103a064d6d5dc3e5ee60f195ae773cac0438055c4f9fc4f6583"
+      sha256 "da839bdca2a5dadf1f53efb0d6846a5fa980d3295a7bf94f8506f899b654aefb"
     end
   end
 
