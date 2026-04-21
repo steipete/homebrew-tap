@@ -1,26 +1,26 @@
 class Discrawl < Formula
   desc "Discord archive CLI for local SQLite search and analysis"
   homepage "https://github.com/steipete/discrawl"
-  version "0.2.0"
+  version "0.3.0"
   license "MIT"
 
   on_macos do
     if Hardware::CPU.arm?
       url "https://github.com/steipete/discrawl/releases/download/v#{version}/discrawl_#{version}_darwin_arm64.tar.gz"
-      sha256 "09a2d6a7cbd824b2850dbf20e1d59204b484ef1cc3adad166a286f57d0f5e63c"
+      sha256 "8a977f54aa2c3b28eb823255d53edafb4cc5cc2e23131d70b944422286e7c7f9"
     else
       url "https://github.com/steipete/discrawl/releases/download/v#{version}/discrawl_#{version}_darwin_amd64.tar.gz"
-      sha256 "39970e9a8b99c2699533c008ba155ed3122534b94df32fefc9bab54a8c663ebc"
+      sha256 "cf0ed091bc9f9d7d99ea46738f36bdbfca318203f289c20280d48217fc62f055"
     end
   end
 
   on_linux do
     if Hardware::CPU.arm?
       url "https://github.com/steipete/discrawl/releases/download/v#{version}/discrawl_#{version}_linux_arm64.tar.gz"
-      sha256 "76092af669943d82bfbb635a395605ba0a92f57c866fc35c3c0833bc33298418"
+      sha256 "ec98379d1b72aa78d4339b18804ce01307d35ae373bf9a389a2f7a816cf17923"
     else
       url "https://github.com/steipete/discrawl/releases/download/v#{version}/discrawl_#{version}_linux_amd64.tar.gz"
-      sha256 "57eba0c982b862981c8309161c625a211b4563a5d6a72eaeec5116b540e09c19"
+      sha256 "3774efa37848f423123efe24ceaa9661359d156425ca92d6aadc8fa67f7a80b6"
     end
   end
 
