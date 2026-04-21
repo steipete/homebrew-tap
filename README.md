@@ -37,7 +37,6 @@ brew install --cask steipete/tap/<name>
 - `sag` — Command-line ElevenLabs TTS with mac-style flags
 - `sonoscli` — Control Sonos speakers from the command line
 - `songsee` — Spectral visualization CLI for audio files
-- `summarize` — Link → clean text → summary
 - `tmuxwatch` — Live tmux dashboard with Bubble Tea UI
 - `wacli` — WhatsApp CLI built on whatsmeow
 
@@ -63,6 +62,7 @@ brew uninstall --cask --zap steipete/tap/codexbar
 ## Notes
 
 - Run `brew info steipete/tap/<name>` for per-tool caveats (permissions, setup steps, etc.).
+- `summarize` now ships from Homebrew/core; install it with `brew install summarize`.
 - `wacli` also supports `brew install --HEAD steipete/tap/wacli` to build from `main`.
 
 ## Manual Cleanup (formulae)
@@ -77,7 +77,6 @@ Homebrew formulae don’t support `--zap`. Delete these to “factory reset”:
 - `oracle`: `~/.oracle/`
 - `ordercli`: `~/Library/Application Support/ordercli/config.json`
 - `sonoscli`: `~/Library/Application Support/sonoscli/config.json`
-- `summarize`: `~/.summarize/`
 - `wacli`: `~/.wacli/`
 
 ## Local Source Checkouts (Peter)
