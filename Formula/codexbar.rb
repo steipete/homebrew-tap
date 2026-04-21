@@ -1,8 +1,12 @@
 class Codexbar < Formula
   desc "Menu bar usage and status CLI"
   homepage "https://github.com/steipete/CodexBar"
+  url "https://github.com/steipete/CodexBar/releases/download/v0.22/CodexBarCLI-v0.22-linux-x86_64.tar.gz"
   version "0.22"
+  sha256 "f330406c421eef7e9a0b199f0f1baeced12cffa206cbaf3be45f5d00def3d217"
   license "MIT"
+
+  depends_on :linux
 
   on_linux do
     if Hardware::CPU.arm?
