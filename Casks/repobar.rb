@@ -11,6 +11,7 @@ cask "repobar" do
   depends_on macos: ">= :sequoia"
 
   app "RepoBar.app"
+  binary "#{appdir}/RepoBar.app/Contents/MacOS/repobarcli", target: "repobar"
 
   zap trash: [
     "~/Library/Application Support/RepoBar",
