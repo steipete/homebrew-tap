@@ -23,6 +23,7 @@ brew install --cask steipete/tap/<name>
 ### Formulae
 
 - `blucli` — Play, group, and automate BluOS
+- `birdclaw` — Local-first X workspace for archives, DMs, mentions, and moderation
 - `camsnap` — One command to grab frames, clips, or motion alerts from RTSP/ONVIF cams
 - `codexbar` — CodexBar CLI (Linuxbrew)
 - `discrawl` — Discord archive CLI for local SQLite search and analysis
@@ -71,6 +72,7 @@ brew uninstall --cask --zap steipete/tap/codexbar
 Homebrew formulae don’t support `--zap`. Delete these to “factory reset”:
 
 - `blucli`: `~/Library/Application Support/blu/` + `~/Library/Caches/blu/`
+- `birdclaw`: `~/.birdclaw/`
 - `camsnap`: `~/.config/camsnap/config.yaml`
 - `discrawl`: `~/.discrawl/`
 - `gogcli`: `~/Library/Application Support/gogcli/` (incl `keyring/`, `state/`)
