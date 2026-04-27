@@ -3,8 +3,8 @@ require "language/node"
 class Birdclaw < Formula
   desc "Local-first X workspace for archives, DMs, mentions, and moderation"
   homepage "https://github.com/steipete/birdclaw"
-  url "https://registry.npmjs.org/birdclaw/-/birdclaw-0.1.0.tgz"
-  sha256 "85a834687a2c7ffec0d3c72bbc6ae8ae78d84a05187786f8fd2e63d0d69cfb94"
+  url "https://registry.npmjs.org/birdclaw/-/birdclaw-0.1.1.tgz"
+  sha256 "88f99b43991422119035b4da33c87b0baa203f588beec6f2f0545d3e33c5e8b9"
   license "MIT"
 
   depends_on "node"
