@@ -23,7 +23,7 @@ brew install --cask steipete/tap/<name>
 ### Formulae
 
 - `blucli` — Play, group, and automate BluOS
-- `birdclaw` — Local-first X workspace for archives, DMs, mentions, and moderation
+- `birdclaw` — Local Twitter memory for archives, DMs, likes, bookmarks, and moderation
 - `camsnap` — One command to grab frames, clips, or motion alerts from RTSP/ONVIF cams
 - `codexbar` — CodexBar CLI (Linuxbrew)
 - `discrawl` — Discord archive CLI for local SQLite search and analysis

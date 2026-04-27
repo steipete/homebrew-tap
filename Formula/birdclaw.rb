@@ -1,10 +1,10 @@
 require "language/node"
 
 class Birdclaw < Formula
-  desc "Local-first X workspace for archives, DMs, mentions, and moderation"
+  desc "Local Twitter memory for archives, DMs, likes, bookmarks, and moderation"
   homepage "https://github.com/steipete/birdclaw"
-  url "https://registry.npmjs.org/birdclaw/-/birdclaw-0.1.1.tgz"
-  sha256 "88f99b43991422119035b4da33c87b0baa203f588beec6f2f0545d3e33c5e8b9"
+  url "https://registry.npmjs.org/birdclaw/-/birdclaw-0.2.1.tgz"
+  sha256 "3eefe164cdff72897f286308fd671d86f1dbabad4ca8e87bb421bac166dfeb5b"
   license "MIT"
 
   depends_on "node"
@@ -29,12 +29,12 @@ class Birdclaw < Formula
         birdclaw auth status --json
         birdclaw db stats --json
 
-      Optional live X reads and writes use xurl.
+      Optional live Twitter reads and writes use xurl.
     EOS
   end
 
   test do
     assert_match version.to_s, shell_output("#{bin}/birdclaw --version")
-    assert_match "Local-first X workspace", shell_output("#{bin}/birdclaw --help")
+    assert_match "Local-first Twitter workspace", shell_output("#{bin}/birdclaw --help")
   end
 end
