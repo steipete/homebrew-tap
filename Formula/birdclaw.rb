@@ -11,6 +11,9 @@ class Birdclaw < Formula
 
   def install
     system "npm", "install", *std_npm_args
+    cd libexec/"lib/node_modules/birdclaw" do
+      system "npm", "rebuild", "better-sqlite3", "--build-from-source"
+    end
     bin.install_symlink Dir["#{libexec}/bin/*"]
   end
 
