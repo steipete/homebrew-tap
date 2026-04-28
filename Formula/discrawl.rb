@@ -1,26 +1,26 @@
 class Discrawl < Formula
   desc "Discord archive CLI for local SQLite search and analysis"
   homepage "https://github.com/steipete/discrawl"
-  version "0.6.0"
+  version "0.6.1"
   license "MIT"
 
   on_macos do
     if Hardware::CPU.arm?
       url "https://github.com/steipete/discrawl/releases/download/v#{version}/discrawl_#{version}_darwin_arm64.tar.gz"
-      sha256 "540183da699b64fde9c4182dce0f67dc313cf4d0cb283e6250854c6c963068ea"
+      sha256 "365dec2366cd7ced464346a3d0e2a5b67e2e618d0376b7edb6616529cda5df0c"
     else
       url "https://github.com/steipete/discrawl/releases/download/v#{version}/discrawl_#{version}_darwin_amd64.tar.gz"
-      sha256 "576e944e87c3b6d6679df0a2d8bb873e0211b1b79fba7c9c8af8341ccab9c46a"
+      sha256 "6394a20ff6c0ae32033eb1b5b2c5640083780267c40e1b41913055d30934e568"
     end
   end
 
   on_linux do
     if Hardware::CPU.arm?
       url "https://github.com/steipete/discrawl/releases/download/v#{version}/discrawl_#{version}_linux_arm64.tar.gz"
-      sha256 "dae450a27acce131e24b23548abf5b80ec9a4d61db3efe1bac83c2356e32538b"
+      sha256 "898a42018a71fa38094ab9abc17002b21b238d1780979f9761a5606b60662d03"
     else
       url "https://github.com/steipete/discrawl/releases/download/v#{version}/discrawl_#{version}_linux_amd64.tar.gz"
-      sha256 "290969c3f2356ac04ae3edc895b0a23bbebecac248315492bb0aabafd506d7dd"
+      sha256 "81a8b44e9229fbfd3a25045a4c4de19508012ecd78159f005c55cc4cf69aa112"
     end
   end
 
@@ -40,8 +40,8 @@ class Discrawl < Formula
         discrawl init
         discrawl sync --full
 
-      If you already use OpenClaw, discrawl can reuse:
-        ~/.openclaw/openclaw.json
+      Git-only readers can set:
+        token_source = "none"
     EOS
   end
 
