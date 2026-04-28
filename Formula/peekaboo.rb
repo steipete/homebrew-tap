@@ -1,12 +1,12 @@
 class Peekaboo < Formula
   desc "Lightning-fast macOS screenshots & AI vision analysis"
   homepage "https://github.com/steipete/peekaboo"
-  url "https://github.com/steipete/peekaboo/releases/download/v3.0.0-beta3/peekaboo-macos-universal.tar.gz"
-  sha256 "77eadf6fd5c54eac64b4844d5cc887890b6d6f45d49af61b05c6e29ea2cbd245"
+  url "https://github.com/steipete/peekaboo/releases/download/v3.0.0-beta4/peekaboo-macos-arm64.tar.gz"
+  version "3.0.0-beta4"
+  sha256 "ef8797547a5102672cd26ccadc62e1ff74a8efc004319cd706fc75660eee3a47"
   license "MIT"
-  version "3.0.0-beta3"
 
-  # macOS Sonoma (14.0) or later required
+  depends_on arch: :arm64
   depends_on macos: :sonoma
 
   def install
@@ -15,7 +15,7 @@ class Peekaboo < Formula
 
   def post_install
     # Ensure the binary is executable
-    chmod 0755, "#{bin}/peekaboo"
+    chmod 0755, bin/"peekaboo"
   end
 
   def caveats
