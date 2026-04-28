@@ -40,6 +40,6 @@ class Peekaboo < Formula
     assert_match "Peekaboo", shell_output("#{bin}/peekaboo --version")
 
     # Test help command
-    assert_match "USAGE:", shell_output("#{bin}/peekaboo --help")
+    assert_match "Usage", shell_output("#{bin}/peekaboo --help")
   end
 end
