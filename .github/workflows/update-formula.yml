@@ -4,17 +4,28 @@ on:
   workflow_dispatch:
     inputs:
       formula:
-        description: 'Formula name (e.g., peekaboo)'
+        description: "Formula name (e.g., wacli)"
         required: true
         type: string
       tag:
-        description: 'Release tag to update formula for'
+        description: "Release tag to update formula for"
         required: true
         type: string
       repository:
-        description: 'Source repository (e.g., steipete/peekaboo)'
+        description: "Source repository (e.g., steipete/wacli)"
         required: true
         type: string
+      macos_artifact:
+        description: "macOS artifact name (defaults to <formula>-macos-universal.tar.gz)"
+        required: false
+        type: string
+      linux_url:
+        description: "Linux archive URL (defaults to the GitHub tag archive)"
+        required: false
+        type: string
+
+permissions:
+  contents: write
 
 jobs:
   update-formula:
@@ -22,34 +33,42 @@ jobs:
     steps:
       - name: Checkout tap repository
         uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-      
+
       - name: Setup Git
         run: |
           git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-      
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
       - name: Update formula
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          FORMULA="${{ github.event.inputs.formula }}"
-          TAG="${{ github.event.inputs.tag }}"
-          REPO="${{ github.event.inputs.repository }}"
-          VERSION="${TAG#v}"
-          
-          # Download the release artifact
-          DOWNLOAD_URL="https://github.com/${REPO}/releases/download/${TAG}/${FORMULA}-macos-universal.tar.gz"
-          curl -L "${DOWNLOAD_URL}" -o "${FORMULA}.tar.gz"
-          
-          # Calculate SHA256
-          SHA256=$(shasum -a 256 "${FORMULA}.tar.gz" | awk '{print $1}')
-          
-          # Update the formula
-          sed -i '' "s/version \".*\"/version \"${VERSION}\"/" "Formula/${FORMULA}.rb"
-          sed -i '' "s/sha256 \".*\"/sha256 \"${SHA256}\"/" "Formula/${FORMULA}.rb"
-          sed -i '' "s|url \".*\"|url \"${DOWNLOAD_URL}\"|" "Formula/${FORMULA}.rb"
-          
-          # Commit and push
+          args=(
+            --formula "${{ inputs.formula }}"
+            --tag "${{ inputs.tag }}"
+            --repository "${{ inputs.repository }}"
+          )
+
+          if [ -n "${{ inputs.macos_artifact }}" ]; then
+            args+=(--macos-artifact "${{ inputs.macos_artifact }}")
+          fi
+
+          if [ -n "${{ inputs.linux_url }}" ]; then
+            args+=(--linux-url "${{ inputs.linux_url }}")
+          fi
+
+          python3 .github/scripts/update_formula.py "${args[@]}"
+
+      - name: Commit and push
+        run: |
+          FORMULA="${{ inputs.formula }}"
+          TAG="${{ inputs.tag }}"
+
+          if git diff --quiet -- "Formula/${FORMULA}.rb"; then
+            echo "Formula/${FORMULA}.rb already up to date"
+            exit 0
+          fi
+
           git add "Formula/${FORMULA}.rb"
-          git commit -m "Update ${FORMULA} to ${TAG}"
+          git commit -m "${FORMULA}: update formula for ${TAG}"
           git push
