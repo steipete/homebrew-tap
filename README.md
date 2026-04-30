@@ -48,6 +48,16 @@ brew install --cask steipete/tap/<name>
 - `repobar` — Menu bar GitHub repo status at a glance
 - `trimmy` — Paste-once, run-once clipboard cleaner for terminal snippets
 
+## Updating Formulae
+
+Run the `Update Formula` workflow with:
+
+- `formula`: formula name, e.g. `wacli`
+- `tag`: release tag, e.g. `v0.7.0`
+- `repository`: source repository, e.g. `steipete/wacli`
+
+The workflow updates regular single-URL formulae and formulae with separate `on_macos` and `on_linux` stanzas when each stanza has exactly one checksum. Formulae with multiple architecture-specific checksums in one stanza still need manual updates. For `wacli`, `steipete/wacli` dispatches this workflow automatically after publishing the macOS release artifact.
+
 ## Update / Uninstall
 
 ```bash
