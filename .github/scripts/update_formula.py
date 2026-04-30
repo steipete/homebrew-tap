@@ -75,8 +75,14 @@ def require_single_sha_in_stanza(text: str, stanza: str) -> None:
         )
 
 
-def update_sha_in_stanza(text: str, stanza: str, digest: str) -> str:
+def update_url_and_sha_in_stanza(text: str, stanza: str, url: str, digest: str) -> str:
     require_single_sha_in_stanza(text, stanza)
+    text = replace_once(
+        text,
+        rf'(\n\s*{stanza}\s+do\n(?:.*?\n)*?\s+url\s+")[^"]+(")',
+        rf'\g<1>{url}\2',
+        f"url in {stanza} stanza",
+    )
     return replace_once(
         text,
         rf'(\n\s*{stanza}\s+do\n(?:.*?\n)*?\s+sha256\s+")[^"]+(")',
@@ -126,6 +132,10 @@ def main() -> int:
 
     path = pathlib.Path("Formula") / f"{args.formula}.rb"
     text = path.read_text()
+    has_macos = has_stanza(text, "on_macos")
+    has_linux = has_stanza(text, "on_linux")
+    if has_macos != has_linux:
+        raise SystemExit("formulae with only one platform stanza need manual updates")
     require_single_sha_in_stanza(text, "on_macos")
     require_single_sha_in_stanza(text, "on_linux")
 
@@ -137,15 +147,12 @@ def main() -> int:
         "version",
     )
 
-    if has_stanza(text, "on_macos"):
-        text = update_sha_in_stanza(text, "on_macos", macos_sha)
+    if has_macos:
+        text = update_url_and_sha_in_stanza(text, "on_macos", macos_url, macos_sha)
+        linux_sha = sha256(linux_url)
+        text = update_url_and_sha_in_stanza(text, "on_linux", linux_url, linux_sha)
     else:
         text = update_top_level_url_and_sha(text, macos_url, macos_sha)
-
-    if has_stanza(text, "on_linux"):
-        linux_sha = sha256(linux_url)
-        text = update_sha_in_stanza(text, "on_linux", linux_sha)
-    else:
         linux_sha = None
 
     path.write_text(text)
