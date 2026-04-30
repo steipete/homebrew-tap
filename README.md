@@ -56,7 +56,7 @@ Run the `Update Formula` workflow with:
 - `tag`: release tag, e.g. `v0.7.0`
 - `repository`: source repository, e.g. `steipete/wacli`
 
-The workflow updates regular single-URL formulae and formulae with separate `on_macos` and `on_linux` stanzas. For `wacli`, `steipete/wacli` dispatches this workflow automatically after publishing the macOS release artifact.
+The workflow updates regular single-URL formulae and formulae with separate `on_macos` and `on_linux` stanzas when each stanza has exactly one checksum. Formulae with multiple architecture-specific checksums in one stanza still need manual updates. For `wacli`, `steipete/wacli` dispatches this workflow automatically after publishing the macOS release artifact.
 
 ## Update / Uninstall
 

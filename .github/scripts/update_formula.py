@@ -51,7 +51,32 @@ def replace_zero_or_one(text: str, pattern: str, replacement: str, description: 
     return re.sub(pattern, replacement, text, count=1, flags=re.MULTILINE | re.DOTALL)
 
 
+def stanza_body(text: str, stanza: str) -> str | None:
+    match = re.search(
+        rf'^\s*{stanza}\s+do\s*$\n(?P<body>.*?)(?=^\s*(?:on_macos\s+do|on_linux\s+do|head |def |test do))',
+        text,
+        flags=re.MULTILINE | re.DOTALL,
+    )
+    if not match:
+        return None
+    return match.group("body")
+
+
+def require_single_sha_in_stanza(text: str, stanza: str) -> None:
+    body = stanza_body(text, stanza)
+    if body is None:
+        return
+
+    checksums = re.findall(r'^\s*sha256\s+"[^"]+"', body, flags=re.MULTILINE)
+    if len(checksums) != 1:
+        raise SystemExit(
+            f"expected exactly one sha256 in {stanza} stanza, found {len(checksums)}; "
+            "formulae with multiple architecture-specific checksums need manual updates"
+        )
+
+
 def update_sha_in_stanza(text: str, stanza: str, digest: str) -> str:
+    require_single_sha_in_stanza(text, stanza)
     return replace_once(
         text,
         rf'(\n\s*{stanza}\s+do\n(?:.*?\n)*?\s+sha256\s+")[^"]+(")',
@@ -61,7 +86,7 @@ def update_sha_in_stanza(text: str, stanza: str, digest: str) -> str:
 
 
 def has_stanza(text: str, stanza: str) -> bool:
-    return re.search(rf'^\s*{stanza}\s+do\s*$', text, re.MULTILINE) is not None
+    return stanza_body(text, stanza) is not None
 
 
 def update_top_level_url_and_sha(text: str, url: str, digest: str) -> str:
@@ -101,6 +126,8 @@ def main() -> int:
 
     path = pathlib.Path("Formula") / f"{args.formula}.rb"
     text = path.read_text()
+    require_single_sha_in_stanza(text, "on_macos")
+    require_single_sha_in_stanza(text, "on_linux")
 
     macos_sha = sha256(macos_url)
     text = replace_zero_or_one(
