@@ -1,4 +1,5 @@
 name: Update Formula
+run-name: Update ${{ inputs.formula }} for ${{ inputs.tag }}${{ inputs.request_id && format(' ({0})', inputs.request_id) || '' }}
 
 on:
   workflow_dispatch:
@@ -21,6 +22,10 @@ on:
         type: string
       linux_url:
         description: "Linux archive URL (defaults to the GitHub tag archive)"
+        required: false
+        type: string
+      request_id:
+        description: "Unique caller-generated ID used to identify this workflow run"
         required: false
         type: string
 
