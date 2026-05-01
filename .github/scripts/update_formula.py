@@ -75,12 +75,33 @@ def require_single_sha_in_stanza(text: str, stanza: str) -> None:
         )
 
 
-def update_url_and_sha_in_stanza(text: str, stanza: str, url: str, digest: str) -> str:
+def replace_url_preserving_interpolation(
+    text: str,
+    pattern: str,
+    url: str,
+    version: str,
+    description: str,
+) -> str:
+    matches = list(re.finditer(pattern, text, flags=re.MULTILINE | re.DOTALL))
+    if len(matches) != 1:
+        raise SystemExit(f"expected exactly one {description}, found {len(matches)}")
+
+    match = matches[0]
+    existing_url = match.group("url")
+    if "#{version}" in existing_url and existing_url.replace("#{version}", version) == url:
+        print(f"{description} uses #{{version}} interpolation; leaving it unchanged")
+        return text
+
+    return text[: match.start("url")] + url + text[match.end("url") :]
+
+
+def update_url_and_sha_in_stanza(text: str, stanza: str, url: str, digest: str, version: str) -> str:
     require_single_sha_in_stanza(text, stanza)
-    text = replace_once(
+    text = replace_url_preserving_interpolation(
         text,
-        rf'(\n\s*{stanza}\s+do\n(?:.*?\n)*?\s+url\s+")[^"]+(")',
-        rf'\g<1>{url}\2',
+        rf'(?P<prefix>\n\s*{stanza}\s+do\n(?:.*?\n)*?\s+url\s+")(?P<url>[^"]+)(?P<suffix>")',
+        url,
+        version,
         f"url in {stanza} stanza",
     )
     return replace_once(
@@ -95,11 +116,12 @@ def has_stanza(text: str, stanza: str) -> bool:
     return stanza_body(text, stanza) is not None
 
 
-def update_top_level_url_and_sha(text: str, url: str, digest: str) -> str:
-    text = replace_once(
+def update_top_level_url_and_sha(text: str, url: str, digest: str, version: str) -> str:
+    text = replace_url_preserving_interpolation(
         text,
-        r'^(\s*url\s+")[^"]+(")',
-        rf'\g<1>{url}\2',
+        r'^(?P<prefix>\s*url\s+")(?P<url>[^"]+)(?P<suffix>")',
+        url,
+        version,
         "top-level url",
     )
     return replace_once(
@@ -148,11 +170,11 @@ def main() -> int:
     )
 
     if has_macos:
-        text = update_url_and_sha_in_stanza(text, "on_macos", macos_url, macos_sha)
+        text = update_url_and_sha_in_stanza(text, "on_macos", macos_url, macos_sha, version)
         linux_sha = sha256(linux_url)
-        text = update_url_and_sha_in_stanza(text, "on_linux", linux_url, linux_sha)
+        text = update_url_and_sha_in_stanza(text, "on_linux", linux_url, linux_sha, version)
     else:
-        text = update_top_level_url_and_sha(text, macos_url, macos_sha)
+        text = update_top_level_url_and_sha(text, macos_url, macos_sha, version)
         linux_sha = None
 
     path.write_text(text)
