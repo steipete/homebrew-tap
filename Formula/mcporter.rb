@@ -12,6 +12,6 @@ class Mcporter < Formula
   end
 
   test do
-    assert_match "Usage: mcporter <command>", shell_output("#{bin}/mcporter", 1)
+    assert_match version.to_s, shell_output("#{bin}/mcporter --version")
   end
 end
