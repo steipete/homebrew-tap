@@ -7,7 +7,7 @@ class Peekaboo < Formula
   license "MIT"
 
   depends_on arch: :arm64
-  depends_on macos: :sonoma
+  depends_on macos: :sequoia
 
   def install
     bin.install "peekaboo" => "peekaboo"
