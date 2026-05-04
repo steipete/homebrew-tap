@@ -1,14 +1,17 @@
+require "language/node"
+
 class Mcporter < Formula
   desc "Model Context Protocol runtime and CLI generator"
   homepage "https://github.com/steipete/mcporter"
-  url "https://github.com/steipete/mcporter/releases/download/v0.10.0/mcporter-macos-arm64-v0.10.0.tar.gz"
-  sha256 "4b23391b709ea3ba877df283cb1b66c69d361fc8cee6f87d0b5d7fd8838be0e5"
+  url "https://github.com/steipete/mcporter/releases/download/v0.10.0/mcporter-0.10.0.tgz"
+  sha256 "446fdf8c6a61e5201868ba702087de003308fbb11c56f6209ef331579c1af917"
   license "MIT"
 
-  depends_on arch: :arm64
+  depends_on "node"
 
   def install
-    bin.install "mcporter"
+    system "npm", "install", *std_npm_args
+    bin.install_symlink Dir["#{libexec}/bin/*"]
   end
 
   test do
