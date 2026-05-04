@@ -10,7 +10,7 @@ class Mcporter < Formula
   depends_on "node"
 
   def install
-    system "npm", "install", *std_npm_args
+    system "npm", "install", *std_npm_args, "--min-release-age=0"
     bin.install_symlink Dir["#{libexec}/bin/*"]
   end
 
