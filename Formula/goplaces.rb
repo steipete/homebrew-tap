@@ -1,26 +1,26 @@
 class Goplaces < Formula
   desc "Modern Go client + CLI for the Google Places API (New)"
   homepage "https://github.com/steipete/goplaces"
-  version "0.3.0"
+  version "0.4.0"
   license "MIT"
 
   on_macos do
     if Hardware::CPU.arm?
       url "https://github.com/steipete/goplaces/releases/download/v#{version}/goplaces_#{version}_darwin_arm64.tar.gz"
-      sha256 "14084bccdec26cc8215cd4cb3cec9a44726332e52df8b943a16455d33412a665"
+      sha256 "149f2156a421a7f3e9935ec2ac3264e1d9aeda9bd2db1057e5c03369fa5a33c8"
     else
       url "https://github.com/steipete/goplaces/releases/download/v#{version}/goplaces_#{version}_darwin_amd64.tar.gz"
-      sha256 "46e7bae887a75fd317ebd9c0c03183312379fb62f3cde67c9c4ecdd9e0af4751"
+      sha256 "fef54ad21aa1d6aded9624b2e26453f57de345ac9885601f64b4be56c15df8d5"
     end
   end
 
   on_linux do
     if Hardware::CPU.arm?
       url "https://github.com/steipete/goplaces/releases/download/v#{version}/goplaces_#{version}_linux_arm64.tar.gz"
-      sha256 "221c00ff137b4aa76835ded607e46d38a1ec986ca8fbad886430440d67debd1b"
+      sha256 "62378b4432f0b906d43986589e9364b980efb26e783c1d639aa4c76acd93e556"
     else
       url "https://github.com/steipete/goplaces/releases/download/v#{version}/goplaces_#{version}_linux_amd64.tar.gz"
-      sha256 "cfa78d4d9a362bbc2c3d3ff7777160fb5a5994de7e8521b00481b72d4053b1e7"
+      sha256 "7141c3019e04a79d0ada58cb9fc2f225e58f26572bfeccad3fde54b0d992bf7c"
     end
   end
 
