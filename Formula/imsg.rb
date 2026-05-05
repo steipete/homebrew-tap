@@ -1,8 +1,8 @@
 class Imsg < Formula
   desc "Send and read iMessage / SMS from the terminal"
   homepage "https://github.com/steipete/imsg"
-  url "https://github.com/steipete/imsg/releases/download/v0.5.0/imsg-macos-v0.5.0.zip"
-  sha256 "fc7ac307ea227e0398f9ebf89a48586f6dcda800fcacbc689df28e9a0f5f4cba"
+  url "https://github.com/steipete/imsg/releases/download/v0.6.0/imsg-macos.zip"
+  sha256 "a00fd0d5994b36d3310301ab7f94db82cadf5b17493c4d38de7056d1c0c20b0f"
   license "MIT"
 
   # macOS Sonoma (14.0) or later required
