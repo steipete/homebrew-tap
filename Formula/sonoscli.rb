@@ -1,9 +1,9 @@
 class Sonoscli < Formula
   desc "Control Sonos speakers from the command-line"
   homepage "https://github.com/steipete/sonoscli"
-  url "https://github.com/steipete/sonoscli/releases/download/v0.1.0/sonoscli-macos-arm64.tar.gz"
-  version "0.1.0"
-  sha256 "b795545973ebc60617a2989012e3bb93dd46c7bd2879fca16ce66617f5c3c1ac"
+  url "https://github.com/steipete/sonoscli/releases/download/v0.2.0/sonoscli_0.2.0_darwin_arm64.tar.gz"
+  version "0.2.0"
+  sha256 "697997967c07770f7569c3f437a34cb0ffb974a6252e3f45c017b132d1e3b149"
   license "MIT"
 
   depends_on arch: :arm64
