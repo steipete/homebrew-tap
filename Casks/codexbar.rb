@@ -1,6 +1,6 @@
 cask "codexbar" do
-  version "0.23"
-  sha256 "a44b8c72c0e08d9e0e8cacef46a482ff25d3b89b77ac1e3f2d65a0a7c0f69713"
+  version "0.24"
+  sha256 "93826a91e89301e2f9b821d7a387cdc4bbc2ed4ae441dd98f0c760da613685a9"
 
   url "https://github.com/steipete/CodexBar/releases/download/v#{version}/CodexBar-#{version}.zip",
       verified: "github.com/steipete/CodexBar/"
