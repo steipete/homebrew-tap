@@ -1,17 +1,17 @@
 class Wacli < Formula
   desc "WhatsApp CLI built on whatsmeow"
   homepage "https://github.com/steipete/wacli"
-  version "0.6.0"
+  version "0.7.0"
   license "MIT"
 
   on_macos do
     url "https://github.com/steipete/wacli/releases/download/v#{version}/wacli-macos-universal.tar.gz"
-    sha256 "63c2be44462c88e0aa718ed4e3e9b2abc5de16bfc1b43af4efcc6bda059b1ecb"
+    sha256 "0245b67af2997f087951fc5539ec200a5f44881cff0ab69f1a6e233abda38666"
   end
 
   on_linux do
     url "https://github.com/steipete/wacli/archive/refs/tags/v#{version}.tar.gz"
-    sha256 "3b673f252ebdfcfc3225b646b32271b3b1cf15807a561a3abb20448025846d14"
+    sha256 "27783a54ef51909207800e3a4d55334786f5d9a2fd394fb4744010602d89700c"
     depends_on "go" => :build
   end
 
