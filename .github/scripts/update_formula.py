@@ -145,6 +145,14 @@ def main() -> int:
         "--linux-url",
         help="Linux source/archive URL. Defaults to the GitHub tag archive",
     )
+    parser.add_argument(
+        "--artifact-template",
+        help=(
+            "Release asset template for multi-architecture formulae. "
+            "Supports {formula}, {version}, {tag}, and {target}; "
+            "defaults to {formula}_{version}_{target}.tar.gz when the formula has per-target URLs."
+        ),
+    )
     args = parser.parse_args()
 
     version = args.tag[1:] if args.tag.startswith("v") else args.tag
@@ -156,12 +164,11 @@ def main() -> int:
     text = path.read_text()
     has_macos = has_stanza(text, "on_macos")
     has_linux = has_stanza(text, "on_linux")
+    targets = ("darwin_amd64", "darwin_arm64", "linux_amd64", "linux_arm64")
+    has_target_urls = any(f"_{target}.tar.gz" in text for target in targets)
     if has_macos != has_linux:
         raise SystemExit("formulae with only one platform stanza need manual updates")
-    require_single_sha_in_stanza(text, "on_macos")
-    require_single_sha_in_stanza(text, "on_linux")
 
-    macos_sha = sha256(macos_url)
     text = replace_zero_or_one(
         text,
         r'^(\s*version\s+")[^"]+(")',
@@ -169,20 +176,52 @@ def main() -> int:
         "version",
     )
 
-    if has_macos:
-        text = update_url_and_sha_in_stanza(text, "on_macos", macos_url, macos_sha, version)
-        linux_sha = sha256(linux_url)
-        text = update_url_and_sha_in_stanza(text, "on_linux", linux_url, linux_sha, version)
+    if has_target_urls:
+        template = args.artifact_template or "{formula}_{version}_{target}.tar.gz"
+        for target in targets:
+            artifact = template.format(
+                formula=args.formula,
+                version=version,
+                tag=args.tag,
+                target=target,
+            )
+            url = f"https://github.com/{args.repository}/releases/download/{args.tag}/{artifact}"
+            digest = sha256(url)
+            pattern = (
+                rf'(?P<prefix>url ")(?P<url>https://github\.com/[^"]+/{args.formula}_[^"]+_{target}\.tar\.gz)'
+                r'(?P<middle>"\n\s+sha256 ")[0-9a-f]+(?P<suffix>")'
+            )
+            match = re.search(pattern, text)
+            if not match:
+                raise SystemExit(f"failed to update {target} in {path}")
+            existing_url = match.group("url")
+            replacement_url = url
+            if "#{version}" in existing_url and existing_url.replace("#{version}", version) == url:
+                replacement_url = existing_url
+            replacement = (
+                f'{match.group("prefix")}{replacement_url}'
+                f'{match.group("middle")}{digest}{match.group("suffix")}'
+            )
+            text = text[: match.start()] + replacement + text[match.end() :]
+            print(f"{target}: {digest}  {url}")
     else:
-        text = update_top_level_url_and_sha(text, macos_url, macos_sha, version)
-        linux_sha = None
+        require_single_sha_in_stanza(text, "on_macos")
+        require_single_sha_in_stanza(text, "on_linux")
+        macos_sha = sha256(macos_url)
+        if has_macos:
+            text = update_url_and_sha_in_stanza(text, "on_macos", macos_url, macos_sha, version)
+            linux_sha = sha256(linux_url)
+            text = update_url_and_sha_in_stanza(text, "on_linux", linux_url, linux_sha, version)
+        else:
+            text = update_top_level_url_and_sha(text, macos_url, macos_sha, version)
+            linux_sha = None
+        print(f"macOS: {macos_sha}  {macos_url}")
+        if linux_sha:
+            print(f"Linux: {linux_sha}  {linux_url}")
 
     path.write_text(text)
 
     print(f"updated {path} to {version}")
-    print(f"macOS: {macos_sha}  {macos_url}")
-    if linux_sha:
-        print(f"Linux: {linux_sha}  {linux_url}")
     return 0
 
 

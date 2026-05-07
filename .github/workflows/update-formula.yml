@@ -24,6 +24,10 @@ on:
         description: "Linux archive URL (defaults to the GitHub tag archive)"
         required: false
         type: string
+      artifact_template:
+        description: "Multi-arch asset template, e.g. {formula}_{version}_{target}.tar.gz"
+        required: false
+        type: string
       request_id:
         description: "Unique caller-generated ID used to identify this workflow run"
         required: false
@@ -60,6 +64,10 @@ jobs:
 
           if [ -n "${{ inputs.linux_url }}" ]; then
             args+=(--linux-url "${{ inputs.linux_url }}")
+          fi
+
+          if [ -n "${{ inputs.artifact_template }}" ]; then
+            args+=(--artifact-template "${{ inputs.artifact_template }}")
           fi
 
           python3 .github/scripts/update_formula.py "${args[@]}"
