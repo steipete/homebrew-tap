@@ -16,6 +16,10 @@ on:
         description: "Source repository (e.g., steipete/wacli)"
         required: true
         type: string
+      description:
+        description: "Formula description used when creating a missing formula"
+        required: false
+        type: string
       macos_artifact:
         description: "macOS artifact name (defaults to <formula>-macos-universal.tar.gz)"
         required: false
@@ -57,6 +61,10 @@ jobs:
             --tag "${{ inputs.tag }}"
             --repository "${{ inputs.repository }}"
           )
+
+          if [ -n "${{ inputs.description }}" ]; then
+            args+=(--description "${{ inputs.description }}")
+          fi
 
           if [ -n "${{ inputs.macos_artifact }}" ]; then
             args+=(--macos-artifact "${{ inputs.macos_artifact }}")

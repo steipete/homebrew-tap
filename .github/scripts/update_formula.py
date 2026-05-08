@@ -116,6 +116,58 @@ def has_stanza(text: str, stanza: str) -> bool:
     return stanza_body(text, stanza) is not None
 
 
+def ruby_class_name(formula: str) -> str:
+    return "".join(part.capitalize() for part in re.split(r"[-_]+", formula) if part)
+
+
+def seed_formula(formula: str, repository: str, version: str, description: str, template: str) -> str:
+    def url(target: str) -> str:
+        artifact = template.format(
+            formula=formula,
+            version="#{version}",
+            tag=f"v{version}",
+            target=target,
+        )
+        return f"https://github.com/{repository}/releases/download/v#{{version}}/{artifact}"
+
+    class_name = ruby_class_name(formula)
+    return f'''class {class_name} < Formula
+  desc "{description}"
+  homepage "https://github.com/{repository}"
+  version "{version}"
+  license "MIT"
+
+  on_macos do
+    if Hardware::CPU.arm?
+      url "{url("darwin_arm64")}"
+      sha256 "0000000000000000000000000000000000000000000000000000000000000000"
+    else
+      url "{url("darwin_amd64")}"
+      sha256 "0000000000000000000000000000000000000000000000000000000000000000"
+    end
+  end
+
+  on_linux do
+    if Hardware::CPU.arm?
+      url "{url("linux_arm64")}"
+      sha256 "0000000000000000000000000000000000000000000000000000000000000000"
+    else
+      url "{url("linux_amd64")}"
+      sha256 "0000000000000000000000000000000000000000000000000000000000000000"
+    end
+  end
+
+  def install
+    bin.install "{formula}"
+  end
+
+  test do
+    assert_match version.to_s, shell_output("#{{bin}}/{formula} --version")
+  end
+end
+'''
+
+
 def update_top_level_url_and_sha(text: str, url: str, digest: str, version: str) -> str:
     text = replace_url_preserving_interpolation(
         text,
@@ -137,6 +189,10 @@ def main() -> int:
     parser.add_argument("--formula", required=True, help="Formula name, e.g. wacli")
     parser.add_argument("--tag", required=True, help="Release tag, e.g. v0.7.0")
     parser.add_argument("--repository", required=True, help="Source repository, e.g. steipete/wacli")
+    parser.add_argument(
+        "--description",
+        help="Formula description used when creating a missing formula",
+    )
     parser.add_argument(
         "--macos-artifact",
         help="macOS release artifact name. Defaults to <formula>-macos-universal.tar.gz",
@@ -161,6 +217,12 @@ def main() -> int:
     linux_url = args.linux_url or f"https://github.com/{args.repository}/archive/refs/tags/{args.tag}.tar.gz"
 
     path = pathlib.Path("Formula") / f"{args.formula}.rb"
+    if not path.exists():
+        template = args.artifact_template or "{formula}_{version}_{target}.tar.gz"
+        description = args.description or f"{args.formula} command-line tool"
+        path.write_text(seed_formula(args.formula, args.repository, version, description, template))
+        print(f"created {path}")
+
     text = path.read_text()
     has_macos = has_stanza(text, "on_macos")
     has_linux = has_stanza(text, "on_linux")
