@@ -1,6 +1,6 @@
 class Wacli < Formula
   desc "WhatsApp CLI built on whatsmeow"
-  homepage "https://github.com/steipete/wacli"
+  homepage "https://github.com/openclaw/wacli"
   version "0.8.1"
   license "MIT"
 
@@ -15,7 +15,7 @@ class Wacli < Formula
     depends_on "go" => :build
   end
 
-  head "https://github.com/steipete/wacli.git", branch: "main"
+  head "https://github.com/openclaw/wacli.git", branch: "main"
 
   def install
     if File.exist?("wacli")
