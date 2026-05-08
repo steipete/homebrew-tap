@@ -38,6 +38,7 @@ brew install --cask steipete/tap/<name>
 - `sag` — Command-line ElevenLabs TTS with mac-style flags
 - `sonoscli` — Control Sonos speakers from the command line
 - `songsee` — Spectral visualization CLI for audio files
+- `telecrawl` — Telegram Desktop archive CLI with encrypted Git backups
 - `tmuxwatch` — Live tmux dashboard with Bubble Tea UI
 - `wacli` — WhatsApp CLI built on whatsmeow
 - `wacrawl` — Read-only WhatsApp Desktop archive CLI
@@ -90,6 +91,7 @@ Homebrew formulae don’t support `--zap`. Delete these to “factory reset”:
 - `oracle`: `~/.oracle/`
 - `ordercli`: `~/Library/Application Support/ordercli/config.json`
 - `sonoscli`: `~/Library/Application Support/sonoscli/config.json`
+- `telecrawl`: `~/.telecrawl/`
 - `wacli`: `~/.wacli/`
 - `wacrawl`: `~/.wacrawl/`
 
