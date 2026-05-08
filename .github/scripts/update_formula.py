@@ -51,6 +51,68 @@ def replace_zero_or_one(text: str, pattern: str, replacement: str, description: 
     return re.sub(pattern, replacement, text, count=1, flags=re.MULTILINE | re.DOTALL)
 
 
+def format_template(value: str, formula: str, version: str, tag: str, target: str | None = None) -> str:
+    replacements = {
+        "formula": formula,
+        "version": version,
+        "tag": tag,
+    }
+    if target is not None:
+        replacements["target"] = target
+    return value.format(**replacements)
+
+
+def parse_target_aliases(value: str | None) -> dict[str, str]:
+    if not value:
+        return {}
+
+    aliases: dict[str, str] = {}
+    for item in value.split(","):
+        if not item:
+            continue
+        if "=" not in item:
+            raise SystemExit(f"invalid target alias {item!r}; expected canonical=artifact-target")
+        canonical, artifact_target = item.split("=", 1)
+        aliases[canonical.strip()] = artifact_target.strip()
+    return aliases
+
+
+def target_markers(target: str, alias: str | None = None) -> tuple[str, ...]:
+    markers = {target, target.replace("_", "-")}
+    if target == "darwin_amd64":
+        markers.update(("macos-x86_64", "macos-amd64", "darwin-x86_64"))
+    elif target == "darwin_arm64":
+        markers.update(("macos-arm64", "darwin-aarch64"))
+    elif target == "linux_amd64":
+        markers.update(("linux-x86_64", "linux-amd64"))
+    elif target == "linux_arm64":
+        markers.update(("linux-aarch64", "linux-arm64"))
+    elif target == "darwin_universal":
+        markers.update(("macos-universal", "darwin-universal"))
+    if alias:
+        markers.add(alias)
+    return tuple(sorted(markers, key=len, reverse=True))
+
+
+def classify_target(url: str, aliases: dict[str, str], version: str) -> str | None:
+    expanded = url.replace("#{version}", version)
+    for target in ("darwin_universal", "darwin_arm64", "darwin_amd64", "linux_arm64", "linux_amd64"):
+        for marker in target_markers(target, aliases.get(target)):
+            if marker in expanded:
+                return target
+    return None
+
+
+def iter_url_sha_pairs(text: str) -> list[re.Match[str]]:
+    return list(
+        re.finditer(
+            r'(?P<prefix>url ")(?P<url>[^"]+)(?P<middle>"\n\s+sha256 ")[0-9a-f]+(?P<suffix>")',
+            text,
+            flags=re.MULTILINE,
+        )
+    )
+
+
 def stanza_body(text: str, stanza: str) -> str | None:
     match = re.search(
         rf'^\s*{stanza}\s+do\s*$\n(?P<body>.*?)(?=^\s*(?:on_macos\s+do|on_linux\s+do|head |def |test do))',
@@ -209,12 +271,31 @@ def main() -> int:
             "defaults to {formula}_{version}_{target}.tar.gz when the formula has per-target URLs."
         ),
     )
+    parser.add_argument(
+        "--artifact-url",
+        help=(
+            "Direct top-level artifact/source URL. Supports {formula}, {version}, and {tag}. "
+            "Useful for npm tarballs and source archives."
+        ),
+    )
+    parser.add_argument(
+        "--target-aliases",
+        help=(
+            "Comma-separated canonical=artifact-target aliases for custom asset names, "
+            "for example darwin_arm64=macos-arm64,linux_amd64=linux-x86_64."
+        ),
+    )
     args = parser.parse_args()
 
     version = args.tag[1:] if args.tag.startswith("v") else args.tag
     macos_artifact = args.macos_artifact or f"{args.formula}-macos-universal.tar.gz"
-    macos_url = f"https://github.com/{args.repository}/releases/download/{args.tag}/{macos_artifact}"
+    macos_url = (
+        format_template(args.artifact_url, args.formula, version, args.tag)
+        if args.artifact_url
+        else f"https://github.com/{args.repository}/releases/download/{args.tag}/{macos_artifact}"
+    )
     linux_url = args.linux_url or f"https://github.com/{args.repository}/archive/refs/tags/{args.tag}.tar.gz"
+    target_aliases = parse_target_aliases(args.target_aliases)
 
     path = pathlib.Path("Formula") / f"{args.formula}.rb"
     if not path.exists():
@@ -227,9 +308,11 @@ def main() -> int:
     has_macos = has_stanza(text, "on_macos")
     has_linux = has_stanza(text, "on_linux")
     targets = ("darwin_amd64", "darwin_arm64", "linux_amd64", "linux_arm64")
-    target_url_count = sum(f"_{target}.tar.gz" in text for target in targets)
+    url_sha_pairs = iter_url_sha_pairs(text)
+    classified_pairs = [(match, classify_target(match.group("url"), target_aliases, version)) for match in url_sha_pairs]
+    target_url_count = sum(1 for _, target in classified_pairs if target)
     has_target_urls = target_url_count > 1
-    if has_macos != has_linux:
+    if has_macos != has_linux and not has_target_urls:
         raise SystemExit("formulae with only one platform stanza need manual updates")
 
     text = replace_zero_or_one(
@@ -241,22 +324,20 @@ def main() -> int:
 
     if has_target_urls:
         template = args.artifact_template or "{formula}_{version}_{target}.tar.gz"
-        for target in targets:
+        replacements: list[tuple[int, int, str]] = []
+        seen_targets: set[str] = set()
+        for match, target in classified_pairs:
+            if not target:
+                continue
+            artifact_target = target_aliases.get(target, target)
             artifact = template.format(
                 formula=args.formula,
                 version=version,
                 tag=args.tag,
-                target=target,
+                target=artifact_target,
             )
             url = f"https://github.com/{args.repository}/releases/download/{args.tag}/{artifact}"
             digest = sha256(url)
-            pattern = (
-                rf'(?P<prefix>url ")(?P<url>https://github\.com/[^"]+/{args.formula}_[^"]+_{target}\.tar\.gz)'
-                r'(?P<middle>"\n\s+sha256 ")[0-9a-f]+(?P<suffix>")'
-            )
-            match = re.search(pattern, text)
-            if not match:
-                raise SystemExit(f"failed to update {target} in {path}")
             existing_url = match.group("url")
             replacement_url = url
             if "#{version}" in existing_url and existing_url.replace("#{version}", version) == url:
@@ -265,8 +346,24 @@ def main() -> int:
                 f'{match.group("prefix")}{replacement_url}'
                 f'{match.group("middle")}{digest}{match.group("suffix")}'
             )
-            text = text[: match.start()] + replacement + text[match.end() :]
+            replacements.append((match.start(), match.end(), replacement))
+            seen_targets.add(target)
             print(f"{target}: {digest}  {url}")
+        for target in sorted(set(targets).intersection(seen_targets ^ set(targets))):
+            if target_url_count >= 4:
+                raise SystemExit(f"failed to update {target} in {path}")
+        for start, end, replacement in reversed(replacements):
+            text = text[:start] + replacement + text[end:]
+
+        if args.linux_url:
+            linux_sha = sha256(linux_url)
+            text = replace_zero_or_one(
+                text,
+                r'(?P<prefix>url "https://github\.com/[^"]+/archive/refs/tags/[^"]+"\n\s+sha256 ")[0-9a-f]+(?P<suffix>")',
+                rf'\g<prefix>{linux_sha}\g<suffix>',
+                "source archive sha256",
+            )
+            print(f"Linux source: {linux_sha}  {linux_url}")
     else:
         require_single_sha_in_stanza(text, "on_macos")
         require_single_sha_in_stanza(text, "on_linux")

@@ -32,6 +32,14 @@ on:
         description: "Multi-arch asset template, e.g. {formula}_{version}_{target}.tar.gz"
         required: false
         type: string
+      artifact_url:
+        description: "Direct artifact/source URL template for top-level formulae"
+        required: false
+        type: string
+      target_aliases:
+        description: "Comma-separated canonical=artifact-target aliases for custom asset names"
+        required: false
+        type: string
       request_id:
         description: "Unique caller-generated ID used to identify this workflow run"
         required: false
@@ -76,6 +84,14 @@ jobs:
 
           if [ -n "${{ inputs.artifact_template }}" ]; then
             args+=(--artifact-template "${{ inputs.artifact_template }}")
+          fi
+
+          if [ -n "${{ inputs.artifact_url }}" ]; then
+            args+=(--artifact-url "${{ inputs.artifact_url }}")
+          fi
+
+          if [ -n "${{ inputs.target_aliases }}" ]; then
+            args+=(--target-aliases "${{ inputs.target_aliases }}")
           fi
 
           python3 .github/scripts/update_formula.py "${args[@]}"
