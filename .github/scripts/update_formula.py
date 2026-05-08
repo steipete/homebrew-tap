@@ -165,7 +165,8 @@ def main() -> int:
     has_macos = has_stanza(text, "on_macos")
     has_linux = has_stanza(text, "on_linux")
     targets = ("darwin_amd64", "darwin_arm64", "linux_amd64", "linux_arm64")
-    has_target_urls = any(f"_{target}.tar.gz" in text for target in targets)
+    target_url_count = sum(f"_{target}.tar.gz" in text for target in targets)
+    has_target_urls = target_url_count > 1
     if has_macos != has_linux:
         raise SystemExit("formulae with only one platform stanza need manual updates")
 
