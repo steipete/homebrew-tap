@@ -101,11 +101,11 @@ jobs:
           FORMULA="${{ inputs.formula }}"
           TAG="${{ inputs.tag }}"
 
-          if git diff --quiet -- "Formula/${FORMULA}.rb"; then
+          git add "Formula/${FORMULA}.rb"
+          if git diff --cached --quiet -- "Formula/${FORMULA}.rb"; then
             echo "Formula/${FORMULA}.rb already up to date"
             exit 0
           fi
 
-          git add "Formula/${FORMULA}.rb"
           git commit -m "${FORMULA}: update formula for ${TAG}"
           git push
