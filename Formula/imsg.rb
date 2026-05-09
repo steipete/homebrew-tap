@@ -10,6 +10,7 @@ class Imsg < Formula
 
   def install
     libexec.install "imsg"
+    lib.install "imsg-bridge-helper.dylib" if File.exist?("imsg-bridge-helper.dylib")
     Dir["*.bundle"].each do |bundle|
       libexec.install bundle
     end
@@ -26,6 +27,9 @@ class Imsg < Formula
 
       To send messages, allow Terminal to control Messages.app:
       System Settings > Privacy & Security > Automation
+
+      Advanced IMCore bridge features also require SIP disabled. The formula
+      installs the bridge helper automatically when the release archive ships it.
     EOS
   end
 
