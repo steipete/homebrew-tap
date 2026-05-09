@@ -30,7 +30,7 @@ brew install --cask steipete/tap/<name>
 - `gogcli` — Google CLI for Gmail, Calendar, Drive, and Contacts
 - `gifgrep` — Grep the GIF. Stick the landing.
 - `imsg` — Send and read iMessage / SMS from the terminal
-- `mcporter` — Model Context Protocol runtime and CLI generator (`0.10.1`: standalone generated CLI compile fix)
+- `mcporter` — Model Context Protocol runtime and CLI generator (`0.10.2`: faster keep-alive calls and live MCP hardening)
 - `oracle` — Bundle prompts + files for second-model review
 - `ordercli` — Multi-provider order CLI (Foodora, Deliveroo)
 - `peekaboo` — Lightning-fast macOS screenshots & AI vision analysis
