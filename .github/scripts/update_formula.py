@@ -246,6 +246,23 @@ def update_top_level_url_and_sha(text: str, url: str, digest: str, version: str)
     )
 
 
+def update_repository_metadata(text: str, repository: str) -> str:
+    homepage = f"https://github.com/{repository}"
+    head = f"{homepage}.git"
+    text = replace_zero_or_one(
+        text,
+        r'^(?P<prefix>\s*homepage\s+")[^"]+(?P<suffix>")',
+        rf'\g<prefix>{homepage}\g<suffix>',
+        "homepage",
+    )
+    return replace_zero_or_one(
+        text,
+        r'^(?P<prefix>\s*head\s+")[^"]+(?P<suffix>"(?:,\s*branch:\s*"[^"]+")?)',
+        rf'\g<prefix>{head}\g<suffix>',
+        "head",
+    )
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--formula", required=True, help="Formula name, e.g. wacli")
@@ -305,6 +322,7 @@ def main() -> int:
         print(f"created {path}")
 
     text = path.read_text()
+    text = update_repository_metadata(text, args.repository)
     has_macos = has_stanza(text, "on_macos")
     has_linux = has_stanza(text, "on_linux")
     targets = ("darwin_amd64", "darwin_arm64", "linux_amd64", "linux_arm64")
