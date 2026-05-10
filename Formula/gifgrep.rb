@@ -7,20 +7,20 @@ class Gifgrep < Formula
   on_macos do
     if Hardware::CPU.arm?
       url "https://github.com/steipete/gifgrep/releases/download/v#{version}/gifgrep_#{version}_darwin_arm64.tar.gz"
-      sha256 "82169cb52181c5b2d4d7a25263aa960622dd267ccd40923b6fc2137449c6beae"
+      sha256 "ca75600e15632b215be212729142dc283ec7931b368918d6d3f233890269a691"
     else
       url "https://github.com/steipete/gifgrep/releases/download/v#{version}/gifgrep_#{version}_darwin_amd64.tar.gz"
-      sha256 "008eb721d886c471af0159779a0324fff67bde7d933f34a2edeab8666602e09b"
+      sha256 "80541b78e3985afc3ac7050a54cfa28cff04d36364dedfce485678417f3c5294"
     end
   end
 
   on_linux do
     if Hardware::CPU.arm?
       url "https://github.com/steipete/gifgrep/releases/download/v#{version}/gifgrep_#{version}_linux_arm64.tar.gz"
-      sha256 "eb2fa0d80fd5d1118ed8786e308bb8533909a48ccb4d78801f32e3846a564ae4"
+      sha256 "d984033e29074c38b6dc0824493aa0331b596d81abaac80434c69a7acc50e909"
     else
       url "https://github.com/steipete/gifgrep/releases/download/v#{version}/gifgrep_#{version}_linux_amd64.tar.gz"
-      sha256 "24803f08c11f649870e827a8ca4d718afa5c63a507a1f8773aa847ddd583b5a1"
+      sha256 "d46107fb74510e3e5322a2b8cb6ef5e273386000bb528dc9b9a4171bf2652511"
     end
   end
 
