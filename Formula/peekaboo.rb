@@ -1,16 +1,15 @@
 class Peekaboo < Formula
   desc "Lightning-fast macOS screenshots & AI vision analysis"
-  homepage "https://github.com/steipete/peekaboo"
-  url "https://github.com/steipete/peekaboo/releases/download/v3.0.0-beta4/peekaboo-macos-arm64.tar.gz"
-  version "3.0.0-beta4"
-  sha256 "ef8797547a5102672cd26ccadc62e1ff74a8efc004319cd706fc75660eee3a47"
+  homepage "https://github.com/openclaw/Peekaboo"
+  url "https://github.com/openclaw/Peekaboo/releases/download/v3.0.0/peekaboo-macos-universal.tar.gz"
+  version "3.0.0"
+  sha256 "93aab577b150204faed58d031a376a1c9cf77a2280b346a09241912107b4d5ae"
   license "MIT"
 
-  depends_on arch: :arm64
   depends_on macos: :sequoia
 
   def install
-    bin.install "peekaboo" => "peekaboo"
+    bin.install "peekaboo-macos-universal/peekaboo" => "peekaboo"
   end
 
   def post_install
