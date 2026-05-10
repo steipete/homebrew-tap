@@ -137,6 +137,14 @@ def require_single_sha_in_stanza(text: str, stanza: str) -> None:
         )
 
 
+def stanza_match(text: str, stanza: str) -> re.Match[str] | None:
+    return re.search(
+        rf'(?P<header>^\s*{stanza}\s+do\s*$\n)(?P<body>.*?)(?=^\s*(?:on_macos\s+do|on_linux\s+do|head |def |test do))',
+        text,
+        flags=re.MULTILINE | re.DOTALL,
+    )
+
+
 def replace_url_preserving_interpolation(
     text: str,
     pattern: str,
@@ -158,20 +166,40 @@ def replace_url_preserving_interpolation(
 
 
 def update_url_and_sha_in_stanza(text: str, stanza: str, url: str, digest: str, version: str) -> str:
-    require_single_sha_in_stanza(text, stanza)
-    text = replace_url_preserving_interpolation(
-        text,
-        rf'(?P<prefix>\n\s*{stanza}\s+do\n(?:.*?\n)*?\s+url\s+")(?P<url>[^"]+)(?P<suffix>")',
-        url,
-        version,
-        f"url in {stanza} stanza",
-    )
-    return replace_once(
-        text,
-        rf'(\n\s*{stanza}\s+do\n(?:.*?\n)*?\s+sha256\s+")[^"]+(")',
-        rf'\g<1>{digest}\2',
-        f"sha256 in {stanza} stanza",
-    )
+    match = stanza_match(text, stanza)
+    if not match:
+        return text
+
+    body = match.group("body")
+    pairs = iter_url_sha_pairs(body)
+    if not pairs:
+        raise SystemExit(f"expected at least one url/sha256 pair in {stanza} stanza")
+
+    expanded_urls = {pair.group("url").replace("#{version}", version) for pair in pairs}
+    if len(expanded_urls) > 1:
+        raise SystemExit(
+            f"expected one source URL shape in {stanza} stanza, found {len(expanded_urls)}; "
+            "formulae with multiple architecture-specific checksums need manual updates"
+        )
+
+    replacements: list[tuple[int, int, str]] = []
+    for pair in pairs:
+        existing_url = pair.group("url")
+        replacement_url = url
+        if "#{version}" in existing_url and existing_url.replace("#{version}", version) == url:
+            replacement_url = existing_url
+        replacements.append(
+            (
+                pair.start(),
+                pair.end(),
+                f'{pair.group("prefix")}{replacement_url}{pair.group("middle")}{digest}{pair.group("suffix")}',
+            )
+        )
+
+    for start, end, replacement in reversed(replacements):
+        body = body[:start] + replacement + body[end:]
+
+    return text[: match.start("body")] + body + text[match.end("body") :]
 
 
 def has_stanza(text: str, stanza: str) -> bool:
@@ -383,8 +411,6 @@ def main() -> int:
             )
             print(f"Linux source: {linux_sha}  {linux_url}")
     else:
-        require_single_sha_in_stanza(text, "on_macos")
-        require_single_sha_in_stanza(text, "on_linux")
         macos_sha = sha256(macos_url)
         if has_macos:
             text = update_url_and_sha_in_stanza(text, "on_macos", macos_url, macos_sha, version)
