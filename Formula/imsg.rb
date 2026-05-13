@@ -29,6 +29,7 @@ class Imsg < Formula
     Dir["dist/*.bundle"].each do |bundle|
       libexec.install bundle
     end
+    rm bin/"imsg" if (bin/"imsg").exist?
     bin.write_exec_script libexec/"imsg"
   end
 
