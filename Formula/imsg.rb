@@ -15,8 +15,12 @@ class Imsg < Formula
     ENV["OUTPUT_DIR"] = buildpath/"dist"
     ENV["CODESIGN_IDENTITY"] = "-"
 
+    inreplace "scripts/build-universal.sh",
+      'swift build -c "$BUILD_MODE" --product "$APP_NAME" --arch "$ARCH"',
+      'swift build --disable-sandbox -c "$BUILD_MODE" --product "$APP_NAME" --arch "$ARCH"'
+
     system "scripts/generate-version.sh"
-    system "swift", "package", "resolve"
+    system "swift", "package", "--disable-sandbox", "resolve"
     system "scripts/patch-deps.sh"
     system "scripts/build-universal.sh"
 
