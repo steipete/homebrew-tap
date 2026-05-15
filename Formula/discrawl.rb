@@ -1,26 +1,26 @@
 class Discrawl < Formula
   desc "Discord archive CLI for local SQLite search and analysis"
   homepage "https://github.com/openclaw/discrawl"
-  version "0.7.2"
+  version "0.8.0"
   license "MIT"
 
   on_macos do
     if Hardware::CPU.arm?
       url "https://github.com/openclaw/discrawl/releases/download/v#{version}/discrawl_#{version}_darwin_arm64.tar.gz"
-      sha256 "f301cc5b6ac497d5d09c623c19b9b2fce62457419965fe3e28ed0d93a2230a2f"
+      sha256 "4f9542b71761eb02c4cb750ea325ab5cc29576f58334428386f7baa5fd820ec1"
     else
       url "https://github.com/openclaw/discrawl/releases/download/v#{version}/discrawl_#{version}_darwin_amd64.tar.gz"
-      sha256 "5584723d432845db3dcd13ee70eabb4c2d3a798401800b8e29fa3e2b85f428c0"
+      sha256 "e2a161226b8e12be38e564b0137f81a458fe5eca6d9d6ef42f3788e52282fe9e"
     end
   end
 
   on_linux do
     if Hardware::CPU.arm?
       url "https://github.com/openclaw/discrawl/releases/download/v#{version}/discrawl_#{version}_linux_arm64.tar.gz"
-      sha256 "834446adf35c6e82d2d231f1ecc31d52c390631a87eebf8d25e5d2b308c1c2f5"
+      sha256 "de25d4b5bf11e8aebc65c7f1c6a728cd7e7cd388a6ebca401cfd47983de3b8be"
     else
       url "https://github.com/openclaw/discrawl/releases/download/v#{version}/discrawl_#{version}_linux_amd64.tar.gz"
-      sha256 "fccd8500e56036cb478f87e08652f3fc24a8a75662c42f71122393e38c6cbb3a"
+      sha256 "d2cc832cb22076fd9c045ef53e0c43c40e1ca86ef19f0fe6d9fa4e33a9d3f536"
     end
   end
 
