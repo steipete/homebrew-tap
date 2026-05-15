@@ -27,8 +27,9 @@ class Codexbar < Formula
   end
 
   def install
-    bin.install "CodexBarCLI"
-    bin.install "VERSION"
+    libexec.install "CodexBarCLI"
+    libexec.install "VERSION"
+    bin.write_exec_script libexec/"CodexBarCLI"
     bin.install_symlink "CodexBarCLI" => "codexbar"
   end
 
