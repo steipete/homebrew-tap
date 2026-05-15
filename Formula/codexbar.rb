@@ -28,10 +28,11 @@ class Codexbar < Formula
 
   def install
     bin.install "CodexBarCLI"
+    bin.install "VERSION"
     bin.install_symlink "CodexBarCLI" => "codexbar"
   end
 
   test do
-    assert_match "CodexBar", shell_output("#{bin}/codexbar --version")
+    assert_equal "CodexBar #{version}", shell_output("#{bin}/codexbar --version").strip
   end
 end
