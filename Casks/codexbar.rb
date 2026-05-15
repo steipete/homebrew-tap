@@ -1,14 +1,14 @@
 cask "codexbar" do
-  version "0.24"
-  sha256 "93826a91e89301e2f9b821d7a387cdc4bbc2ed4ae441dd98f0c760da613685a9"
+  version "0.26.0"
+  sha256 "1c343eb1af58c4a025cfc424181d49412a94f067a14997edbd4dbe1b3c5162e2"
 
-  url "https://github.com/steipete/CodexBar/releases/download/v#{version}/CodexBar-#{version}.zip",
+  url "https://github.com/steipete/CodexBar/releases/download/v#{version}/CodexBar-macos-universal-#{version}.zip",
       verified: "github.com/steipete/CodexBar/"
   name "CodexBar"
   desc "Menu bar usage monitor for Codex and Claude"
   homepage "https://codexbar.app/"
 
-  depends_on macos: ">= :sonoma"
+  depends_on macos: :sonoma
 
   app "CodexBar.app"
   binary "#{appdir}/CodexBar.app/Contents/Helpers/CodexBarCLI", target: "codexbar"
