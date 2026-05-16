@@ -3,19 +3,33 @@ class Wacli < Formula
   homepage "https://github.com/openclaw/wacli"
   version "0.9.1"
   license "MIT"
+  head "https://github.com/openclaw/wacli.git", branch: "main"
 
   on_macos do
-    url "https://github.com/openclaw/wacli/releases/download/v0.9.1/wacli-macos-universal.tar.gz"
-    sha256 "7b58d2513ed4848bc147ade9fa7ce4b9b1fcda858ac5595cfea1feb43bdb301a"
+    on_arm do
+      url "https://github.com/openclaw/wacli/releases/download/v#{version}/wacli-macos-universal.tar.gz"
+      sha256 "7b58d2513ed4848bc147ade9fa7ce4b9b1fcda858ac5595cfea1feb43bdb301a"
+    end
+
+    on_intel do
+      url "https://github.com/openclaw/wacli/releases/download/v#{version}/wacli-macos-universal.tar.gz"
+      sha256 "7b58d2513ed4848bc147ade9fa7ce4b9b1fcda858ac5595cfea1feb43bdb301a"
+    end
   end
 
   on_linux do
-    url "https://github.com/openclaw/wacli/archive/refs/tags/v0.9.1.tar.gz"
-    sha256 "0084e2f80937fff976e4da51a05f509576bbc9a140c052a399dd3cf409f9a7d6"
     depends_on "go" => :build
-  end
 
-  head "https://github.com/openclaw/wacli.git", branch: "main"
+    on_arm do
+      url "https://github.com/openclaw/wacli/archive/refs/tags/v#{version}.tar.gz"
+      sha256 "0084e2f80937fff976e4da51a05f509576bbc9a140c052a399dd3cf409f9a7d6"
+    end
+
+    on_intel do
+      url "https://github.com/openclaw/wacli/archive/refs/tags/v#{version}.tar.gz"
+      sha256 "0084e2f80937fff976e4da51a05f509576bbc9a140c052a399dd3cf409f9a7d6"
+    end
+  end
 
   def install
     if File.exist?("wacli")

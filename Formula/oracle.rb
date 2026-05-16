@@ -12,6 +12,8 @@ class Oracle < Formula
 
   def install
     system "npm", "install", *std_npm_args
+    # The npm tarball vendors an x86_64 macOS notifier that is not used by the CLI.
+    rm_r Dir["#{libexec}/lib/node_modules/@steipete/oracle/node_modules/toasted-notifier/vendor/mac.noindex"]
     bin.install_symlink Dir["#{libexec}/bin/*"]
   end
 
