@@ -11,7 +11,7 @@ class Goplaces < Formula
   on_macos do
     if Hardware::CPU.intel?
       url "https://github.com/openclaw/goplaces/releases/download/v0.4.1/goplaces_0.4.1_darwin_amd64.tar.gz"
-      sha256 "83bb8cda184d75609348f64dd66a903a09173edaeb8cd4dada273b439af2a71c"
+      sha256 "5aa62ed8ec6d8935d4fa52b6ede05e5a9b2cf9e80122d623aa157bcc6e715754"
 
       define_method(:install) do
         bin.install "goplaces"
@@ -19,7 +19,7 @@ class Goplaces < Formula
     end
     if Hardware::CPU.arm?
       url "https://github.com/openclaw/goplaces/releases/download/v0.4.1/goplaces_0.4.1_darwin_arm64.tar.gz"
-      sha256 "a0a8a476d5acf431e4d1afa943c3005ee28ff75335e9ee974926af0fbd9f69f2"
+      sha256 "49229a52e226b9543b81e699fab3ee89e9ac52d76e7d07a004b9788673d45790"
 
       define_method(:install) do
         bin.install "goplaces"
@@ -30,14 +30,14 @@ class Goplaces < Formula
   on_linux do
     if Hardware::CPU.intel? && Hardware::CPU.is_64_bit?
       url "https://github.com/openclaw/goplaces/releases/download/v0.4.1/goplaces_0.4.1_linux_amd64.tar.gz"
-      sha256 "b5830bd39951594d35df212c57d45686b98b72d72e08d5988ee08012c3f26a51"
+      sha256 "7479b393881db52d88dcc62bc9113ecf0252d272d62be717dbc9644c27c340ac"
       define_method(:install) do
         bin.install "goplaces"
       end
     end
     if Hardware::CPU.arm? && Hardware::CPU.is_64_bit?
       url "https://github.com/openclaw/goplaces/releases/download/v0.4.1/goplaces_0.4.1_linux_arm64.tar.gz"
-      sha256 "e6620b495e70a5e7b1ae7193fcd32f570008cfff0dc47f9f3acfe3c379bd5dc0"
+      sha256 "401aa0993a2cc660f1247ae07e731a1f4696c2780c369de57a78a882e9339b1e"
       define_method(:install) do
         bin.install "goplaces"
       end
