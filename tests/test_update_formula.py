@@ -78,6 +78,39 @@ end
 
         self.assertIn("multiple architecture-specific checksums", str(raised.exception))
 
+    def test_duplicate_urls_in_platform_stanzas_use_stanza_mode(self) -> None:
+        text = '''class Wacli < Formula
+  on_macos do
+    on_arm do
+      url "https://github.com/openclaw/wacli/releases/download/v0.9.1/wacli-macos-universal.tar.gz"
+      sha256 "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    end
+
+    on_intel do
+      url "https://github.com/openclaw/wacli/releases/download/v0.9.1/wacli-macos-universal.tar.gz"
+      sha256 "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    end
+  end
+
+  on_linux do
+    on_arm do
+      url "https://github.com/openclaw/wacli/archive/refs/tags/v0.9.1.tar.gz"
+      sha256 "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    end
+
+    on_intel do
+      url "https://github.com/openclaw/wacli/archive/refs/tags/v0.9.1.tar.gz"
+      sha256 "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    end
+  end
+
+  def install
+  end
+end
+'''
+
+        self.assertTrue(update_formula.uses_stanza_url_mode(text, "0.9.2"))
+
 
 if __name__ == "__main__":
     unittest.main()

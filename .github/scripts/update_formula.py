@@ -137,6 +137,21 @@ def require_single_sha_in_stanza(text: str, stanza: str) -> None:
         )
 
 
+def stanza_url_shape_count(text: str, stanza: str, version: str) -> int:
+    body = stanza_body(text, stanza)
+    if body is None:
+        return 0
+
+    pairs = iter_url_sha_pairs(body)
+    return len({pair.group("url").replace("#{version}", version) for pair in pairs})
+
+
+def uses_stanza_url_mode(text: str, version: str) -> bool:
+    if not (has_stanza(text, "on_macos") and has_stanza(text, "on_linux")):
+        return False
+    return all(stanza_url_shape_count(text, stanza, version) <= 1 for stanza in ("on_macos", "on_linux"))
+
+
 def stanza_match(text: str, stanza: str) -> re.Match[str] | None:
     return re.search(
         rf'(?P<header>^\s*{stanza}\s+do\s*$\n)(?P<body>.*?)(?=^\s*(?:on_macos\s+do|on_linux\s+do|head |def |test do))',
@@ -357,7 +372,7 @@ def main() -> int:
     url_sha_pairs = iter_url_sha_pairs(text)
     classified_pairs = [(match, classify_target(match.group("url"), target_aliases, version)) for match in url_sha_pairs]
     target_url_count = sum(1 for _, target in classified_pairs if target)
-    has_target_urls = target_url_count > 1
+    has_target_urls = target_url_count > 1 and not uses_stanza_url_mode(text, version)
     if has_macos != has_linux and not has_target_urls:
         raise SystemExit("formulae with only one platform stanza need manual updates")
 
