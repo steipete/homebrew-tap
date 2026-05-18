@@ -111,6 +111,28 @@ end
 
         self.assertTrue(update_formula.uses_stanza_url_mode(text, "0.9.2"))
 
+    def test_updates_cask_version_and_checksum_preserving_interpolated_url(self) -> None:
+        text = '''cask "codexbar" do
+  version "0.26.1"
+  sha256 "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+
+  url "https://github.com/steipete/CodexBar/releases/download/v#{version}/CodexBar-macos-universal-#{version}.zip",
+      verified: "github.com/steipete/CodexBar/"
+end
+'''
+
+        updated = update_formula.update_version(text, "0.27.0")
+        updated = update_formula.update_top_level_url_and_sha(
+            updated,
+            "https://github.com/steipete/CodexBar/releases/download/v0.27.0/CodexBar-macos-universal-0.27.0.zip",
+            "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+            "0.27.0",
+        )
+
+        self.assertIn('version "0.27.0"', updated)
+        self.assertIn('sha256 "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"', updated)
+        self.assertIn("CodexBar-macos-universal-#{version}.zip", updated)
+
 
 if __name__ == "__main__":
     unittest.main()

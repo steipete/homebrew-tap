@@ -40,6 +40,14 @@ on:
         description: "Comma-separated canonical=artifact-target aliases for custom asset names"
         required: false
         type: string
+      cask:
+        description: "Optional cask name to update with the same release"
+        required: false
+        type: string
+      cask_artifact:
+        description: "Release asset name for the optional cask"
+        required: false
+        type: string
       request_id:
         description: "Unique caller-generated ID used to identify this workflow run"
         required: false
@@ -94,18 +102,35 @@ jobs:
             args+=(--target-aliases "${{ inputs.target_aliases }}")
           fi
 
+          if [ -n "${{ inputs.cask }}" ]; then
+            args+=(--cask "${{ inputs.cask }}")
+          fi
+
+          if [ -n "${{ inputs.cask_artifact }}" ]; then
+            args+=(--cask-artifact "${{ inputs.cask_artifact }}")
+          fi
+
           python3 .github/scripts/update_formula.py "${args[@]}"
 
       - name: Commit and push
         run: |
           FORMULA="${{ inputs.formula }}"
           TAG="${{ inputs.tag }}"
+          CASK="${{ inputs.cask }}"
 
           git add "Formula/${FORMULA}.rb"
-          if git diff --cached --quiet -- "Formula/${FORMULA}.rb"; then
-            echo "Formula/${FORMULA}.rb already up to date"
+          if [ -n "$CASK" ]; then
+            git add "Casks/${CASK}.rb"
+          fi
+
+          if git diff --cached --quiet; then
+            echo "Formula/${FORMULA}.rb${CASK:+ and Casks/${CASK}.rb} already up to date"
             exit 0
           fi
 
-          git commit -m "${FORMULA}: update formula for ${TAG}"
+          if [ -n "$CASK" ]; then
+            git commit -m "${FORMULA}: update formula and cask for ${TAG}"
+          else
+            git commit -m "${FORMULA}: update formula for ${TAG}"
+          fi
           git push

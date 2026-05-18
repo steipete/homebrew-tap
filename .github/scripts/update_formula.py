@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Update a Homebrew formula for a GitHub release.
+"""Update a Homebrew formula and optional cask for a GitHub release.
 
 The script keeps formula-specific editing in this tap. It supports the simple
 single `url`/`sha256` formula shape as well as formulae with separate
-`on_macos` and `on_linux` stanzas such as `Formula/wacli.rb`.
+`on_macos` and `on_linux` stanzas such as `Formula/wacli.rb`. It can also
+update a matching cask when a release publishes both CLI and app assets.
 """
 
 from __future__ import annotations
@@ -289,6 +290,31 @@ def update_top_level_url_and_sha(text: str, url: str, digest: str, version: str)
     )
 
 
+def update_version(text: str, version: str) -> str:
+    return replace_zero_or_one(
+        text,
+        r'^(\s*version\s+")[^"]+(")',
+        rf'\g<1>{version}\2',
+        "version",
+    )
+
+
+def update_cask(cask: str, repository: str, tag: str, artifact: str) -> None:
+    version = tag[1:] if tag.startswith("v") else tag
+    url = f"https://github.com/{repository}/releases/download/{tag}/{artifact}"
+    digest = sha256(url)
+    path = pathlib.Path("Casks") / f"{cask}.rb"
+    if not path.exists():
+        raise SystemExit(f"{path} does not exist; cask creation needs a manual template")
+
+    text = path.read_text()
+    text = update_version(text, version)
+    text = update_top_level_url_and_sha(text, url, digest, version)
+    path.write_text(text)
+    print(f"cask: {digest}  {url}")
+    print(f"updated {path} to {version}")
+
+
 def update_repository_metadata(text: str, repository: str) -> str:
     homepage = f"https://github.com/{repository}"
     head = f"{homepage}.git"
@@ -345,9 +371,20 @@ def main() -> int:
             "for example darwin_arm64=macos-arm64,linux_amd64=linux-x86_64."
         ),
     )
+    parser.add_argument("--cask", help="Optional cask name to update alongside the formula")
+    parser.add_argument(
+        "--cask-artifact",
+        help=(
+            "Release asset name for --cask. Supports {formula}, {version}, and {tag}; "
+            "required when --cask is set."
+        ),
+    )
     args = parser.parse_args()
 
     version = args.tag[1:] if args.tag.startswith("v") else args.tag
+    if args.cask and not args.cask_artifact:
+        raise SystemExit("--cask-artifact is required when --cask is set")
+
     macos_artifact = args.macos_artifact or f"{args.formula}-macos-universal.tar.gz"
     macos_url = (
         format_template(args.artifact_url, args.formula, version, args.tag)
@@ -376,12 +413,7 @@ def main() -> int:
     if has_macos != has_linux and not has_target_urls:
         raise SystemExit("formulae with only one platform stanza need manual updates")
 
-    text = replace_zero_or_one(
-        text,
-        r'^(\s*version\s+")[^"]+(")',
-        rf'\g<1>{version}\2',
-        "version",
-    )
+    text = update_version(text, version)
 
     if has_target_urls:
         template = args.artifact_template or "{formula}_{version}_{target}.tar.gz"
@@ -441,6 +473,9 @@ def main() -> int:
     path.write_text(text)
 
     print(f"updated {path} to {version}")
+    if args.cask:
+        cask_artifact = format_template(args.cask_artifact, args.formula, version, args.tag)
+        update_cask(args.cask, args.repository, args.tag, cask_artifact)
     return 0
 
 
