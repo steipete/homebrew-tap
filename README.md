@@ -26,8 +26,6 @@ brew install --cask steipete/tap/<name>
 - `birdclaw` — Local Twitter memory for archives, DMs, likes, bookmarks, and moderation
 - `camsnap` — One command to grab frames, clips, or motion alerts from RTSP/ONVIF cams
 - `codexbar` — CodexBar CLI (Linuxbrew)
-- `discrawl` — Discord archive CLI for local SQLite search and analysis
-- `gogcli` — Google CLI for Gmail, Calendar, Drive, and Contacts
 - `gifgrep` — Grep the GIF. Stick the landing.
 - `imsg` — Send and read iMessage / SMS from the terminal
 - `mcporter` — Model Context Protocol runtime and CLI generator (`0.11.1`: hardened generated CLI bundles)
@@ -40,7 +38,6 @@ brew install --cask steipete/tap/<name>
 - `songsee` — Spectral visualization CLI for audio files
 - `telecrawl` — Telegram Desktop archive CLI with encrypted Git backups
 - `tmuxwatch` — Live tmux dashboard with Bubble Tea UI
-- `wacli` — WhatsApp CLI built on whatsmeow
 - `wacrawl` — Read-only WhatsApp Desktop archive CLI
 
 ### Casks
@@ -53,11 +50,13 @@ brew install --cask steipete/tap/<name>
 
 Run the `Update Formula` workflow with:
 
-- `formula`: formula name, e.g. `wacli`
+- `formula`: formula name, e.g. `tmuxwatch`
 - `tag`: release tag, e.g. `v0.7.0`
-- `repository`: source repository, e.g. `steipete/wacli`
+- `repository`: source repository, e.g. `steipete/tmuxwatch`
 
-The workflow updates regular single-URL formulae, formulae with separate `on_macos` and `on_linux` stanzas, and duplicate source-build URLs inside a stanza. Formulae with multiple architecture-specific checksums in one stanza still need manual updates. For `wacli`, `steipete/wacli` dispatches this workflow automatically after publishing the macOS release artifact.
+The workflow updates regular single-URL formulae, formulae with separate `on_macos` and `on_linux` stanzas, duplicate source-build URLs inside a stanza, and target-specific binary formulae when `artifact_template` is provided. Formulae with unsupported custom platform layouts still need manual updates.
+
+OpenClaw-owned formulae live in `openclaw/tap`; migrated names are listed in `tap_migrations.json`.
 
 ## Update / Uninstall
 
@@ -75,7 +74,6 @@ brew uninstall --cask --zap steipete/tap/codexbar
 ## Notes
 
 - Run `brew info steipete/tap/<name>` for per-tool caveats (permissions, setup steps, etc.).
-- `wacli` also supports `brew install --HEAD steipete/tap/wacli` to build from `main`.
 
 ## Manual Cleanup (formulae)
 
@@ -84,14 +82,11 @@ Homebrew formulae don’t support `--zap`. Delete these to “factory reset”:
 - `blucli`: `~/Library/Application Support/blu/` + `~/Library/Caches/blu/`
 - `birdclaw`: `~/.birdclaw/`
 - `camsnap`: `~/.config/camsnap/config.yaml`
-- `discrawl`: `~/.discrawl/`
-- `gogcli`: `~/Library/Application Support/gogcli/` (incl `keyring/`, `state/`)
 - `mcporter`: `~/.mcporter/`
 - `oracle`: `~/.oracle/`
 - `ordercli`: `~/Library/Application Support/ordercli/config.json`
 - `sonoscli`: `~/Library/Application Support/sonoscli/config.json`
 - `telecrawl`: `~/.telecrawl/`
-- `wacli`: `~/.wacli/`
 - `wacrawl`: `~/.wacrawl/`
 
 ## Local Source Checkouts (Peter)

@@ -1,3 +1,7 @@
 {
-  "summarize": "homebrew/core"
+  "discrawl": "openclaw/tap",
+  "gogcli": "openclaw/tap",
+  "goplaces": "openclaw/tap",
+  "summarize": "homebrew/core",
+  "wacli": "openclaw/tap"
 }
