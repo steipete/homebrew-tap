@@ -111,6 +111,93 @@ end
 
         self.assertTrue(update_formula.uses_stanza_url_mode(text, "0.9.2"))
 
+    def test_converts_duplicate_platform_stanzas_to_target_urls(self) -> None:
+        text = '''class Wacli < Formula
+  version "0.9.2"
+
+  on_macos do
+    on_arm do
+      url "https://github.com/openclaw/wacli/releases/download/v0.9.2/wacli-macos-universal.tar.gz"
+      sha256 "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    end
+
+    on_intel do
+      url "https://github.com/openclaw/wacli/releases/download/v0.9.2/wacli-macos-universal.tar.gz"
+      sha256 "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    end
+  end
+
+  on_linux do
+    on_arm do
+      url "https://github.com/openclaw/wacli/archive/refs/tags/v0.9.2.tar.gz"
+      sha256 "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    end
+
+    on_intel do
+      url "https://github.com/openclaw/wacli/archive/refs/tags/v0.9.2.tar.gz"
+      sha256 "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    end
+  end
+
+  def install
+  end
+end
+'''
+
+        updated = update_formula.convert_stanza_url_mode_to_targets(
+            text,
+            "openclaw/wacli",
+            "v0.9.3",
+            "wacli",
+            "0.9.3",
+            "{formula}_{version}_{target}.tar.gz",
+            {},
+        )
+
+        self.assertIn("wacli_0.9.3_darwin_arm64.tar.gz", updated)
+        self.assertIn("wacli_0.9.3_darwin_amd64.tar.gz", updated)
+        self.assertIn("wacli_0.9.3_linux_arm64.tar.gz", updated)
+        self.assertIn("wacli_0.9.3_linux_amd64.tar.gz", updated)
+        self.assertNotIn("wacli-macos-universal.tar.gz", updated)
+        self.assertNotIn("/archive/refs/tags/", updated)
+
+    def test_inserts_target_stanzas_for_top_level_formula(self) -> None:
+        text = '''class Sag < Formula
+  desc "Command-line ElevenLabs TTS with mac-style flags"
+  homepage "https://github.com/steipete/sag"
+  url "https://github.com/steipete/sag/releases/download/v0.3.0/sag_0.3.0_darwin_universal.tar.gz"
+  sha256 "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  license "MIT"
+
+  on_linux do
+    on_intel do
+      url "https://github.com/steipete/sag/releases/download/v0.3.0/sag_0.3.0_linux_amd64.tar.gz"
+      sha256 "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    end
+  end
+
+  def install
+  end
+end
+'''
+
+        updated = update_formula.insert_target_stanzas(
+            text,
+            "steipete/sag",
+            "v0.3.1",
+            "sag",
+            "0.3.1",
+            "{formula}_{version}_{target}.tar.gz",
+            {},
+        )
+
+        self.assertIn("sag_0.3.1_darwin_arm64.tar.gz", updated)
+        self.assertIn("sag_0.3.1_darwin_amd64.tar.gz", updated)
+        self.assertIn("sag_0.3.1_linux_arm64.tar.gz", updated)
+        self.assertIn("sag_0.3.1_linux_amd64.tar.gz", updated)
+        self.assertNotIn("darwin_universal", updated)
+        self.assertEqual(updated.count("on_linux do"), 1)
+
     def test_updates_cask_version_and_checksum_preserving_interpolated_url(self) -> None:
         text = '''cask "codexbar" do
   version "0.26.1"

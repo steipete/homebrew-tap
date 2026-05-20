@@ -274,6 +274,163 @@ end
 '''
 
 
+def target_url(
+    repository: str,
+    tag: str,
+    formula: str,
+    version: str,
+    template: str,
+    target_aliases: dict[str, str],
+    target: str,
+) -> str:
+    artifact_target = target_aliases.get(target, target)
+    artifact = template.format(
+        formula=formula,
+        version=version,
+        tag=tag,
+        target=artifact_target,
+    )
+    return f"https://github.com/{repository}/releases/download/{tag}/{artifact}"
+
+
+def target_stanza(
+    stanza: str,
+    first_target: str,
+    second_target: str,
+    repository: str,
+    tag: str,
+    formula: str,
+    version: str,
+    template: str,
+    target_aliases: dict[str, str],
+) -> str:
+    first_url = target_url(repository, tag, formula, version, template, target_aliases, first_target)
+    second_url = target_url(repository, tag, formula, version, template, target_aliases, second_target)
+    first_predicate = "Hardware::CPU.arm?" if first_target.endswith("arm64") else "Hardware::CPU.intel?"
+    second_predicate = "Hardware::CPU.intel?" if second_target.endswith("amd64") else "Hardware::CPU.arm?"
+    if stanza == "on_linux":
+        first_predicate = f"{first_predicate} && Hardware::CPU.is_64_bit?"
+        second_predicate = f"{second_predicate} && Hardware::CPU.is_64_bit?"
+
+    return f'''  {stanza} do
+    if {first_predicate}
+      url "{first_url}"
+      sha256 "0000000000000000000000000000000000000000000000000000000000000000"
+    end
+
+    if {second_predicate}
+      url "{second_url}"
+      sha256 "0000000000000000000000000000000000000000000000000000000000000000"
+    end
+  end
+'''
+
+
+def convert_stanza_url_mode_to_targets(
+    text: str,
+    repository: str,
+    tag: str,
+    formula: str,
+    version: str,
+    template: str,
+    target_aliases: dict[str, str],
+) -> str:
+    replacements = {
+        "on_macos": target_stanza(
+            "on_macos",
+            "darwin_arm64",
+            "darwin_amd64",
+            repository,
+            tag,
+            formula,
+            version,
+            template,
+            target_aliases,
+        ),
+        "on_linux": target_stanza(
+            "on_linux",
+            "linux_arm64",
+            "linux_amd64",
+            repository,
+            tag,
+            formula,
+            version,
+            template,
+            target_aliases,
+        ),
+    }
+
+    for stanza, replacement in replacements.items():
+        match = stanza_match(text, stanza)
+        if not match:
+            raise SystemExit(f"expected {stanza} stanza for target conversion")
+        text = text[: match.start()] + replacement + text[match.end() :]
+    return text
+
+
+def remove_stanza(text: str, stanza: str) -> str:
+    match = stanza_match(text, stanza)
+    if not match:
+        return text
+    return text[: match.start()] + text[match.end() :]
+
+
+def remove_top_level_url_sha(text: str) -> str:
+    return re.sub(
+        r'^\s*url\s+"[^"]+"\n\s*sha256\s+"[0-9a-f]+"\n',
+        "",
+        text,
+        count=1,
+        flags=re.MULTILINE,
+    )
+
+
+def insert_target_stanzas(
+    text: str,
+    repository: str,
+    tag: str,
+    formula: str,
+    version: str,
+    template: str,
+    target_aliases: dict[str, str],
+) -> str:
+    text = remove_stanza(text, "on_macos")
+    text = remove_stanza(text, "on_linux")
+    text = remove_top_level_url_sha(text)
+
+    stanzas = (
+        "\n"
+        + target_stanza(
+            "on_macos",
+            "darwin_arm64",
+            "darwin_amd64",
+            repository,
+            tag,
+            formula,
+            version,
+            template,
+            target_aliases,
+        )
+        + "\n"
+        + target_stanza(
+            "on_linux",
+            "linux_arm64",
+            "linux_amd64",
+            repository,
+            tag,
+            formula,
+            version,
+            template,
+            target_aliases,
+        )
+    )
+
+    match = re.search(r'^(\s*license\s+"[^"]+"\n)', text, flags=re.MULTILINE)
+    if not match:
+        raise SystemExit("target conversion requires a license line")
+    return text[: match.end()] + stanzas + text[match.end() :]
+
+
 def update_top_level_url_and_sha(text: str, url: str, digest: str, version: str) -> str:
     text = replace_url_preserving_interpolation(
         text,
@@ -410,6 +567,34 @@ def main() -> int:
     classified_pairs = [(match, classify_target(match.group("url"), target_aliases, version)) for match in url_sha_pairs]
     target_url_count = sum(1 for _, target in classified_pairs if target)
     has_target_urls = target_url_count > 1 and not uses_stanza_url_mode(text, version)
+    if args.artifact_template and not has_target_urls and uses_stanza_url_mode(text, version):
+        text = convert_stanza_url_mode_to_targets(
+            text,
+            args.repository,
+            args.tag,
+            args.formula,
+            version,
+            args.artifact_template,
+            target_aliases,
+        )
+        url_sha_pairs = iter_url_sha_pairs(text)
+        classified_pairs = [(match, classify_target(match.group("url"), target_aliases, version)) for match in url_sha_pairs]
+        target_url_count = sum(1 for _, target in classified_pairs if target)
+        has_target_urls = target_url_count > 1
+    elif args.artifact_template and not has_target_urls:
+        text = insert_target_stanzas(
+            text,
+            args.repository,
+            args.tag,
+            args.formula,
+            version,
+            args.artifact_template,
+            target_aliases,
+        )
+        url_sha_pairs = iter_url_sha_pairs(text)
+        classified_pairs = [(match, classify_target(match.group("url"), target_aliases, version)) for match in url_sha_pairs]
+        target_url_count = sum(1 for _, target in classified_pairs if target)
+        has_target_urls = target_url_count > 1
     if has_macos != has_linux and not has_target_urls:
         raise SystemExit("formulae with only one platform stanza need manual updates")
 
