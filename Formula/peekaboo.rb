@@ -1,8 +1,8 @@
 class Peekaboo < Formula
   desc "Lightning-fast macOS screenshots & AI vision analysis"
   homepage "https://github.com/openclaw/Peekaboo"
-  url "https://github.com/openclaw/Peekaboo/releases/download/v3.2.1/peekaboo-macos-universal.tar.gz"
-  sha256 "7e848465dd26d2b493f07b1de1914f2a876ab27141b628b4fd881f7a1335333b"
+  url "https://github.com/openclaw/Peekaboo/releases/download/v3.2.2/peekaboo-macos-universal.tar.gz"
+  sha256 "83bd0271909a575c8f95bc85d271d250b49d728ae854d2662baa9d523f4b5a6a"
   license "MIT"
 
   depends_on macos: :sequoia
