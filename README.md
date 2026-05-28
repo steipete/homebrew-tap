@@ -1,3 +1,5 @@
+![Homebrew Tap banner](docs/assets/readme-banner.jpg)
+
 # steipete’s Homebrew Tap
 
 Homebrew tap for shipping my CLI tools + a few macOS apps.
