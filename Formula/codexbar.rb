@@ -1,26 +1,26 @@
 class Codexbar < Formula
   desc "Menu bar usage and status CLI"
   homepage "https://github.com/steipete/CodexBar"
-  version "0.30.0"
+  version "0.30.1"
   license "MIT"
 
   on_macos do
     if Hardware::CPU.arm?
       url "https://github.com/steipete/CodexBar/releases/download/v#{version}/CodexBarCLI-v#{version}-macos-arm64.tar.gz"
-      sha256 "9b8390ef5353e591d9dcd84c702a55600a7bf8534aa446e45c6eafea85791179"
+      sha256 "526086ed3aee5537616698ba3e0bf103ccb23a9194557caebad2c3023ef36988"
     else
       url "https://github.com/steipete/CodexBar/releases/download/v#{version}/CodexBarCLI-v#{version}-macos-x86_64.tar.gz"
-      sha256 "6039e4a7d6b0f911f508b6e1b6084061c52c3a251acef874b252bb04cd4ab82a"
+      sha256 "c74cd9def15110842ab464b25a5554f82db1c59540982f14ef957c77e5d9077b"
     end
   end
 
   on_linux do
     if Hardware::CPU.arm?
       url "https://github.com/steipete/CodexBar/releases/download/v#{version}/CodexBarCLI-v#{version}-linux-aarch64.tar.gz"
-      sha256 "78cfe45b5cd77a985362f749d1995742518cee706efc1931218f02c583f13681"
+      sha256 "4841d79e343bbabdb07c0f9b80a4ebcd1a1da7275d66a9eaacfa65bddb50b3fd"
     else
       url "https://github.com/steipete/CodexBar/releases/download/v#{version}/CodexBarCLI-v#{version}-linux-x86_64.tar.gz"
-      sha256 "cb638ba68fd7ef2e4b43b4899fd66720a330b9458346fb66207e9b5813b6e6f3"
+      sha256 "4b9d2728f6f6fba0971f635944c9bbfa7456feb72cc84b5b89e664e93888f2b5"
     end
   end
 
