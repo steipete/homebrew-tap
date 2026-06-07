@@ -38,7 +38,6 @@ brew install --cask steipete/tap/<name>
 - `songsee` — Spectral visualization CLI for audio files
 - `telecrawl` — Telegram Desktop archive CLI with encrypted Git backups
 - `tmuxwatch` — Live tmux dashboard with Bubble Tea UI
-- `wacrawl` — Read-only WhatsApp Desktop archive CLI
 
 ### Casks
 
@@ -87,7 +86,6 @@ Homebrew formulae don’t support `--zap`. Delete these to “factory reset”:
 - `ordercli`: `~/Library/Application Support/ordercli/config.json`
 - `sonoscli`: `~/Library/Application Support/sonoscli/config.json`
 - `telecrawl`: `~/.telecrawl/`
-- `wacrawl`: `~/.wacrawl/`
 
 ## Local Source Checkouts (Peter)
 

@@ -3,5 +3,6 @@
   "gogcli": "openclaw/tap",
   "goplaces": "openclaw/tap",
   "summarize": "homebrew/core",
-  "wacli": "openclaw/tap"
+  "wacli": "openclaw/tap",
+  "wacrawl": "openclaw/tap"
 }
