@@ -8,7 +8,7 @@ cask "repobar" do
   desc "Menu bar dashboard for GitHub repository health"
   homepage "https://repobar.app/"
 
-  depends_on macos: ">= :sequoia"
+  depends_on macos: :sequoia
 
   app "RepoBar.app"
   binary "#{appdir}/RepoBar.app/Contents/MacOS/repobarcli", target: "repobar"

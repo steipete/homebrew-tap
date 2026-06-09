@@ -8,7 +8,7 @@ cask "codexbar" do
   desc "Menu bar usage monitor for Codex and Claude"
   homepage "https://codexbar.app/"
 
-  depends_on macos: ">= :sonoma"
+  depends_on macos: :sonoma
 
   app "CodexBar.app"
   binary "#{appdir}/CodexBar.app/Contents/Helpers/CodexBarCLI", target: "codexbar"
