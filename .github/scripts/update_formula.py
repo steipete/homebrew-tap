@@ -599,6 +599,10 @@ def main() -> int:
         raise SystemExit("formulae with only one platform stanza need manual updates")
 
     text = update_version(text, version)
+    url_sha_pairs = iter_url_sha_pairs(text)
+    classified_pairs = [(match, classify_target(match.group("url"), target_aliases, version)) for match in url_sha_pairs]
+    target_url_count = sum(1 for _, target in classified_pairs if target)
+    has_target_urls = target_url_count > 1 and not uses_stanza_url_mode(text, version)
 
     if has_target_urls:
         template = args.artifact_template or "{formula}_{version}_{target}.tar.gz"
