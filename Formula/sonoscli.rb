@@ -3,7 +3,7 @@ class Sonoscli < Formula
   homepage "https://github.com/steipete/sonoscli"
   url "https://github.com/steipete/sonoscli/releases/download/v0.3.2/sonoscli_0.3.2_macos-universal.tar.gz"
   version "0.3.2"
-  sha256 "0750beae4f85dc47e3391601fae7f9a83d1aedb91a514e3fec4b72479fa071f6"
+  sha256 "33817232436e6248e297239aa44c69d281b1adcd4b3fa0633b3426f0381ad971"
   license "MIT"
 
   depends_on :macos
