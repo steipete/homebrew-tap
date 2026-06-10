@@ -15,6 +15,7 @@ import os
 import pathlib
 import re
 import sys
+import urllib.parse
 import urllib.request
 
 
@@ -447,6 +448,53 @@ def update_top_level_url_and_sha(text: str, url: str, digest: str, version: str)
     )
 
 
+def release_artifact_name(url: str) -> str:
+    return pathlib.PurePosixPath(urllib.parse.urlparse(url).path).name
+
+
+def artifact_name_matches_target(
+    name: str,
+    target: str,
+    target_aliases: dict[str, str],
+    version: str,
+) -> bool:
+    version_suffix = rf'[-_.]v?{re.escape(version)}(?:$|[.])'
+    for marker in target_markers(target, target_aliases.get(target)):
+        pattern = rf'(?:^|[-_.]){re.escape(marker)}(?:$|[.]|{version_suffix})'
+        if re.search(pattern, name):
+            return True
+    return False
+
+
+def remove_top_level_arm64_dependency_for_universal_macos(
+    text: str,
+    macos_url: str,
+    target_aliases: dict[str, str],
+    version: str,
+) -> str:
+    if not artifact_name_matches_target(
+        release_artifact_name(macos_url),
+        "darwin_universal",
+        target_aliases,
+        version,
+    ):
+        return text
+
+    has_macos_dependency = re.search(
+        r'^  depends_on\s+(?::macos\b|(?:maximum_)?macos:)',
+        text,
+        flags=re.MULTILINE,
+    )
+    replacement = "" if has_macos_dependency else r"\g<indent>depends_on :macos\n"
+    return re.sub(
+        r'^(?P<indent>  )depends_on\s+arch:\s+:arm64\s*\n',
+        replacement,
+        text,
+        count=1,
+        flags=re.MULTILINE,
+    )
+
+
 def update_version(text: str, version: str) -> str:
     return replace_zero_or_one(
         text,
@@ -654,6 +702,7 @@ def main() -> int:
             text = update_url_and_sha_in_stanza(text, "on_linux", linux_url, linux_sha, version)
         else:
             text = update_top_level_url_and_sha(text, macos_url, macos_sha, version)
+            text = remove_top_level_arm64_dependency_for_universal_macos(text, macos_url, target_aliases, version)
             linux_sha = None
         print(f"macOS: {macos_sha}  {macos_url}")
         if linux_sha:

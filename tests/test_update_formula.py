@@ -1,8 +1,12 @@
 from __future__ import annotations
 
 import importlib.util
+import os
 import pathlib
+import sys
+import tempfile
 import unittest
+from unittest import mock
 
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
@@ -14,6 +18,26 @@ SPEC.loader.exec_module(update_formula)
 
 
 class UpdateFormulaTest(unittest.TestCase):
+    def run_main_in_temp_tap(self, formula_text: str, *args: str) -> str:
+        original_cwd = os.getcwd()
+        with tempfile.TemporaryDirectory() as directory:
+            root = pathlib.Path(directory)
+            formula_dir = root / "Formula"
+            formula_dir.mkdir()
+            formula_path = formula_dir / "sonoscli.rb"
+            formula_path.write_text(formula_text)
+
+            os.chdir(root)
+            try:
+                with (
+                    mock.patch.object(update_formula, "sha256", return_value="c" * 64),
+                    mock.patch.object(sys, "argv", ["update_formula.py", *args]),
+                ):
+                    update_formula.main()
+                return formula_path.read_text()
+            finally:
+                os.chdir(original_cwd)
+
     def test_updates_duplicate_source_url_checksums_in_stanza(self) -> None:
         text = '''class Camsnap < Formula
   version "0.2.0"
@@ -219,6 +243,350 @@ end
         self.assertIn('version "0.27.0"', updated)
         self.assertIn('sha256 "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"', updated)
         self.assertIn("CodexBar-macos-universal-#{version}.zip", updated)
+
+    def test_arm64_macos_artifact_keeps_top_level_arch_restriction(self) -> None:
+        text = '''class Sonoscli < Formula
+  desc "Control Sonos speakers from the command-line"
+  homepage "https://github.com/steipete/sonoscli"
+  url "https://github.com/steipete/sonoscli/releases/download/v0.3.1/sonoscli_0.3.1_darwin_arm64.tar.gz"
+  version "0.3.1"
+  sha256 "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  license "MIT"
+
+  depends_on arch: :arm64
+
+  def install
+    bin.install Dir["**/sonos"].first => "sonos"
+  end
+end
+'''
+
+        updated = self.run_main_in_temp_tap(
+            text,
+            "--formula",
+            "sonoscli",
+            "--tag",
+            "v0.3.2",
+            "--repository",
+            "steipete/sonoscli",
+            "--macos-artifact",
+            "sonoscli_0.3.2_darwin_arm64.tar.gz",
+        )
+
+        self.assertIn("sonoscli_0.3.2_darwin_arm64.tar.gz", updated)
+        self.assertIn('sha256 "' + "c" * 64 + '"', updated)
+        self.assertIn("depends_on arch: :arm64", updated)
+
+    def test_universal_macos_artifact_removes_top_level_arm64_restriction_idempotently(self) -> None:
+        text = '''class Sonoscli < Formula
+  desc "Control Sonos speakers from the command-line"
+  homepage "https://github.com/steipete/sonoscli"
+  url "https://github.com/steipete/sonoscli/releases/download/v0.3.1/sonoscli_0.3.1_darwin_arm64.tar.gz"
+  version "0.3.1"
+  sha256 "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  license "MIT"
+
+  depends_on arch: :arm64
+
+  def install
+    bin.install Dir["**/sonos"].first => "sonos"
+  end
+end
+'''
+
+        updated = self.run_main_in_temp_tap(
+            text,
+            "--formula",
+            "sonoscli",
+            "--tag",
+            "v0.3.2",
+            "--repository",
+            "steipete/sonoscli",
+            "--macos-artifact",
+            "sonoscli_0.3.2_macos-universal.tar.gz",
+        )
+        updated_again = update_formula.remove_top_level_arm64_dependency_for_universal_macos(
+            updated,
+            "https://github.com/steipete/sonoscli/releases/download/v0.3.2/sonoscli_0.3.2_macos-universal.tar.gz",
+            {},
+            "0.3.2",
+        )
+
+        self.assertIn("sonoscli_0.3.2_macos-universal.tar.gz", updated)
+        self.assertIn('version "0.3.2"', updated)
+        self.assertIn('sha256 "' + "c" * 64 + '"', updated)
+        self.assertNotIn("depends_on arch: :arm64", updated)
+        self.assertIn("depends_on :macos", updated)
+        self.assertEqual(updated_again, updated)
+
+    def test_universal_macos_artifact_leaves_other_arch_syntax_unchanged(self) -> None:
+        text = '''class Sonoscli < Formula
+  desc "Control Sonos speakers from the command-line"
+  homepage "https://github.com/steipete/sonoscli"
+  url "https://github.com/steipete/sonoscli/releases/download/v0.3.1/sonoscli_0.3.1_darwin_arm64.tar.gz"
+  version "0.3.1"
+  sha256 "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  license "MIT"
+
+  depends_on arch: :x86_64
+  depends_on "libusb"
+
+  def install
+    bin.install Dir["**/sonos"].first => "sonos"
+  end
+end
+'''
+
+        updated = self.run_main_in_temp_tap(
+            text,
+            "--formula",
+            "sonoscli",
+            "--tag",
+            "v0.3.2",
+            "--repository",
+            "steipete/sonoscli",
+            "--macos-artifact",
+            "sonoscli_0.3.2_macos-universal.tar.gz",
+        )
+
+        self.assertIn("depends_on arch: :x86_64", updated)
+        self.assertIn('depends_on "libusb"', updated)
+
+    def test_universal_repo_name_does_not_remove_arm64_restriction(self) -> None:
+        text = '''class Sonoscli < Formula
+  desc "Control Sonos speakers from the command-line"
+  homepage "https://github.com/steipete/macos-universal-tools"
+  url "https://github.com/steipete/macos-universal-tools/releases/download/v0.3.1/sonoscli_0.3.1_darwin_arm64.tar.gz"
+  version "0.3.1"
+  sha256 "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  license "MIT"
+
+  depends_on arch: :arm64
+
+  def install
+    bin.install Dir["**/sonos"].first => "sonos"
+  end
+end
+'''
+
+        updated = self.run_main_in_temp_tap(
+            text,
+            "--formula",
+            "sonoscli",
+            "--tag",
+            "v0.3.2",
+            "--repository",
+            "steipete/macos-universal-tools",
+            "--macos-artifact",
+            "sonoscli_0.3.2_darwin_arm64.tar.gz",
+        )
+
+        self.assertIn("sonoscli_0.3.2_darwin_arm64.tar.gz", updated)
+        self.assertIn("depends_on arch: :arm64", updated)
+
+    def test_universal_artifact_prefix_does_not_remove_arm64_restriction(self) -> None:
+        text = '''class Sonoscli < Formula
+  desc "Control Sonos speakers from the command-line"
+  homepage "https://github.com/steipete/sonoscli"
+  url "https://github.com/steipete/sonoscli/releases/download/v0.3.1/macos-universal-tools_0.3.1_darwin_arm64.tar.gz"
+  version "0.3.1"
+  sha256 "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  license "MIT"
+
+  depends_on arch: :arm64
+
+  def install
+    bin.install Dir["**/sonos"].first => "sonos"
+  end
+end
+'''
+
+        updated = self.run_main_in_temp_tap(
+            text,
+            "--formula",
+            "sonoscli",
+            "--tag",
+            "v0.3.2",
+            "--repository",
+            "steipete/sonoscli",
+            "--macos-artifact",
+            "macos-universal-tools_0.3.2_darwin_arm64.tar.gz",
+        )
+
+        self.assertIn("macos-universal-tools_0.3.2_darwin_arm64.tar.gz", updated)
+        self.assertIn("depends_on arch: :arm64", updated)
+
+    def test_existing_macos_dependency_is_not_duplicated(self) -> None:
+        text = '''class Sonoscli < Formula
+  desc "Control Sonos speakers from the command-line"
+  homepage "https://github.com/steipete/sonoscli"
+  url "https://github.com/steipete/sonoscli/releases/download/v0.3.1/sonoscli_0.3.1_darwin_arm64.tar.gz"
+  version "0.3.1"
+  sha256 "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  license "MIT"
+
+  depends_on :macos
+  depends_on arch: :arm64
+
+  def install
+    bin.install Dir["**/sonos"].first => "sonos"
+  end
+end
+'''
+
+        updated = self.run_main_in_temp_tap(
+            text,
+            "--formula",
+            "sonoscli",
+            "--tag",
+            "v0.3.2",
+            "--repository",
+            "steipete/sonoscli",
+            "--macos-artifact",
+            "sonoscli_0.3.2_macos-universal.tar.gz",
+        )
+
+        self.assertEqual(updated.count("depends_on :macos"), 1)
+        self.assertNotIn("depends_on arch: :arm64", updated)
+
+    def test_existing_versioned_macos_dependency_is_not_duplicated(self) -> None:
+        text = '''class Sonoscli < Formula
+  desc "Control Sonos speakers from the command-line"
+  homepage "https://github.com/steipete/sonoscli"
+  url "https://github.com/steipete/sonoscli/releases/download/v0.3.1/sonoscli_0.3.1_darwin_arm64.tar.gz"
+  version "0.3.1"
+  sha256 "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  license "MIT"
+
+  depends_on macos: :sonoma
+  depends_on arch: :arm64
+
+  def install
+    bin.install Dir["**/sonos"].first => "sonos"
+  end
+end
+'''
+
+        updated = self.run_main_in_temp_tap(
+            text,
+            "--formula",
+            "sonoscli",
+            "--tag",
+            "v0.3.2",
+            "--repository",
+            "steipete/sonoscli",
+            "--macos-artifact",
+            "sonoscli_0.3.2_macos-universal.tar.gz",
+        )
+
+        self.assertIn("depends_on macos: :sonoma", updated)
+        self.assertNotIn("depends_on :macos", updated)
+        self.assertNotIn("depends_on arch: :arm64", updated)
+
+    def test_nested_macos_dependency_does_not_count_as_top_level(self) -> None:
+        text = '''class Sonoscli < Formula
+  desc "Control Sonos speakers from the command-line"
+  homepage "https://github.com/steipete/sonoscli"
+  url "https://github.com/steipete/sonoscli/releases/download/v0.3.1/sonoscli_0.3.1_darwin_arm64.tar.gz"
+  version "0.3.1"
+  sha256 "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  license "MIT"
+
+  depends_on arch: :arm64
+
+  on_arm do
+    depends_on macos: :sonoma
+  end
+
+  def install
+    bin.install Dir["**/sonos"].first => "sonos"
+  end
+end
+'''
+
+        updated = self.run_main_in_temp_tap(
+            text,
+            "--formula",
+            "sonoscli",
+            "--tag",
+            "v0.3.2",
+            "--repository",
+            "steipete/sonoscli",
+            "--macos-artifact",
+            "sonoscli_0.3.2_macos-universal.tar.gz",
+        )
+
+        self.assertIn("  depends_on :macos", updated)
+        self.assertIn("    depends_on macos: :sonoma", updated)
+        self.assertNotIn("depends_on arch: :arm64", updated)
+
+    def test_universal_target_alias_removes_arm64_restriction(self) -> None:
+        text = '''class Sonoscli < Formula
+  desc "Control Sonos speakers from the command-line"
+  homepage "https://github.com/steipete/sonoscli"
+  url "https://github.com/steipete/sonoscli/releases/download/v0.3.1/sonoscli_0.3.1_darwin_arm64.tar.gz"
+  version "0.3.1"
+  sha256 "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  license "MIT"
+
+  depends_on arch: :arm64
+
+  def install
+    bin.install Dir["**/sonos"].first => "sonos"
+  end
+end
+'''
+
+        updated = self.run_main_in_temp_tap(
+            text,
+            "--formula",
+            "sonoscli",
+            "--tag",
+            "v0.3.2",
+            "--repository",
+            "steipete/sonoscli",
+            "--macos-artifact",
+            "sonoscli_0.3.2_fat.tar.gz",
+            "--target-aliases",
+            "darwin_universal=fat",
+        )
+
+        self.assertIn("sonoscli_0.3.2_fat.tar.gz", updated)
+        self.assertNotIn("depends_on arch: :arm64", updated)
+        self.assertIn("depends_on :macos", updated)
+
+    def test_universal_artifact_with_unlisted_archive_extension_removes_arm64_restriction(self) -> None:
+        text = '''class Sonoscli < Formula
+  desc "Control Sonos speakers from the command-line"
+  homepage "https://github.com/steipete/sonoscli"
+  url "https://github.com/steipete/sonoscli/releases/download/v0.3.1/sonoscli_0.3.1_darwin_arm64.tar.gz"
+  version "0.3.1"
+  sha256 "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  license "MIT"
+
+  depends_on arch: :arm64
+
+  def install
+    bin.install Dir["**/sonos"].first => "sonos"
+  end
+end
+'''
+
+        updated = self.run_main_in_temp_tap(
+            text,
+            "--formula",
+            "sonoscli",
+            "--tag",
+            "v0.3.2",
+            "--repository",
+            "steipete/sonoscli",
+            "--macos-artifact",
+            "sonoscli_0.3.2_darwin_universal.tar.zst",
+        )
+
+        self.assertIn("sonoscli_0.3.2_darwin_universal.tar.zst", updated)
+        self.assertNotIn("depends_on arch: :arm64", updated)
+        self.assertIn("depends_on :macos", updated)
 
 
 if __name__ == "__main__":
