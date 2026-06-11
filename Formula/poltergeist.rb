@@ -1,8 +1,8 @@
 class Poltergeist < Formula
   desc "Universal file watcher with auto-rebuild for any language or build system"
   homepage "https://github.com/steipete/poltergeist"
-  url "https://github.com/steipete/poltergeist/releases/download/v2.1.1/poltergeist-macos-universal-v2.1.1.tar.gz"
-  sha256 "a654108db074415ed463b53765d85f019b0063fe66d06d44d56120326f9e964f"
+  url "https://github.com/steipete/poltergeist/releases/download/v2.1.2/poltergeist-macos-universal-v2.1.2.tar.gz"
+  sha256 "981e3390befb9c14c9d919615369188b195b187d2b03a03571101a30efbfe169"
   license "MIT"
 
   depends_on "watchman"
