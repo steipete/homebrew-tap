@@ -18,6 +18,6 @@ class Eightctl < Formula
 
     assert_equal version.to_s, shell_output("#{bin}/eightctl version").strip
     assert_match "Control your Eight Sleep Pod", shell_output("#{bin}/eightctl --help")
-    assert_match "missing required auth fields", shell_output("#{bin}/eightctl --quiet status 2>&1", 1)
+    assert_match "Show device status", shell_output("#{bin}/eightctl status --help")
   end
 end

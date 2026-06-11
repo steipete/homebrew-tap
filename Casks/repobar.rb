@@ -14,10 +14,10 @@ cask "repobar" do
   binary "#{appdir}/RepoBar.app/Contents/MacOS/repobarcli", target: "repobar"
 
   zap trash: [
-    "~/Library/Application Support/RepoBar",
     "~/Library/Application Support/com.steipete.repobar",
-    "~/Library/Caches/RepoBar",
+    "~/Library/Application Support/RepoBar",
     "~/Library/Caches/com.steipete.repobar",
+    "~/Library/Caches/RepoBar",
     "~/Library/HTTPStorages/com.steipete.repobar",
     "~/Library/Preferences/com.steipete.repobar.plist",
     "~/Library/Saved Application State/com.steipete.repobar.savedState",
