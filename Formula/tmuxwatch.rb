@@ -29,6 +29,6 @@ class Tmuxwatch < Formula
   end
 
   test do
-    assert_match "tmuxwatch 0.9.2", shell_output("#{bin}/tmuxwatch --version")
+    assert_match version.to_s, shell_output("#{bin}/tmuxwatch --version")
   end
 end
