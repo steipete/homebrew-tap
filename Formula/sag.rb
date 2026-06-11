@@ -2,7 +2,7 @@ class Sag < Formula
   desc "Command-line ElevenLabs TTS with mac-style flags"
   homepage "https://github.com/steipete/sag"
   url "https://github.com/steipete/sag/releases/download/v0.4.0/sag_0.4.0_darwin_universal.tar.gz"
-  sha256 "b3366e8426f146e99761d7132c6d962db6c6933574e8c0e6f1b5ce50fbb7b94f"
+  sha256 "d4b201312ce2a2cf2b42bc98c47656b8adb09bf05be1086f0703c5ca318180af"
   license "MIT"
 
   on_linux do
@@ -17,7 +17,7 @@ class Sag < Formula
 
     on_intel do
       url "https://github.com/steipete/sag/releases/download/v#{version}/sag_#{version}_linux_amd64.tar.gz"
-      sha256 "4f080722ce0155c795bfa264491793bd56be6c3a18b4cae68cbe666fa922202f"
+      sha256 "b6e8deb2d254b4cc4a9008dc4544c693784bf7492cb63439a03674eaf483055c"
     end
   end
 
