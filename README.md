@@ -26,6 +26,7 @@ brew install --cask steipete/tap/<name>
 - `birdclaw` — Local Twitter memory for archives, DMs, likes, bookmarks, and moderation
 - `camsnap` — One command to grab frames, clips, or motion alerts from RTSP/ONVIF cams
 - `codexbar` — CodexBar CLI (Linuxbrew)
+- `eightctl` — Control Eight Sleep Pods from the terminal
 - `gifgrep` — Grep the GIF. Stick the landing.
 - `imsg` — Send and read iMessage / SMS from the terminal
 - `mcporter` — Model Context Protocol runtime and CLI generator (`0.11.3`: XDG config fallback)
@@ -81,6 +82,7 @@ Homebrew formulae don’t support `--zap`. Delete these to “factory reset”:
 - `blucli`: `~/Library/Application Support/blu/` + `~/Library/Caches/blu/`
 - `birdclaw`: `~/.birdclaw/`
 - `camsnap`: `~/.config/camsnap/config.yaml`
+- `eightctl`: `~/.config/eightctl/config.yaml`
 - `mcporter`: `~/.mcporter/`
 - `oracle`: `~/.oracle/`
 - `ordercli`: `~/Library/Application Support/ordercli/config.json`
