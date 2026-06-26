@@ -29,7 +29,7 @@ brew install --cask steipete/tap/<name>
 - `eightctl` — Control Eight Sleep Pods from the terminal
 - `gifgrep` — Grep the GIF. Stick the landing.
 - `imsg` — Send and read iMessage / SMS from the terminal
-- `mcporter` — Model Context Protocol runtime and CLI generator (`0.11.3`: XDG config fallback)
+- `mcporter` — Model Context Protocol runtime and CLI generator (`0.12.1`: file-backed call arguments and daemon reliability fixes)
 - `oracle` — Bundle prompts + files for second-model review
 - `ordercli` — Multi-provider order CLI (Foodora, Deliveroo)
 - `peekaboo` — Lightning-fast macOS screenshots & AI vision analysis
