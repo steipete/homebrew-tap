@@ -1,6 +1,6 @@
 cask "blackbar" do
-  version "0.2.3"
-  sha256 "8e5d1bbde874b07907cb8c5e822f270b559fcdde9f57ef066cff1b1728a97a43"
+  version "0.2.4"
+  sha256 "6aaa646d2ebc49bfe1a0245851f883a0935d051f6e9c9b840a47e540bc01691d"
 
   url "https://github.com/steipete/BlackBar/releases/download/v#{version}/BlackBar-#{version}.zip",
       verified: "github.com/steipete/BlackBar/"

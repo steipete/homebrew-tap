@@ -2,7 +2,9 @@
   "discrawl": "openclaw/tap",
   "gogcli": "openclaw/tap",
   "goplaces": "openclaw/tap",
+  "octopool": "openclaw/tap",
   "summarize": "homebrew/core",
+  "telecrawl": "openclaw/tap",
   "wacli": "openclaw/tap",
   "wacrawl": "openclaw/tap"
 }
