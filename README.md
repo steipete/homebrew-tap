@@ -37,11 +37,11 @@ brew install --cask steipete/tap/<name>
 - `sag` — Command-line ElevenLabs TTS with mac-style flags
 - `sonoscli` — Control Sonos speakers from the command line
 - `songsee` — Spectral visualization CLI for audio files
-- `telecrawl` — Telegram Desktop archive CLI with encrypted Git backups
 - `tmuxwatch` — Live tmux dashboard with Bubble Tea UI
 
 ### Casks
 
+- `blackbar` — Menu bar app for Blacksmith CI status and live vCPU usage
 - `codexbar` — Menu bar usage monitor for Codex and Claude
 - `repobar` — Menu bar GitHub repo status at a glance
 - `trimmy` — Paste-once, run-once clipboard cleaner for terminal snippets
@@ -87,7 +87,6 @@ Homebrew formulae don’t support `--zap`. Delete these to “factory reset”:
 - `oracle`: `~/.oracle/`
 - `ordercli`: `~/Library/Application Support/ordercli/config.json`
 - `sonoscli`: `~/Library/Application Support/sonoscli/config.json`
-- `telecrawl`: `~/.telecrawl/`
 
 ## Local Source Checkouts (Peter)
 
