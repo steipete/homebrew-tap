@@ -58,7 +58,7 @@ permissions:
 
 jobs:
   update-formula:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout tap repository
         uses: actions/checkout@v6
