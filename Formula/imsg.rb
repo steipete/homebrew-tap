@@ -1,8 +1,8 @@
 class Imsg < Formula
   desc "Send and read iMessage / SMS from the terminal"
   homepage "https://github.com/openclaw/imsg"
-  url "https://github.com/openclaw/imsg/releases/download/v0.12.2/imsg-macos.zip"
-  sha256 "5550850a330adf6bf579100a9ba6f545412768845ca61135b51fde9dd4761d97"
+  url "https://github.com/openclaw/imsg/releases/download/v0.12.3/imsg-macos.zip"
+  sha256 "35977a22e9721440acf9f5b945d67034939948ba4fa4ea46b0f55d527f24d4f2"
   license "MIT"
 
   # macOS Sonoma (14.0) or later required
