@@ -30,6 +30,7 @@ brew install --cask steipete/tap/<name>
 - `gifgrep` — Grep the GIF. Stick the landing.
 - `imsg` — Send and read iMessage / SMS from the terminal
 - `mcporter` — Model Context Protocol runtime and CLI generator (`0.12.3`: typed-array signatures and refreshed dependencies)
+- `nameplate` — Click-through identity overlays for Linux remote-desktop fleets
 - `oracle` — Bundle prompts + files for second-model review
 - `ordercli` — Multi-provider order CLI (Foodora, Deliveroo)
 - `peekaboo` — Lightning-fast macOS screenshots & AI vision analysis
