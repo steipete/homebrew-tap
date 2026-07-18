@@ -57,6 +57,8 @@ Run the `Update Formula` workflow with:
 
 The workflow updates regular single-URL formulae, formulae with separate `on_macos` and `on_linux` stanzas, duplicate source-build URLs inside a stanza, and target-specific binary formulae when `artifact_template` is provided. Formulae with unsupported custom platform layouts still need manual updates.
 
+New release assets may briefly return 404 while publishing; the updater waits with exponential backoff. Concurrent formula updates rebase onto the latest `main` before retrying their push.
+
 OpenClaw-owned formulae live in `openclaw/tap`; migrated names are listed in `tap_migrations.json`.
 
 ## Update / Uninstall

@@ -133,4 +133,18 @@ jobs:
           else
             git commit -m "${FORMULA}: update formula for ${TAG}"
           fi
-          git push
+          for attempt in {1..5}; do
+            if git push; then
+              exit 0
+            fi
+
+            if [ "$attempt" -eq 5 ]; then
+              echo "Push failed after $attempt attempts" >&2
+              exit 1
+            fi
+
+            echo "Push raced with main; fetching and rebasing before retry $((attempt + 1))/5" >&2
+            git fetch origin main
+            git rebase origin/main
+            sleep $((attempt * 5))
+          done
