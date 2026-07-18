@@ -16,6 +16,10 @@ on:
         description: "Source repository (e.g., steipete/wacli)"
         required: true
         type: string
+      assets:
+        description: "Optional exact four-platform asset name/SHA-256 JSON from a verified release inventory"
+        required: false
+        type: string
       description:
         description: "Formula description used when creating a missing formula"
         required: false
@@ -70,6 +74,7 @@ jobs:
 
       - name: Update formula
         env:
+          ASSETS_JSON: ${{ inputs.assets }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           args=(
@@ -77,6 +82,10 @@ jobs:
             --tag "${{ inputs.tag }}"
             --repository "${{ inputs.repository }}"
           )
+
+          if [ -n "$ASSETS_JSON" ]; then
+            args+=(--assets-json "$ASSETS_JSON")
+          fi
 
           if [ -n "${{ inputs.description }}" ]; then
             args+=(--description "${{ inputs.description }}")

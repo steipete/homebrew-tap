@@ -54,8 +54,9 @@ Run the `Update Formula` workflow with:
 - `formula`: formula name, e.g. `tmuxwatch`
 - `tag`: release tag, e.g. `v0.7.0`
 - `repository`: source repository, e.g. `steipete/tmuxwatch`
+- `assets`: optional JSON object containing exact `name` and `sha256` values for `darwin_amd64`, `darwin_arm64`, `linux_amd64`, and `linux_arm64`
 
-The workflow updates regular single-URL formulae, formulae with separate `on_macos` and `on_linux` stanzas, duplicate source-build URLs inside a stanza, and target-specific binary formulae when `artifact_template` is provided. Formulae with unsupported custom platform layouts still need manual updates.
+When `assets` is present, the updater uses each filename and checksum verbatim, downloads every release asset, and refuses to commit unless the downloaded SHA-256 matches. Without it, the workflow preserves the legacy single-URL, template, alias, and filename-guessing paths for older callers. Formulae with unsupported custom platform layouts still need manual updates.
 
 New release assets may briefly return 404 while publishing; the updater waits with exponential backoff. Concurrent formula updates rebase onto the latest `main` before retrying their push.
 

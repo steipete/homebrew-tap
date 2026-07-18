@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import importlib.util
+import json
 import os
 import pathlib
 import sys
@@ -79,6 +80,86 @@ class UpdateFormulaTest(unittest.TestCase):
             missing.close()
 
         sleep.assert_not_called()
+
+    def test_explicit_assets_render_exact_names_after_download_verification(self) -> None:
+        formula = '''class Sonoscli < Formula
+  homepage "https://github.com/steipete/sonoscli"
+  version "0.3.1"
+  license "MIT"
+
+  on_macos do
+    if Hardware::CPU.arm?
+      url "https://github.com/steipete/sonoscli/releases/download/v0.3.1/old-darwin-arm64.tar.gz"
+      sha256 "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    else
+      url "https://github.com/steipete/sonoscli/releases/download/v0.3.1/old-darwin-amd64.tar.gz"
+      sha256 "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    end
+  end
+
+  on_linux do
+    on_arm do
+      url "https://github.com/steipete/sonoscli/releases/download/v0.3.1/old-linux-arm64.tar.gz"
+      sha256 "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    end
+    on_intel do
+      url "https://github.com/steipete/sonoscli/releases/download/v0.3.1/old-linux-amd64.tar.gz"
+      sha256 "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    end
+  end
+
+  resource "completion" do
+    url "https://example.test/completion.tar.gz"
+    sha256 "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+  end
+
+  def install
+    bin.install "sonoscli"
+  end
+end
+'''
+        assets = {
+            target: {"name": f"sonoscli_0.3.2_custom_{target}_v8.0.tar.gz", "sha256": "c" * 64}
+            for target in update_formula.RELEASE_TARGETS
+        }
+
+        updated = self.run_main_in_temp_tap(
+            formula,
+            "--formula",
+            "sonoscli",
+            "--tag",
+            "v0.3.2",
+            "--repository",
+            "steipete/sonoscli",
+            "--assets-json",
+            json.dumps(assets),
+        )
+
+        self.assertIn('version "0.3.2"', updated)
+        self.assertIn('url "https://example.test/completion.tar.gz"', updated)
+        self.assertIn('sha256 "' + "d" * 64 + '"', updated)
+        for item in assets.values():
+            self.assertIn(item["name"], updated)
+            self.assertIn(f'sha256 "{item["sha256"]}"', updated)
+
+    def test_explicit_assets_contract_is_atomic_and_must_rehash(self) -> None:
+        self.assertIsNone(update_formula.parse_explicit_assets(None))
+        assets = {
+            target: {"name": f"fixture-{target}.tar.gz", "sha256": "a" * 64}
+            for target in update_formula.RELEASE_TARGETS
+        }
+        incomplete = dict(assets)
+        incomplete.pop("linux_arm64")
+        with self.assertRaisesRegex(SystemExit, "must contain exactly"):
+            update_formula.parse_explicit_assets(json.dumps(incomplete))
+
+        parsed = update_formula.parse_explicit_assets(json.dumps(assets))
+        assert parsed is not None
+        with (
+            mock.patch.object(update_formula, "sha256", return_value="b" * 64),
+            self.assertRaisesRegex(SystemExit, "SHA-256 mismatch"),
+        ):
+            update_formula.verify_explicit_assets("steipete/fixture", "v1.2.3", parsed)
 
     def test_updates_duplicate_source_url_checksums_in_stanza(self) -> None:
         text = '''class Camsnap < Formula

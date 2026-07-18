@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import json
 import os
 import pathlib
 import re
@@ -24,6 +25,54 @@ import urllib.request
 USER_AGENT = "steipete-homebrew-tap-updater"
 RELEASE_ASSET_ATTEMPTS = 6
 RELEASE_ASSET_INITIAL_BACKOFF = 10.0
+RELEASE_TARGETS = ("darwin_amd64", "darwin_arm64", "linux_amd64", "linux_arm64")
+ARTIFACT_NAME_PATTERN = re.compile(r"[A-Za-z0-9][A-Za-z0-9+@._-]*")
+SHA256_PATTERN = re.compile(r"[0-9a-f]{64}")
+
+
+def parse_explicit_assets(value: str | None) -> dict[str, dict[str, str]] | None:
+    if not value:
+        return None
+    try:
+        payload = json.loads(value)
+    except json.JSONDecodeError as error:
+        raise SystemExit(f"invalid assets JSON: {error.msg}") from error
+    if not isinstance(payload, dict) or set(payload) != set(RELEASE_TARGETS):
+        raise SystemExit("assets JSON must contain exactly darwin_amd64, darwin_arm64, linux_amd64, and linux_arm64")
+
+    assets: dict[str, dict[str, str]] = {}
+    names: set[str] = set()
+    for target in RELEASE_TARGETS:
+        item = payload[target]
+        if not isinstance(item, dict) or set(item) != {"name", "sha256"}:
+            raise SystemExit(f"assets JSON {target} must contain exactly name and sha256")
+        name = item["name"]
+        digest = item["sha256"]
+        if not isinstance(name, str) or not ARTIFACT_NAME_PATTERN.fullmatch(name) or not name.endswith(".tar.gz"):
+            raise SystemExit(f"assets JSON {target} has an unsafe release asset filename")
+        if not isinstance(digest, str) or not SHA256_PATTERN.fullmatch(digest):
+            raise SystemExit(f"assets JSON {target} has an invalid SHA-256")
+        if name in names:
+            raise SystemExit(f"assets JSON repeats release asset filename {name!r}")
+        names.add(name)
+        assets[target] = {"name": name, "sha256": digest}
+    return assets
+
+
+def explicit_asset_url(repository: str, tag: str, name: str) -> str:
+    return f"https://github.com/{repository}/releases/download/{tag}/{name}"
+
+
+def verify_explicit_assets(repository: str, tag: str, assets: dict[str, dict[str, str]]) -> None:
+    for target in RELEASE_TARGETS:
+        item = assets[target]
+        url = explicit_asset_url(repository, tag, item["name"])
+        observed = sha256(url)
+        if observed != item["sha256"]:
+            raise SystemExit(
+                f"downloaded {target} SHA-256 mismatch: observed {observed}, expected {item['sha256']}"
+            )
+        print(f"verified {target}: {observed}  {url}")
 
 
 def sha256(
@@ -134,7 +183,7 @@ def classify_target(url: str, aliases: dict[str, str], version: str) -> str | No
 def iter_url_sha_pairs(text: str) -> list[re.Match[str]]:
     return list(
         re.finditer(
-            r'(?P<prefix>url ")(?P<url>[^"]+)(?P<middle>"\n\s+sha256 ")[0-9a-f]+(?P<suffix>")',
+            r'(?P<prefix>url ")(?P<url>[^"]+)(?P<middle>"\n\s+sha256 ")(?P<sha>[0-9a-f]+)(?P<suffix>")',
             text,
             flags=re.MULTILINE,
         )
@@ -143,7 +192,7 @@ def iter_url_sha_pairs(text: str) -> list[re.Match[str]]:
 
 def stanza_body(text: str, stanza: str) -> str | None:
     match = re.search(
-        rf'^\s*{stanza}\s+do\s*$\n(?P<body>.*?)(?=^\s*(?:on_macos\s+do|on_linux\s+do|head |def |test do))',
+        rf'^\s*{stanza}\s+do\s*$\n(?P<body>.*?)(?=^\s*(?:on_macos\s+do|on_linux\s+do|resource\s+|head |def |test do))',
         text,
         flags=re.MULTILINE | re.DOTALL,
     )
@@ -182,7 +231,7 @@ def uses_stanza_url_mode(text: str, version: str) -> bool:
 
 def stanza_match(text: str, stanza: str) -> re.Match[str] | None:
     return re.search(
-        rf'(?P<header>^\s*{stanza}\s+do\s*$\n)(?P<body>.*?)(?=^\s*(?:on_macos\s+do|on_linux\s+do|head |def |test do))',
+        rf'(?P<header>^\s*{stanza}\s+do\s*$\n)(?P<body>.*?)(?=^\s*(?:on_macos\s+do|on_linux\s+do|resource\s+|head |def |test do))',
         text,
         flags=re.MULTILINE | re.DOTALL,
     )
@@ -247,6 +296,109 @@ def update_url_and_sha_in_stanza(text: str, stanza: str, url: str, digest: str, 
 
 def has_stanza(text: str, stanza: str) -> bool:
     return stanza_body(text, stanza) is not None
+
+
+def predicate_architecture(line: str) -> str | None:
+    match = re.fullmatch(
+        r"    (?:if|elsif) Hardware::CPU\.(arm|intel)\?(?: && Hardware::CPU\.is_64_bit\?)?\n?",
+        line,
+    )
+    if match:
+        return "arm64" if match.group(1) == "arm" else "amd64"
+    match = re.fullmatch(r"    on_(arm|intel) do\n?", line)
+    if match:
+        return "arm64" if match.group(1) == "arm" else "amd64"
+    return None
+
+
+def update_explicit_stanza(
+    text: str,
+    stanza: str,
+    repository: str,
+    tag: str,
+    assets: dict[str, dict[str, str]],
+) -> str:
+    matches = list(re.finditer(rf"^  {stanza} do$", text, flags=re.MULTILINE))
+    match = stanza_match(text, stanza)
+    if len(matches) != 1 or match is None:
+        raise SystemExit(f"explicit-assets mode requires exactly one {stanza} stanza")
+
+    prefix = "darwin" if stanza == "on_macos" else "linux"
+    lines = match.group("body").splitlines(keepends=True)
+    current_architecture: str | None = None
+    conditional_architecture: str | None = None
+    seen_targets: set[str] = set()
+    index = 0
+    while index < len(lines):
+        architecture = predicate_architecture(lines[index])
+        if architecture:
+            current_architecture = architecture
+            conditional_architecture = architecture
+            index += 1
+            continue
+        if re.fullmatch(r"    else\n?", lines[index]):
+            if conditional_architecture is None:
+                raise SystemExit(f"explicit-assets mode found an unmatched else in {stanza}")
+            current_architecture = "amd64" if conditional_architecture == "arm64" else "arm64"
+            index += 1
+            continue
+        if re.fullmatch(r"    end\n?", lines[index]):
+            current_architecture = None
+            conditional_architecture = None
+            index += 1
+            continue
+
+        url_match = re.fullmatch(r'(\s+)url "[^"]+"\n?', lines[index])
+        if not url_match:
+            index += 1
+            continue
+        if current_architecture is None or index + 1 >= len(lines):
+            raise SystemExit(f"explicit-assets mode could not bind a {stanza} URL to an architecture predicate")
+        sha_match = re.fullmatch(r'(\s+)sha256 "[0-9a-f]+"\n?', lines[index + 1])
+        if not sha_match or sha_match.group(1) != url_match.group(1):
+            raise SystemExit(f"explicit-assets mode requires adjacent URL/checksum pairs in {stanza}")
+
+        target = f"{prefix}_{current_architecture}"
+        if target in seen_targets:
+            raise SystemExit(f"explicit-assets mode found duplicate {target} URL/checksum pairs")
+        item = assets[target]
+        newline = "\n" if lines[index].endswith("\n") else ""
+        indentation = url_match.group(1)
+        lines[index] = f'{indentation}url "{explicit_asset_url(repository, tag, item["name"])}"{newline}'
+        lines[index + 1] = f'{indentation}sha256 "{item["sha256"]}"{newline}'
+        seen_targets.add(target)
+        index += 2
+
+    expected_targets = {f"{prefix}_arm64", f"{prefix}_amd64"}
+    if seen_targets != expected_targets:
+        raise SystemExit(f"explicit-assets mode requires exact arm64 and amd64 pairs in {stanza}")
+    body = "".join(lines)
+    return text[: match.start("body")] + body + text[match.end("body") :]
+
+
+def render_explicit_target_formula(
+    text: str,
+    repository: str,
+    tag: str,
+    version: str,
+    assets: dict[str, dict[str, str]],
+) -> str:
+    text = update_repository_metadata(text, repository)
+    text = update_version(text, version)
+    text = update_explicit_stanza(text, "on_macos", repository, tag, assets)
+    text = update_explicit_stanza(text, "on_linux", repository, tag, assets)
+    actual_pairs = sorted(
+        (match.group("url").replace("#{version}", version), match.group("sha"))
+        for stanza in ("on_macos", "on_linux")
+        for match in iter_url_sha_pairs(stanza_body(text, stanza) or "")
+    )
+    expected_pairs = sorted(
+        (explicit_asset_url(repository, tag, assets[target]["name"]), assets[target]["sha256"])
+        for target in RELEASE_TARGETS
+    )
+    if actual_pairs != expected_pairs:
+        raise SystemExit("explicit-assets rendering did not produce the exact target URL/checksum inventory")
+    return text
 
 
 def ruby_class_name(formula: str) -> str:
@@ -568,6 +720,7 @@ def main() -> int:
     parser.add_argument("--formula", required=True, help="Formula name, e.g. wacli")
     parser.add_argument("--tag", required=True, help="Release tag, e.g. v0.7.0")
     parser.add_argument("--repository", required=True, help="Source repository, e.g. steipete/wacli")
+    parser.add_argument("--assets-json", help="Exact four-platform asset name/SHA-256 JSON")
     parser.add_argument(
         "--description",
         help="Formula description used when creating a missing formula",
@@ -613,6 +766,21 @@ def main() -> int:
     args = parser.parse_args()
 
     version = args.tag[1:] if args.tag.startswith("v") else args.tag
+    explicit_assets = parse_explicit_assets(args.assets_json)
+    if explicit_assets is not None:
+        incompatible = [
+            name
+            for name, value in (
+                ("artifact_template", args.artifact_template),
+                ("artifact_url", args.artifact_url),
+                ("linux_url", args.linux_url),
+                ("macos_artifact", args.macos_artifact),
+                ("target_aliases", args.target_aliases),
+            )
+            if value
+        ]
+        if incompatible:
+            raise SystemExit("explicit-assets mode does not support legacy naming inputs: " + ", ".join(incompatible))
     if args.cask and not args.cask_artifact:
         raise SystemExit("--cask-artifact is required when --cask is set")
 
@@ -633,6 +801,16 @@ def main() -> int:
         print(f"created {path}")
 
     text = path.read_text()
+    if explicit_assets is not None:
+        verify_explicit_assets(args.repository, args.tag, explicit_assets)
+        text = render_explicit_target_formula(text, args.repository, args.tag, version, explicit_assets)
+        path.write_text(text)
+        print(f"updated {path} to {version} from exact verified release assets")
+        if args.cask:
+            cask_artifact = format_template(args.cask_artifact, args.formula, version, args.tag)
+            update_cask(args.cask, args.repository, args.tag, cask_artifact)
+        return 0
+
     text = update_repository_metadata(text, args.repository)
     has_macos = has_stanza(text, "on_macos")
     has_linux = has_stanza(text, "on_linux")
