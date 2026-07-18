@@ -6,6 +6,7 @@ import pathlib
 import sys
 import tempfile
 import unittest
+import urllib.error
 from unittest import mock
 
 
@@ -37,6 +38,47 @@ class UpdateFormulaTest(unittest.TestCase):
                 return formula_path.read_text()
             finally:
                 os.chdir(original_cwd)
+
+    def test_sha256_retries_missing_release_asset_with_backoff(self) -> None:
+        response = mock.MagicMock()
+        response.__enter__.return_value.read.side_effect = [b"artifact", b""]
+        missing = urllib.error.HTTPError(
+            "https://github.com/openclaw/Peekaboo/releases/download/v1.0.0/peekaboo.tar.gz",
+            404,
+            "Not Found",
+            {},
+            None,
+        )
+
+        with (
+            mock.patch.object(update_formula.urllib.request, "urlopen", side_effect=[missing, response]),
+            mock.patch.object(update_formula.time, "sleep") as sleep,
+        ):
+            digest = update_formula.sha256(missing.url, attempts=2, initial_backoff=3)
+
+        self.assertEqual(digest, "c7c5c1d70c5dec4416ab6158afd0b223ef40c29b1dc1f97ed9428b94d4cadb1c")
+        sleep.assert_called_once_with(3)
+
+    def test_sha256_does_not_retry_non_release_404(self) -> None:
+        missing = urllib.error.HTTPError(
+            "https://github.com/openclaw/Peekaboo/archive/refs/tags/v1.0.0.tar.gz",
+            404,
+            "Not Found",
+            {},
+            None,
+        )
+
+        try:
+            with (
+                mock.patch.object(update_formula.urllib.request, "urlopen", side_effect=missing),
+                mock.patch.object(update_formula.time, "sleep") as sleep,
+                self.assertRaises(urllib.error.HTTPError),
+            ):
+                update_formula.sha256(missing.url, attempts=2, initial_backoff=3)
+        finally:
+            missing.close()
+
+        sleep.assert_not_called()
 
     def test_updates_duplicate_source_url_checksums_in_stanza(self) -> None:
         text = '''class Camsnap < Formula

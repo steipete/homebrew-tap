@@ -15,25 +15,51 @@ import os
 import pathlib
 import re
 import sys
+import time
+import urllib.error
 import urllib.parse
 import urllib.request
 
 
 USER_AGENT = "steipete-homebrew-tap-updater"
+RELEASE_ASSET_ATTEMPTS = 6
+RELEASE_ASSET_INITIAL_BACKOFF = 10.0
 
 
-def sha256(url: str) -> str:
+def sha256(
+    url: str,
+    *,
+    attempts: int = RELEASE_ASSET_ATTEMPTS,
+    initial_backoff: float = RELEASE_ASSET_INITIAL_BACKOFF,
+) -> str:
     headers = {"User-Agent": USER_AGENT}
     token = os.environ.get("GITHUB_TOKEN")
     if token and url.startswith("https://github.com/"):
         headers["Authorization"] = f"Bearer {token}"
 
     request = urllib.request.Request(url, headers=headers)
-    digest = hashlib.sha256()
-    with urllib.request.urlopen(request) as response:
-        while chunk := response.read(1024 * 1024):
-            digest.update(chunk)
-    return digest.hexdigest()
+    for attempt in range(1, attempts + 1):
+        try:
+            digest = hashlib.sha256()
+            with urllib.request.urlopen(request) as response:
+                while chunk := response.read(1024 * 1024):
+                    digest.update(chunk)
+            return digest.hexdigest()
+        except urllib.error.HTTPError as error:
+            is_missing_release_asset = error.code == 404 and "/releases/download/" in url
+            if not is_missing_release_asset or attempt == attempts:
+                raise
+
+            error.close()
+            delay = initial_backoff * (2 ** (attempt - 1))
+            print(
+                f"release asset unavailable (404); retrying in {delay:g}s "
+                f"({attempt}/{attempts}): {url}",
+                file=sys.stderr,
+            )
+            time.sleep(delay)
+
+    raise AssertionError("unreachable")
 
 
 def replace_once(text: str, pattern: str, replacement: str, description: str) -> str:
