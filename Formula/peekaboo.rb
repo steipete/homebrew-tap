@@ -8,7 +8,7 @@ class Peekaboo < Formula
   depends_on macos: :sequoia
 
   def install
-    bin.install "peekaboo" => "peekaboo"
+    bin.install "peekaboo", *Dir["libswiftCompatibility*.dylib"]
   end
 
   def post_install
