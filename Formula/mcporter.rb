@@ -3,8 +3,8 @@ require "language/node"
 class Mcporter < Formula
   desc "Model Context Protocol runtime and CLI generator"
   homepage "https://github.com/openclaw/mcporter"
-  url "https://github.com/openclaw/mcporter/releases/download/v0.13.1/mcporter-0.13.1.tgz"
-  sha256 "cf1f2753c813687f615e2ed00a1fff6d8ed636cc26089ba6020d4baf0137029f"
+  url "https://github.com/openclaw/mcporter/releases/download/v0.13.2/mcporter-0.13.2.tgz"
+  sha256 "637b7456832ac98924a69a82e42950152c07e26f654b8e024afd0c528fb5697c"
   license "MIT"
 
   depends_on "node"
