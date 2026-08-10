@@ -1,0 +1,91 @@
+{
+  "artifacts": [
+    {
+      "app": [
+        "Nameplate.app"
+      ],
+      "target": "/Applications/Nameplate.app"
+    },
+    {
+      "binary": [
+        "/Applications/Nameplate.app/Contents/Helpers/nameplate"
+      ],
+      "target": "/opt/homebrew/bin/nameplate"
+    },
+    {
+      "zap": [
+        {
+          "trash": [
+            "~/Library/Caches/com.steipete.nameplate",
+            "~/Library/HTTPStorages/com.steipete.nameplate",
+            "~/Library/Preferences/com.steipete.nameplate.plist",
+            "~/Library/Saved Application State/com.steipete.nameplate.savedState"
+          ]
+        }
+      ]
+    }
+  ],
+  "auto_updates": null,
+  "autobump": true,
+  "bundle_short_version": null,
+  "bundle_version": null,
+  "caveats": null,
+  "caveats_rosetta": null,
+  "conflicts_with": null,
+  "container": null,
+  "depends_on": {
+    "arch": [
+      {
+        "bits": 64,
+        "type": "arm"
+      }
+    ],
+    "macos": {
+      ">=": [
+        "15"
+      ]
+    }
+  },
+  "deprecate_args": null,
+  "deprecated": false,
+  "deprecation_date": null,
+  "deprecation_reason": null,
+  "deprecation_replacement_cask": null,
+  "deprecation_replacement_formula": null,
+  "desc": "Brand every computer in your fleet with click-through identity overlays",
+  "disable_args": null,
+  "disable_date": null,
+  "disable_reason": null,
+  "disable_replacement_cask": null,
+  "disable_replacement_formula": null,
+  "disabled": false,
+  "full_token": "steipete/tap/nameplate",
+  "homepage": "https://nameplate.sh/",
+  "installed": null,
+  "installed_time": null,
+  "languages": [],
+  "name": [
+    "Nameplate"
+  ],
+  "no_autobump_message": null,
+  "old_tokens": [],
+  "outdated": false,
+  "pinned": false,
+  "pinned_version": null,
+  "rename": [],
+  "ruby_source_checksum": {
+    "sha256": "ed314577dc171fd4d2790832d136e157a0f60bb0e53ac534763bbf15bc6aa720"
+  },
+  "ruby_source_path": "Casks/nameplate.rb",
+  "sha256": "639e9eff1fc3e57a351a9cae4dc31eea5b3d6b730b5e21609eeebf48350f936f",
+  "skip_livecheck": false,
+  "tap": "steipete/tap",
+  "tap_git_head": "5bfaad78863f58414e59d97249a4508185f0a543",
+  "token": "nameplate",
+  "url": "https://github.com/steipete/Nameplate/releases/download/v0.3.1/Nameplate-0.3.1.zip",
+  "url_specs": {
+    "verified": "github.com/steipete/Nameplate/"
+  },
+  "variations": {},
+  "version": "0.3.1"
+}

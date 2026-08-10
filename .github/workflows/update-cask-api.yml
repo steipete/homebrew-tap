@@ -1,0 +1,87 @@
+name: Update Cask API Metadata
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "Casks/**"
+  workflow_run:
+    workflows:
+      - Update Formula
+    types:
+      - completed
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-cask-api
+  cancel-in-progress: false
+
+jobs:
+  update-cask-api:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: macos-latest
+    steps:
+      - name: Checkout tap repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          ref: main
+
+      - name: Setup Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Tap checked-out source
+        env:
+          HOMEBREW_NO_AUTO_UPDATE: "1"
+        run: |
+          if brew tap | grep -qx "steipete/tap"; then
+            tap_repo="$(brew --repo steipete/tap)"
+            git -C "$tap_repo" fetch "$GITHUB_WORKSPACE" HEAD
+            git -C "$tap_repo" checkout --detach FETCH_HEAD
+          else
+            brew tap --custom-remote steipete/tap "$GITHUB_WORKSPACE"
+          fi
+
+      - name: Generate cask API metadata
+        run: python3 .github/scripts/generate_cask_api.py
+
+      - name: Commit and push
+        env:
+          HOMEBREW_NO_AUTO_UPDATE: "1"
+        run: |
+          git add api/cask
+          if git diff --cached --quiet; then
+            echo "Cask API metadata already up to date"
+            exit 0
+          fi
+
+          git commit -m "chore: update cask API metadata"
+          for attempt in {1..5}; do
+            if git push origin HEAD:main; then
+              exit 0
+            fi
+
+            if [ "$attempt" -eq 5 ]; then
+              echo "Push failed after $attempt attempts" >&2
+              exit 1
+            fi
+
+            echo "Push raced with main; rebasing and regenerating before retry $((attempt + 1))/5" >&2
+            git fetch origin main
+            git rebase origin/main
+
+            tap_repo="$(brew --repo steipete/tap)"
+            git -C "$tap_repo" fetch "$GITHUB_WORKSPACE" HEAD
+            git -C "$tap_repo" checkout --detach FETCH_HEAD
+            python3 .github/scripts/generate_cask_api.py
+            git add api/cask
+            if ! git diff --cached --quiet; then
+              git commit -m "chore: refresh cask API metadata after push race"
+            fi
+          done

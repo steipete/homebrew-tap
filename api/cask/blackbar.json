@@ -1,0 +1,82 @@
+{
+  "artifacts": [
+    {
+      "app": [
+        "BlackBar.app"
+      ],
+      "target": "/Applications/BlackBar.app"
+    },
+    {
+      "zap": [
+        {
+          "trash": [
+            "~/Library/Application Support/BlackBar",
+            "~/Library/Application Support/com.steipete.blackbar",
+            "~/Library/Caches/BlackBar",
+            "~/Library/Caches/com.steipete.blackbar",
+            "~/Library/HTTPStorages/com.steipete.blackbar",
+            "~/Library/Preferences/com.steipete.blackbar.plist",
+            "~/Library/Saved Application State/com.steipete.blackbar.savedState"
+          ]
+        }
+      ]
+    }
+  ],
+  "auto_updates": true,
+  "autobump": true,
+  "bundle_short_version": null,
+  "bundle_version": null,
+  "caveats": null,
+  "caveats_rosetta": null,
+  "conflicts_with": null,
+  "container": null,
+  "depends_on": {
+    "macos": {
+      ">=": [
+        "14"
+      ]
+    }
+  },
+  "deprecate_args": null,
+  "deprecated": false,
+  "deprecation_date": null,
+  "deprecation_reason": null,
+  "deprecation_replacement_cask": null,
+  "deprecation_replacement_formula": null,
+  "desc": "Menu bar app for Blacksmith CI status and live vCPU usage",
+  "disable_args": null,
+  "disable_date": null,
+  "disable_reason": null,
+  "disable_replacement_cask": null,
+  "disable_replacement_formula": null,
+  "disabled": false,
+  "full_token": "steipete/tap/blackbar",
+  "homepage": "https://black.bar/",
+  "installed": null,
+  "installed_time": null,
+  "languages": [],
+  "name": [
+    "BlackBar"
+  ],
+  "no_autobump_message": null,
+  "old_tokens": [],
+  "outdated": false,
+  "pinned": false,
+  "pinned_version": null,
+  "rename": [],
+  "ruby_source_checksum": {
+    "sha256": "ee74455cc44d4a507411e49a853132d5064fa869757ed0e90f026af97602e625"
+  },
+  "ruby_source_path": "Casks/blackbar.rb",
+  "sha256": "068ff4ceb559a357f142b693fca2ffbc05057f5b9a2f634eb35693c252e4b5bc",
+  "skip_livecheck": false,
+  "tap": "steipete/tap",
+  "tap_git_head": "5bfaad78863f58414e59d97249a4508185f0a543",
+  "token": "blackbar",
+  "url": "https://github.com/steipete/BlackBar/releases/download/v0.2.5/BlackBar-0.2.5.zip",
+  "url_specs": {
+    "verified": "github.com/steipete/BlackBar/"
+  },
+  "variations": {},
+  "version": "0.2.5"
+}
