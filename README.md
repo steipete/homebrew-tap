@@ -60,6 +60,16 @@ When `assets` is present, the updater uses each filename and checksum verbatim, 
 
 New release assets may briefly return 404 while publishing; the updater waits with exponential backoff. Concurrent formula updates rebase onto the latest `main` before retrying their push.
 
+## Cask API Metadata
+
+Raw metadata for API-based consumers such as mise is published at `api/cask/<token>.json`. The `Update Cask API Metadata` workflow regenerates every cask after direct cask changes and after the release updater completes, including casks changed by that workflow's GitHub token.
+
+To regenerate locally, first make sure `steipete/tap` is tapped at the same commit as this checkout, then run:
+
+```bash
+python3 .github/scripts/generate_cask_api.py
+```
+
 OpenClaw-owned formulae live in `openclaw/tap`; migrated names are listed in `tap_migrations.json`.
 
 ## Update / Uninstall

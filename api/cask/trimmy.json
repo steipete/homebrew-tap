@@ -1,0 +1,88 @@
+{
+  "artifacts": [
+    {
+      "app": [
+        "Trimmy.app"
+      ],
+      "target": "/Applications/Trimmy.app"
+    },
+    {
+      "zap": [
+        {
+          "trash": [
+            "~/Library/Application Scripts/com.steipete.trimmy",
+            "~/Library/Application Support/Trimmy",
+            "~/Library/Caches/com.steipete.trimmy",
+            "~/Library/Containers/com.steipete.trimmy",
+            "~/Library/HTTPStorages/com.steipete.trimmy",
+            "~/Library/HTTPStorages/com.steipete.trimmy.binarycookies",
+            "~/Library/Preferences/com.steipete.trimmy.plist",
+            "~/Library/Saved Application State/com.steipete.trimmy.savedState",
+            "~/Library/WebKit/com.steipete.trimmy"
+          ]
+        }
+      ]
+    }
+  ],
+  "auto_updates": null,
+  "autobump": true,
+  "bundle_short_version": null,
+  "bundle_version": null,
+  "caveats": null,
+  "caveats_rosetta": null,
+  "conflicts_with": null,
+  "container": null,
+  "depends_on": {
+    "arch": [
+      {
+        "bits": 64,
+        "type": "arm"
+      }
+    ],
+    "macos": {
+      ">=": [
+        "15"
+      ]
+    }
+  },
+  "deprecate_args": null,
+  "deprecated": false,
+  "deprecation_date": null,
+  "deprecation_reason": null,
+  "deprecation_replacement_cask": null,
+  "deprecation_replacement_formula": null,
+  "desc": "Paste-once, run-once clipboard cleaner for terminal snippets",
+  "disable_args": null,
+  "disable_date": null,
+  "disable_reason": null,
+  "disable_replacement_cask": null,
+  "disable_replacement_formula": null,
+  "disabled": false,
+  "full_token": "steipete/tap/trimmy",
+  "homepage": "https://github.com/steipete/Trimmy",
+  "installed": null,
+  "installed_time": null,
+  "languages": [],
+  "name": [
+    "Trimmy"
+  ],
+  "no_autobump_message": null,
+  "old_tokens": [],
+  "outdated": false,
+  "pinned": false,
+  "pinned_version": null,
+  "rename": [],
+  "ruby_source_checksum": {
+    "sha256": "51c2db57281e2fd56d116bcdd12c23ae569f55b93d5d691b5d1b6fd88828c855"
+  },
+  "ruby_source_path": "Casks/trimmy.rb",
+  "sha256": "d9692230463ec0a5fe7138875e451b923645184ada1dab3983ae1ec852b63c2e",
+  "skip_livecheck": false,
+  "tap": "steipete/tap",
+  "tap_git_head": "5bfaad78863f58414e59d97249a4508185f0a543",
+  "token": "trimmy",
+  "url": "https://github.com/steipete/Trimmy/releases/download/v0.10.1/Trimmy-0.10.1.zip",
+  "url_specs": {},
+  "variations": {},
+  "version": "0.10.1"
+}

@@ -1,0 +1,98 @@
+{
+  "artifacts": [
+    {
+      "app": [
+        "CodexBar.app"
+      ],
+      "target": "/Applications/CodexBar.app"
+    },
+    {
+      "binary": [
+        "/Applications/CodexBar.app/Contents/Helpers/CodexBarCLI",
+        {
+          "target": "codexbar"
+        }
+      ],
+      "target": "/opt/homebrew/bin/codexbar"
+    },
+    {
+      "zap": [
+        {
+          "trash": [
+            "~/Library/Application Scripts/com.steipete.codexbar",
+            "~/Library/Application Scripts/com.steipete.codexbar.widget",
+            "~/Library/Application Support/CodexBar",
+            "~/Library/Application Support/com.steipete.codexbar",
+            "~/Library/Caches/CodexBar",
+            "~/Library/Caches/com.steipete.codexbar",
+            "~/Library/Containers/com.steipete.codexbar",
+            "~/Library/Containers/com.steipete.codexbar.widget",
+            "~/Library/Group Containers/group.com.steipete.codexbar",
+            "~/Library/HTTPStorages/com.steipete.codexbar",
+            "~/Library/HTTPStorages/com.steipete.codexbar.binarycookies",
+            "~/Library/Preferences/com.steipete.codexbar.plist",
+            "~/Library/Saved Application State/com.steipete.codexbar.savedState",
+            "~/Library/WebKit/com.steipete.codexbar"
+          ]
+        }
+      ]
+    }
+  ],
+  "auto_updates": true,
+  "autobump": true,
+  "bundle_short_version": null,
+  "bundle_version": null,
+  "caveats": null,
+  "caveats_rosetta": null,
+  "conflicts_with": null,
+  "container": null,
+  "depends_on": {
+    "macos": {
+      ">=": [
+        "14"
+      ]
+    }
+  },
+  "deprecate_args": null,
+  "deprecated": false,
+  "deprecation_date": null,
+  "deprecation_reason": null,
+  "deprecation_replacement_cask": null,
+  "deprecation_replacement_formula": null,
+  "desc": "Menu bar usage monitor for Codex and Claude",
+  "disable_args": null,
+  "disable_date": null,
+  "disable_reason": null,
+  "disable_replacement_cask": null,
+  "disable_replacement_formula": null,
+  "disabled": false,
+  "full_token": "steipete/tap/codexbar",
+  "homepage": "https://codexbar.app/",
+  "installed": null,
+  "installed_time": null,
+  "languages": [],
+  "name": [
+    "CodexBar"
+  ],
+  "no_autobump_message": null,
+  "old_tokens": [],
+  "outdated": false,
+  "pinned": false,
+  "pinned_version": null,
+  "rename": [],
+  "ruby_source_checksum": {
+    "sha256": "9045e2127dbb2669ab5e84a74c9e4746b287fbe73b9cf161905b2f355991a7e5"
+  },
+  "ruby_source_path": "Casks/codexbar.rb",
+  "sha256": "972b1f300b1265c175e9c6f6c5b7183063217a97f0a5fcc1f5d3ef06a526064f",
+  "skip_livecheck": false,
+  "tap": "steipete/tap",
+  "tap_git_head": "5bfaad78863f58414e59d97249a4508185f0a543",
+  "token": "codexbar",
+  "url": "https://github.com/steipete/CodexBar/releases/download/v0.49.0/CodexBar-macos-universal-0.49.0.zip",
+  "url_specs": {
+    "verified": "github.com/steipete/CodexBar/"
+  },
+  "variations": {},
+  "version": "0.49.0"
+}
