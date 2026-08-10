@@ -87,7 +87,7 @@
   "sha256": "36a23aa7c584b3043b0effb1be2236faccf7b19b755dcbe994e7ac391ad48998",
   "skip_livecheck": false,
   "tap": "steipete/tap",
-  "tap_git_head": "3d8c78e662fd03aea7fe4759faf34247cdcb0abf",
+  "tap_git_head": "1f515adaa5400d0a04f71da55b4cf192a43f786b",
   "token": "codexbar",
   "url": "https://github.com/steipete/CodexBar/releases/download/v0.49.1/CodexBar-macos-universal-0.49.1.zip",
   "url_specs": {},
