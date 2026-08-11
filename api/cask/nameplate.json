@@ -80,7 +80,7 @@
   "sha256": "639e9eff1fc3e57a351a9cae4dc31eea5b3d6b730b5e21609eeebf48350f936f",
   "skip_livecheck": false,
   "tap": "steipete/tap",
-  "tap_git_head": "1f515adaa5400d0a04f71da55b4cf192a43f786b",
+  "tap_git_head": "78c77bf71202a1f95d7beaba5d171e678fdcecf9",
   "token": "nameplate",
   "url": "https://github.com/steipete/Nameplate/releases/download/v0.3.1/Nameplate-0.3.1.zip",
   "url_specs": {},
