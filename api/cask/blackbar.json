@@ -71,7 +71,7 @@
   "sha256": "068ff4ceb559a357f142b693fca2ffbc05057f5b9a2f634eb35693c252e4b5bc",
   "skip_livecheck": false,
   "tap": "steipete/tap",
-  "tap_git_head": "78c77bf71202a1f95d7beaba5d171e678fdcecf9",
+  "tap_git_head": "7b3973e36b7095d2e688f9999e475ce41cd88831",
   "token": "blackbar",
   "url": "https://github.com/steipete/BlackBar/releases/download/v0.2.5/BlackBar-0.2.5.zip",
   "url_specs": {},
