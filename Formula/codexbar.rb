@@ -27,6 +27,8 @@ class Codexbar < Formula
   def install
     libexec.install "CodexBarCLI"
     libexec.install "VERSION"
+    # JS provider plugins (zai, openai, xai, ...) load from this bundle next to the executable.
+    libexec.install "CodexBar_CodexBarCore.bundle" if File.exist?("CodexBar_CodexBarCore.bundle")
     bin.write_exec_script libexec/"CodexBarCLI"
     bin.install_symlink "CodexBarCLI" => "codexbar"
   end
