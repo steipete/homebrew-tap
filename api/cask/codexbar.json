@@ -81,16 +81,16 @@
   "pinned_version": null,
   "rename": [],
   "ruby_source_checksum": {
-    "sha256": "d4ba9638c00706f0f00592c66ee65b27297907b82c0004edb8ccb5170e349c11"
+    "sha256": "09941f61c175bee6a875698e3d23399c0d5a064a35105671bb3148613535d492"
   },
   "ruby_source_path": "Casks/codexbar.rb",
-  "sha256": "586e0783c844aa057c0a37a2a2beb09e031f47395015d77f60f3b1c36fe8a75c",
+  "sha256": "404f319ccd81f6997c4255952c113330d664ee129c0d15f24323b75319949719",
   "skip_livecheck": false,
   "tap": "steipete/tap",
-  "tap_git_head": "a25930af33dd8a681af5005a298e735bbf34c598",
+  "tap_git_head": "c48103d3c3c73d4eaf6ffbb68c990ec1a626f062",
   "token": "codexbar",
-  "url": "https://github.com/steipete/CodexBar/releases/download/v0.49.5/CodexBar-macos-universal-0.49.5.zip",
+  "url": "https://github.com/steipete/CodexBar/releases/download/v0.49.6/CodexBar-macos-universal-0.49.6.zip",
   "url_specs": {},
   "variations": {},
-  "version": "0.49.5"
+  "version": "0.49.6"
 }
