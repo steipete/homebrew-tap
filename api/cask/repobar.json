@@ -80,7 +80,7 @@
   "sha256": "5f7401ee36f4d1048548204fb540562ccb6d4101b3da109c1fc6914095c855e8",
   "skip_livecheck": false,
   "tap": "steipete/tap",
-  "tap_git_head": "4c134ac43ea0c587e8544a71fda757c3f975c888",
+  "tap_git_head": "22064f1955efbfa8bb63e18871bf448648915849",
   "token": "repobar",
   "url": "https://github.com/steipete/RepoBar/releases/download/v0.8.3/RepoBar-0.8.3.zip",
   "url_specs": {},
