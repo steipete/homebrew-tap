@@ -87,7 +87,7 @@
   "sha256": "b9bd49b356b6a193d8b556302d1b31c7c4d7682ecb6347b0d73309e778fdd6ce",
   "skip_livecheck": false,
   "tap": "steipete/tap",
-  "tap_git_head": "3e1acd947865cecf0dfded3bf935eea51e0ef17c",
+  "tap_git_head": "5d04ff59989d715359e1d63f14362f700fa19538",
   "token": "codexbar",
   "url": "https://github.com/steipete/CodexBar/releases/download/v0.54.1/CodexBar-macos-universal-0.54.1.zip",
   "url_specs": {},
