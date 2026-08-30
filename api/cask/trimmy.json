@@ -79,7 +79,7 @@
   "sha256": "d9692230463ec0a5fe7138875e451b923645184ada1dab3983ae1ec852b63c2e",
   "skip_livecheck": false,
   "tap": "steipete/tap",
-  "tap_git_head": "156d8f477734e67c62094ef58e8d5acc597e0524",
+  "tap_git_head": "28e527480e1806101903697e001c49229567604f",
   "token": "trimmy",
   "url": "https://github.com/steipete/Trimmy/releases/download/v0.10.1/Trimmy-0.10.1.zip",
   "url_specs": {},
