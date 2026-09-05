@@ -350,8 +350,7 @@ end
   version "0.26.1"
   sha256 "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
 
-  url "https://github.com/steipete/CodexBar/releases/download/v#{version}/CodexBar-macos-universal-#{version}.zip",
-      verified: "github.com/steipete/CodexBar/"
+  url "https://github.com/steipete/CodexBar/releases/download/v#{version}/CodexBar-macos-universal-#{version}.zip"
 end
 '''
 
@@ -365,7 +364,7 @@ end
 
         self.assertIn('version "0.27.0"', updated)
         self.assertIn('sha256 "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"', updated)
-        self.assertIn("CodexBar-macos-universal-#{version}.zip", updated)
+        self.assertIn('url "https://github.com/steipete/CodexBar/releases/download/v#{version}/CodexBar-macos-universal-#{version}.zip"\n', updated)
 
     def test_arm64_macos_artifact_keeps_top_level_arch_restriction(self) -> None:
         text = '''class Sonoscli < Formula

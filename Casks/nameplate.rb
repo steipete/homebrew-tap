@@ -2,8 +2,7 @@ cask "nameplate" do
   version "0.3.1"
   sha256 "639e9eff1fc3e57a351a9cae4dc31eea5b3d6b730b5e21609eeebf48350f936f"
 
-  url "https://github.com/steipete/Nameplate/releases/download/v#{version}/Nameplate-#{version}.zip",
-      verified: "github.com/steipete/Nameplate/"
+  url "https://github.com/steipete/Nameplate/releases/download/v#{version}/Nameplate-#{version}.zip"
   name "Nameplate"
   desc "Brand every computer in your fleet with click-through identity overlays"
   homepage "https://nameplate.sh/"

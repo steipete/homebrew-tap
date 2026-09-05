@@ -72,6 +72,12 @@ python3 .github/scripts/generate_cask_api.py
 
 OpenClaw-owned formulae live in `openclaw/tap`; migrated names are listed in `tap_migrations.json`.
 
+## Validation
+
+Run `python3 -B -m unittest discover -s tests -v` and `brew style Casks/*.rb` before submitting changes. The `Tap Tests` workflow also loads every cask with Homebrew and generates its API metadata on pull requests and pushes to `main`.
+
+Use a plain `url` stanza for casks; Homebrew handles URL verification by default and has deprecated the `verified:` parameter.
+
 ## Update / Uninstall
 
 ```bash

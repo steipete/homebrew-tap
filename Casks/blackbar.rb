@@ -2,8 +2,7 @@ cask "blackbar" do
   version "0.2.5"
   sha256 "068ff4ceb559a357f142b693fca2ffbc05057f5b9a2f634eb35693c252e4b5bc"
 
-  url "https://github.com/steipete/BlackBar/releases/download/v#{version}/BlackBar-#{version}.zip",
-      verified: "github.com/steipete/BlackBar/"
+  url "https://github.com/steipete/BlackBar/releases/download/v#{version}/BlackBar-#{version}.zip"
   name "BlackBar"
   desc "Menu bar app for Blacksmith CI status and live vCPU usage"
   homepage "https://black.bar/"
