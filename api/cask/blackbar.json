@@ -70,23 +70,11 @@
   "ruby_source_path": "Casks/blackbar.rb",
   "sha256": "068ff4ceb559a357f142b693fca2ffbc05057f5b9a2f634eb35693c252e4b5bc",
   "skip_livecheck": false,
-  "supported_platforms": [
-    "golden_gate",
-    "arm64_golden_gate",
-    "tahoe",
-    "arm64_tahoe",
-    "sequoia",
-    "arm64_sequoia",
-    "sonoma",
-    "arm64_sonoma"
-  ],
   "tap": "steipete/tap",
-  "tap_git_head": "71653b39cf7755cbdd98291b0d6cad37d4ed429c",
+  "tap_git_head": "1fe0ef880fb28f496de2b9876e51759f638a04f2",
   "token": "blackbar",
   "url": "https://github.com/steipete/BlackBar/releases/download/v0.2.5/BlackBar-0.2.5.zip",
-  "url_specs": {
-    "verified": "github.com/steipete/BlackBar/"
-  },
+  "url_specs": {},
   "variations": {},
   "version": "0.2.5"
 }

@@ -79,18 +79,11 @@
   "ruby_source_path": "Casks/nameplate.rb",
   "sha256": "639e9eff1fc3e57a351a9cae4dc31eea5b3d6b730b5e21609eeebf48350f936f",
   "skip_livecheck": false,
-  "supported_platforms": [
-    "arm64_golden_gate",
-    "arm64_tahoe",
-    "arm64_sequoia"
-  ],
   "tap": "steipete/tap",
-  "tap_git_head": "71653b39cf7755cbdd98291b0d6cad37d4ed429c",
+  "tap_git_head": "1fe0ef880fb28f496de2b9876e51759f638a04f2",
   "token": "nameplate",
   "url": "https://github.com/steipete/Nameplate/releases/download/v0.3.1/Nameplate-0.3.1.zip",
-  "url_specs": {
-    "verified": "github.com/steipete/Nameplate/"
-  },
+  "url_specs": {},
   "variations": {},
   "version": "0.3.1"
 }
