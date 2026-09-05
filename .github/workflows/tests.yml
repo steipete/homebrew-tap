@@ -1,0 +1,30 @@
+name: Tap Tests
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: macos-latest
+    env:
+      HOMEBREW_NO_AUTO_UPDATE: "1"
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Test release and metadata tooling
+        run: python3 -B -m unittest discover -s tests -v
+
+      - name: Check cask style
+        run: brew style Casks/*.rb
+
+      - name: Load casks with Homebrew and generate API metadata
+        run: |
+          brew tap --custom-remote steipete/tap "$GITHUB_WORKSPACE"
+          python3 -B .github/scripts/generate_cask_api.py
