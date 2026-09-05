@@ -78,8 +78,13 @@
   "ruby_source_path": "Casks/trimmy.rb",
   "sha256": "d9692230463ec0a5fe7138875e451b923645184ada1dab3983ae1ec852b63c2e",
   "skip_livecheck": false,
+  "supported_platforms": [
+    "arm64_golden_gate",
+    "arm64_tahoe",
+    "arm64_sequoia"
+  ],
   "tap": "steipete/tap",
-  "tap_git_head": "1fe0ef880fb28f496de2b9876e51759f638a04f2",
+  "tap_git_head": "41906cde4a206b3fe0093a28a53d915ae63784fc",
   "token": "trimmy",
   "url": "https://github.com/steipete/Trimmy/releases/download/v0.10.1/Trimmy-0.10.1.zip",
   "url_specs": {},
