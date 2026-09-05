@@ -1,8 +1,8 @@
 class Songsee < Formula
   desc "Spectral visualization CLI for audio files"
   homepage "https://github.com/openclaw/songsee"
-  url "https://github.com/openclaw/songsee/archive/refs/tags/v0.1.1.tar.gz"
-  sha256 "042fe6796cbd84d68484eb450ce1f9e45c8d977a48f6b54670a67715505b1aad"
+  url "https://github.com/openclaw/songsee/archive/refs/tags/v0.1.2.tar.gz"
+  sha256 "b70ca458eb3ead2cb9d54ae3ae340f60bb7a9a5215ccf04c57c3423f4f40a58e"
   license "MIT"
 
   depends_on "go" => :build
