@@ -1,26 +1,26 @@
 class Gifgrep < Formula
   desc "Grep the GIF. Stick the landing"
   homepage "https://github.com/steipete/gifgrep"
-  version "0.3.2"
+  version "0.4.0"
   license "MIT"
 
   on_macos do
     if Hardware::CPU.arm?
       url "https://github.com/steipete/gifgrep/releases/download/v#{version}/gifgrep_#{version}_darwin_arm64.tar.gz"
-      sha256 "2e202250e6980b3bd0096a98f50002b39af5314c9bccd93ba4840d98d943a9d8"
+      sha256 "85bb505a62e14550b3d9dfa860a90374cd25bef2eaa4f8dc6bbcc7225ccb3494"
     else
       url "https://github.com/steipete/gifgrep/releases/download/v#{version}/gifgrep_#{version}_darwin_amd64.tar.gz"
-      sha256 "c750479790fb68d2f37cf19466701c5ef76c92879712143e80816cd009c98763"
+      sha256 "e433eafdbdc15892c4e441cb44c1a960e48ffae5ffa4b8edb87adde3abb7dafc"
     end
   end
 
   on_linux do
     if Hardware::CPU.arm?
       url "https://github.com/steipete/gifgrep/releases/download/v#{version}/gifgrep_#{version}_linux_arm64.tar.gz"
-      sha256 "cdd78f0f07f2465851db7ccdc126e4addf024c1691c369523d53c95a02c22751"
+      sha256 "0377e0a6ddf625d485e13ea357b65081472fe2d9cbe140280dbc8fa63e86fb24"
     else
       url "https://github.com/steipete/gifgrep/releases/download/v#{version}/gifgrep_#{version}_linux_amd64.tar.gz"
-      sha256 "ac2e63b6abc574080418e033ba1c93cbaad4f815d03e1a24935e9d1fd9dbabf7"
+      sha256 "60ace0f9e69e9065c908934059150c25d4ccb48ad08b3daaed35446735295563"
     end
   end
 
