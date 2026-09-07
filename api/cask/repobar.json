@@ -74,10 +74,10 @@
   "pinned_version": null,
   "rename": [],
   "ruby_source_checksum": {
-    "sha256": "a2f0822c467dc65b735e121f0c066670619b84dff148248762483c093670cce3"
+    "sha256": "5dfd689c47d59c70ba01e5eb41d5a2a5353e85c98c404aaec7e25edb8a579d64"
   },
   "ruby_source_path": "Casks/repobar.rb",
-  "sha256": "5f7401ee36f4d1048548204fb540562ccb6d4101b3da109c1fc6914095c855e8",
+  "sha256": "82b754ab3e114654ec01e626b4a32595226bef4139015801856c8e6cb1d225bf",
   "skip_livecheck": false,
   "supported_platforms": [
     "golden_gate",
@@ -88,10 +88,10 @@
     "arm64_sequoia"
   ],
   "tap": "steipete/tap",
-  "tap_git_head": "799234fc38843c2582354fabc036f47007b094e7",
+  "tap_git_head": "ef792658d61a1a0b46c57a20b58596066780ba8a",
   "token": "repobar",
-  "url": "https://github.com/steipete/RepoBar/releases/download/v0.8.3/RepoBar-0.8.3.zip",
+  "url": "https://github.com/steipete/RepoBar/releases/download/v0.8.8/RepoBar-0.8.8.zip",
   "url_specs": {},
   "variations": {},
-  "version": "0.8.3"
+  "version": "0.8.8"
 }
