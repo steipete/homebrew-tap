@@ -3,8 +3,8 @@ require "language/node"
 class Oracle < Formula
   desc "Bundle prompts + files for second-model review"
   homepage "https://github.com/steipete/oracle"
-  url "https://github.com/steipete/oracle/releases/download/v0.19.0/oracle-0.19.0.tgz"
-  sha256 "e287982bc1570f108feb80093944b4a2bc7fc5361017f4e81840900f317af6f0"
+  url "https://github.com/steipete/oracle/releases/download/v0.20.0/oracle-0.20.0.tgz"
+  sha256 "7d23539b6e0be6075245c584d901092b9afa37596f8969671927435817c22428"
   license "MIT"
 
   depends_on "pnpm" => :build
