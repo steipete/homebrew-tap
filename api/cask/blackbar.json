@@ -81,7 +81,7 @@
     "arm64_sonoma"
   ],
   "tap": "steipete/tap",
-  "tap_git_head": "e1b7d59ea8fc13f904b3b323462a9f6030a34737",
+  "tap_git_head": "3287e07c01fe81e364e40ed893aa8fb6e6edab77",
   "token": "blackbar",
   "url": "https://github.com/steipete/BlackBar/releases/download/v0.2.5/BlackBar-0.2.5.zip",
   "url_specs": {},
