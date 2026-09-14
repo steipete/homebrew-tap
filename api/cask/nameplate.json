@@ -74,10 +74,10 @@
   "pinned_version": null,
   "rename": [],
   "ruby_source_checksum": {
-    "sha256": "a68607924c2e7f76a9a72990be5b0a8abe49c9f9356ecc270a48cf70a4493f1a"
+    "sha256": "9dd1ee244aab787bcd7a4ef479a705b85002f87b1dbd1fc9a829811f5119b41a"
   },
   "ruby_source_path": "Casks/nameplate.rb",
-  "sha256": "639e9eff1fc3e57a351a9cae4dc31eea5b3d6b730b5e21609eeebf48350f936f",
+  "sha256": "ee5468d6c6dedc0ae05f9ee979579f8b2c8f0f1a16de45b7f9e26d8e9a473716",
   "skip_livecheck": false,
   "supported_platforms": [
     "arm64_golden_gate",
@@ -85,10 +85,10 @@
     "arm64_sequoia"
   ],
   "tap": "steipete/tap",
-  "tap_git_head": "8254e9ae54f4c7cb117d6c00ee9415af061a39c4",
+  "tap_git_head": "f1881f1036057cad5238518a2133786fcba77fa5",
   "token": "nameplate",
-  "url": "https://github.com/steipete/Nameplate/releases/download/v0.3.1/Nameplate-0.3.1.zip",
+  "url": "https://github.com/steipete/Nameplate/releases/download/v0.4.0/Nameplate-0.4.0.zip",
   "url_specs": {},
   "variations": {},
-  "version": "0.3.1"
+  "version": "0.4.0"
 }
