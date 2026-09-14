@@ -1,37 +1,41 @@
 class Sag < Formula
   desc "Command-line ElevenLabs TTS with mac-style flags"
   homepage "https://github.com/steipete/sag"
-  url "https://github.com/steipete/sag/releases/download/v0.4.2/sag_0.4.2_darwin_universal.tar.gz"
-  sha256 "bfab698af6e0aea0590b74f6667ac50edd5e430572be690404266529ece53954"
+  version "0.4.2"
   license "MIT"
 
-  on_linux do
-    on_arm do
-      url "https://github.com/steipete/sag/archive/refs/tags/v#{version}.tar.gz"
-      sha256 "6e82a12451860484cb93c44bf63f1be8c7af83017352c6ab0ac3d9fe1784ec72"
+  on_macos do
+    depends_on macos: :sequoia
 
-      depends_on "go" => :build
-      depends_on "pkgconf" => :build
-      depends_on "alsa-lib"
+    if Hardware::CPU.arm?
+      url "https://github.com/steipete/sag/releases/download/v0.4.2/sag_0.4.2_darwin_arm64.tar.gz"
+      sha256 "20f793ee7de3d08d95aca4b83268f0bb6a263b6888f89baea985c637fa551c6f"
+    else
+      url "https://github.com/steipete/sag/releases/download/v0.4.2/sag_0.4.2_darwin_amd64.tar.gz"
+      sha256 "908b72992e75a64bc81194564e87c8adcec63690e31e23ac27c8c0bbe245b232"
     end
+  end
 
-    on_intel do
-      url "https://github.com/steipete/sag/releases/download/v#{version}/sag_#{version}_linux_amd64.tar.gz"
+  on_linux do
+    depends_on "patchelf" => :build
+    depends_on "alsa-lib"
+
+    if Hardware::CPU.arm?
+      url "https://github.com/steipete/sag/releases/download/v0.4.2/sag_0.4.2_linux_arm64.tar.gz"
+      sha256 "488cab1ebbb928d8babff2794977313e26c33492b050253553c711a755758531"
+    else
+      url "https://github.com/steipete/sag/releases/download/v0.4.2/sag_0.4.2_linux_amd64.tar.gz"
       sha256 "177ecbada101a538424d7f8c3961071f15a8a1b43365f169b0d9a69ba825ddfb"
     end
   end
 
-  def install
-    if File.exist?("sag")
-      bin.install "sag"
-    else
-      if OS.linux? && Hardware::CPU.arm?
-        ENV["CGO_ENABLED"] = "1"
-        ENV.append "CGO_LDFLAGS", "-Wl,-rpath,#{formula_opt_lib("alsa-lib")}"
-      end
+  skip_clean "bin/sag"
 
-      system "go", "build", *std_go_args(ldflags: "-s -w"), "./cmd/sag"
-    end
+  def install
+    bin.install "sag"
+    return unless OS.linux?
+
+    system "patchelf", "--set-rpath", formula_opt_lib("alsa-lib"), bin/"sag"
   end
 
   test do
