@@ -65,10 +65,10 @@
   "pinned_version": null,
   "rename": [],
   "ruby_source_checksum": {
-    "sha256": "8fdc7b7af4bca16441e956eae0e6a9587a38afa9246aaa1fd0c2c324fd521e25"
+    "sha256": "0083e4a03b6ab968eab06622636619a2edd01eb5a9e9ff06a0f32e4838717ee5"
   },
   "ruby_source_path": "Casks/blackbar.rb",
-  "sha256": "068ff4ceb559a357f142b693fca2ffbc05057f5b9a2f634eb35693c252e4b5bc",
+  "sha256": "bab03099e0956e3145db2f63fe4b7de2edc274ffc551721c32f5b536d40f744c",
   "skip_livecheck": false,
   "supported_platforms": [
     "golden_gate",
@@ -81,10 +81,10 @@
     "arm64_sonoma"
   ],
   "tap": "steipete/tap",
-  "tap_git_head": "171c8244d22b02ba3f1a3647e2e7f8c112da9227",
+  "tap_git_head": "a73720f2b42db4a3dc1a979f97dfa1cd4c2ee066",
   "token": "blackbar",
-  "url": "https://github.com/steipete/BlackBar/releases/download/v0.2.5/BlackBar-0.2.5.zip",
+  "url": "https://github.com/steipete/BlackBar/releases/download/v0.3.2/BlackBar-0.3.2.zip",
   "url_specs": {},
   "variations": {},
-  "version": "0.2.5"
+  "version": "0.3.2"
 }
