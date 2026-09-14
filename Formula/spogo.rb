@@ -1,26 +1,26 @@
 class Spogo < Formula
   desc "Spotify power CLI using web cookies"
   homepage "https://github.com/openclaw/spogo"
-  version "0.12.0"
+  version "0.13.0"
   license "MIT"
 
   on_macos do
     if Hardware::CPU.arm?
-      url "https://github.com/openclaw/spogo/releases/download/v0.12.0/spogo_0.12.0_darwin_arm64.tar.gz"
-      sha256 "075decc3d4efd8ab831fd7de4f44a12c37ba7bd7dfdb76f23887e4061cfe2a24"
+      url "https://github.com/openclaw/spogo/releases/download/v0.13.0/spogo_0.13.0_darwin_arm64.tar.gz"
+      sha256 "6d998332b50a4366c80bc8dc0a4513539cda3d2d4fd39ffa996e779793cfd32e"
     else
-      url "https://github.com/openclaw/spogo/releases/download/v0.12.0/spogo_0.12.0_darwin_amd64.tar.gz"
-      sha256 "1f6625dfb0070044397c0a15e9b2a1048c829e504104df72672cd660f6fb6bc1"
+      url "https://github.com/openclaw/spogo/releases/download/v0.13.0/spogo_0.13.0_darwin_amd64.tar.gz"
+      sha256 "2e3ad8bffc729e2700c4c61e44cb5b3316d586d9e3414e73c408b6a4e6abaf83"
     end
   end
 
   on_linux do
     if Hardware::CPU.arm?
-      url "https://github.com/openclaw/spogo/releases/download/v0.12.0/spogo_0.12.0_linux_arm64.tar.gz"
-      sha256 "7ef6f24d894786cdb11943c3964cd2558965d4369536e2efd9e42ca18f01dbe4"
+      url "https://github.com/openclaw/spogo/releases/download/v0.13.0/spogo_0.13.0_linux_arm64.tar.gz"
+      sha256 "9c0f8376b6ae318c473b6fa9c685dad1ea4c01f9e3f370be92d2086212609887"
     else
-      url "https://github.com/openclaw/spogo/releases/download/v0.12.0/spogo_0.12.0_linux_amd64.tar.gz"
-      sha256 "be431e3e5f7041d79d9022cd974f03ae4236edb201bad44e4a2d7172a7dbb10a"
+      url "https://github.com/openclaw/spogo/releases/download/v0.13.0/spogo_0.13.0_linux_amd64.tar.gz"
+      sha256 "914ef5d445b708f9c2d357d2345ed6225a5472637f100b10c36d9fe3feda7a28"
     end
   end
 
