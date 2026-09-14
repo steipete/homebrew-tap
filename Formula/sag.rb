@@ -8,7 +8,7 @@ class Sag < Formula
   on_linux do
     on_arm do
       url "https://github.com/steipete/sag/archive/refs/tags/v#{version}.tar.gz"
-      sha256 "ee73ea2d703887c171968d6d113a60d1e9de649950fa44fee96ca2d484e94d5c"
+      sha256 "6e82a12451860484cb93c44bf63f1be8c7af83017352c6ab0ac3d9fe1784ec72"
 
       depends_on "go" => :build
       depends_on "pkgconf" => :build
