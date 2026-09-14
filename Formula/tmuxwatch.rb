@@ -1,26 +1,26 @@
 class Tmuxwatch < Formula
   desc "Live tmux dashboard with Bubble Tea UI"
   homepage "https://github.com/steipete/tmuxwatch"
-  version "0.10.0"
+  version "0.10.1"
   license "MIT"
 
   on_macos do
     if Hardware::CPU.arm?
-      url "https://github.com/steipete/tmuxwatch/releases/download/v#{version}/tmuxwatch_#{version}_darwin_arm64.tar.gz"
-      sha256 "de69421c1b1a36c95c4da5c8b858bd1483e36c7d586b1f823efcc1dbb5364c50"
+      url "https://github.com/steipete/tmuxwatch/releases/download/v0.10.1/tmuxwatch_0.10.1_darwin_arm64.tar.gz"
+      sha256 "9e7e72aa33686140542530216b984d9669bc0484eca1b702ca75f382bfda2c3b"
     else
-      url "https://github.com/steipete/tmuxwatch/releases/download/v#{version}/tmuxwatch_#{version}_darwin_amd64.tar.gz"
-      sha256 "14303fd1d5d3daaa128c406f1fdd4977cc3789f0537d0128d493eecb86b20ab9"
+      url "https://github.com/steipete/tmuxwatch/releases/download/v0.10.1/tmuxwatch_0.10.1_darwin_amd64.tar.gz"
+      sha256 "15ea4a40e8fdc4f418c0e73850b8dd28bfb891f46010fc3e151537c7b63fb6fb"
     end
   end
 
   on_linux do
     if Hardware::CPU.arm?
-      url "https://github.com/steipete/tmuxwatch/releases/download/v#{version}/tmuxwatch_#{version}_linux_arm64.tar.gz"
-      sha256 "7d24086dbe0036af34f1c8c680cdb65bf4464d67226fcac5dd326444c642d123"
+      url "https://github.com/steipete/tmuxwatch/releases/download/v0.10.1/tmuxwatch_0.10.1_linux_arm64.tar.gz"
+      sha256 "9a994e6e40d11571f49829e4118e576239208b162e41e3e1fd038534ae46e56a"
     else
-      url "https://github.com/steipete/tmuxwatch/releases/download/v#{version}/tmuxwatch_#{version}_linux_amd64.tar.gz"
-      sha256 "880b543cf48cb1b865e9bbacdb20bd2269305a14a3a261dd0f0ac29a845054cd"
+      url "https://github.com/steipete/tmuxwatch/releases/download/v0.10.1/tmuxwatch_0.10.1_linux_amd64.tar.gz"
+      sha256 "98a685500974dc520143fa7868ea016793bf0d8645cf168d8916cfcf1994d83a"
     end
   end
 
