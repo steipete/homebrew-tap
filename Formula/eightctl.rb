@@ -1,26 +1,26 @@
 class Eightctl < Formula
   desc "Control Eight Sleep Pods from the terminal"
   homepage "https://github.com/steipete/eightctl"
-  version "0.2.7"
+  version "0.2.8"
   license "MIT"
 
   on_macos do
     if Hardware::CPU.arm?
-      url "https://github.com/steipete/eightctl/releases/download/v0.2.7/eightctl_0.2.7_darwin_arm64.tar.gz"
-      sha256 "3635d6845d3eaab1c0f64440ffe98f44644d388177d2843dd1979dbec87e08db"
+      url "https://github.com/steipete/eightctl/releases/download/v0.2.8/eightctl_0.2.8_darwin_arm64.tar.gz"
+      sha256 "5a188f2eba573ce5af2fe626795b78431c35a36b5ab955f006f363dbe24727c2"
     else
-      url "https://github.com/steipete/eightctl/releases/download/v0.2.7/eightctl_0.2.7_darwin_amd64.tar.gz"
-      sha256 "44f2e48eee28bda688393483fd6c508062cd84843cad54035166f4c5f9ac3897"
+      url "https://github.com/steipete/eightctl/releases/download/v0.2.8/eightctl_0.2.8_darwin_amd64.tar.gz"
+      sha256 "295760ab7356876347420ef78df0b131937a2b43eb8b8affe8b55b2134b0afc8"
     end
   end
 
   on_linux do
     if Hardware::CPU.arm?
-      url "https://github.com/steipete/eightctl/releases/download/v0.2.7/eightctl_0.2.7_linux_arm64.tar.gz"
-      sha256 "7105f6044f5236a86f8f98575a43e1d43e158a29c238e2b8348363ca4dcaf590"
+      url "https://github.com/steipete/eightctl/releases/download/v0.2.8/eightctl_0.2.8_linux_arm64.tar.gz"
+      sha256 "0179e0bad9f17bcfbfec836f87d0bb6e77e32d45d37681b62303cda115b096a0"
     else
-      url "https://github.com/steipete/eightctl/releases/download/v0.2.7/eightctl_0.2.7_linux_amd64.tar.gz"
-      sha256 "9b92a1f8ef9f8b1b9042b31a8a5fde1d311a82af0c96f655f5a7f45ca4011874"
+      url "https://github.com/steipete/eightctl/releases/download/v0.2.8/eightctl_0.2.8_linux_amd64.tar.gz"
+      sha256 "8be6f78860e745f805e02ba8f74dd05d07a13e893f4e6e65c1440d4e52815a79"
     end
   end
 
