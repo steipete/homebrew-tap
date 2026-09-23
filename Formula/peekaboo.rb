@@ -8,12 +8,11 @@ class Peekaboo < Formula
   depends_on macos: :sequoia
 
   def install
-    bin.install "peekaboo", *Dir["libswiftCompatibility*.dylib"]
-  end
-
-  def post_install
-    # Ensure the binary is executable
-    chmod 0755, bin/"peekaboo"
+    # The binary loads its Swift compatibility dylibs via @loader_path, so they stay beside it.
+    libexec.install "peekaboo", *Dir["libswiftCompatibility*.dylib"]
+    # The release tarball ships these files owner-only (0700).
+    chmod 0755, libexec.children
+    bin.install_symlink libexec/"peekaboo"
   end
 
   def caveats
