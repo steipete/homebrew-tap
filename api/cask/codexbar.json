@@ -97,7 +97,7 @@
     "arm64_sonoma"
   ],
   "tap": "steipete/tap",
-  "tap_git_head": "c0111eddd0472945a93c773d3788bec06646cc69",
+  "tap_git_head": "aad57576b300360c3b8aabf9350fa1fac098635d",
   "token": "codexbar",
   "url": "https://github.com/steipete/CodexBar/releases/download/v0.70.0/CodexBar-macos-universal-0.70.0.zip",
   "url_specs": {},
