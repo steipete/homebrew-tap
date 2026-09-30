@@ -81,10 +81,10 @@
   "pinned_version": null,
   "rename": [],
   "ruby_source_checksum": {
-    "sha256": "b23d79daa296964c46a4eba8d03804432d4ad2486cff79833de5f8f1f61f8d8d"
+    "sha256": "386b509c0b703ff035ed7112e3c9f48aac49d345660011e16c2b5c080bf3c3b2"
   },
   "ruby_source_path": "Casks/codexbar.rb",
-  "sha256": "e0b6c031e2cdb210fc31ee67f7fa2b1e712c00b76a6ad771c58ea60339784882",
+  "sha256": "65e06cdf17021bd25ff62028e107d22cb98b0c680d064a73d13ab4a6871cb2da",
   "skip_livecheck": false,
   "supported_platforms": [
     "golden_gate",
@@ -97,10 +97,10 @@
     "arm64_sonoma"
   ],
   "tap": "steipete/tap",
-  "tap_git_head": "198206b37abc0c73713010c461d65480405a49f2",
+  "tap_git_head": "c0111eddd0472945a93c773d3788bec06646cc69",
   "token": "codexbar",
-  "url": "https://github.com/steipete/CodexBar/releases/download/v0.69.0/CodexBar-macos-universal-0.69.0.zip",
+  "url": "https://github.com/steipete/CodexBar/releases/download/v0.70.0/CodexBar-macos-universal-0.70.0.zip",
   "url_specs": {},
   "variations": {},
-  "version": "0.69.0"
+  "version": "0.70.0"
 }
