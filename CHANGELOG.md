@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Avoid starting Watchman when verifying the Poltergeist Homebrew dependency.
+
 - Prepare sag for signed releases with native macOS/Linux archives, preserved signatures, and an explicit Linux ALSA runtime path.
 
 - Update BlackBar to 0.3.2 with Sparkle installer security fixes.
