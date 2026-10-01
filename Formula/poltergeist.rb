@@ -43,7 +43,7 @@ class Poltergeist < Formula
     # Test polter wrapper
     assert_match "Poltergeist", shell_output("#{bin}/polter --help")
 
-    # Test that watchman dependency is available
-    assert_match "version", shell_output("watchman version")
+    # Check the dependency without starting a daemon outside the test sandbox.
+    system Formula["watchman"].opt_bin/"watchman", "--version"
   end
 end
