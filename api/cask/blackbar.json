@@ -81,7 +81,7 @@
     "arm64_sonoma"
   ],
   "tap": "steipete/tap",
-  "tap_git_head": "64018d7aa7238d982184cfeaf9eddab490f8df0c",
+  "tap_git_head": "caa688144d6efdc800b880d5c14f6c7539f26ebc",
   "token": "blackbar",
   "url": "https://github.com/steipete/BlackBar/releases/download/v0.3.3/BlackBar-0.3.3.zip",
   "url_specs": {},
