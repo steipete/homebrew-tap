@@ -1,6 +1,9 @@
 name: Update Cask API Metadata
 
 on:
+  pull_request:
+    paths:
+      - ".github/workflows/update-cask-api.yml"
   push:
     branches:
       - main
@@ -14,16 +17,32 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
   group: update-cask-api
   cancel-in-progress: false
 
 jobs:
+  validate-cask-api:
+    if: github.event_name == 'pull_request'
+    runs-on: xcode-27
+    env:
+      HOMEBREW_NO_AUTO_UPDATE: "1"
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: Load casks and validate API generation
+        run: |
+          brew tap --custom-remote steipete/tap "$GITHUB_WORKSPACE"
+          python3 -B .github/scripts/generate_cask_api.py
+
   update-cask-api:
-    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
-    runs-on: macos-latest
+    if: github.event_name != 'pull_request' && (github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success')
+    runs-on: xcode-27
+    permissions:
+      contents: write
     steps:
       - name: Checkout tap repository
         uses: actions/checkout@v7

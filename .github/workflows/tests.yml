@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   test:
-    runs-on: macos-latest
+    runs-on: xcode-27
     env:
       HOMEBREW_NO_AUTO_UPDATE: "1"
     steps:
