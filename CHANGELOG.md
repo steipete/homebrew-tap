@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Run tap tests and cask API generation on Xcode 27 runners; validate updater workflow changes on pull requests without publishing metadata.
+
 - Avoid starting Watchman when verifying the Poltergeist Homebrew dependency.
 
 - Prepare sag for signed releases with native macOS/Linux archives, preserved signatures, and an explicit Linux ALSA runtime path.

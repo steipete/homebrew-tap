@@ -74,6 +74,8 @@ OpenClaw-owned formulae live in `openclaw/tap`; migrated names are listed in `ta
 
 ## Validation
 
+Both macOS workflows use the Apple Silicon `xcode-27` runner. Changes to the cask API updater workflow are also validated on pull requests; those runs generate metadata without committing or pushing it.
+
 Run `python3 -B -m unittest discover -s tests -v` and `brew style Casks/*.rb` before submitting changes. The `Tap Tests` workflow also loads every cask with Homebrew and generates its API metadata on pull requests and pushes to `main`.
 
 Use a plain `url` stanza for casks; Homebrew handles URL verification by default and has deprecated the `verified:` parameter.
