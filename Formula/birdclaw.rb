@@ -3,8 +3,8 @@ require "language/node"
 class Birdclaw < Formula
   desc "Local Twitter memory for archives, DMs, likes, bookmarks, and moderation"
   homepage "https://github.com/steipete/birdclaw"
-  url "https://registry.npmjs.org/birdclaw/-/birdclaw-0.16.0.tgz"
-  sha256 "75d50081a57fc319d051c6e30a819179d7b93465e643f5799c73865f8cd2c223"
+  url "https://registry.npmjs.org/birdclaw/-/birdclaw-0.16.1.tgz"
+  sha256 "222b52d6c610f0a06122789ae2dac6091f39172cd67be84c3943a558d7f8ab32"
   license "MIT"
 
   depends_on "node"
