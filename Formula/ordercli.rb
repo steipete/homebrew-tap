@@ -1,26 +1,26 @@
 class Ordercli < Formula
   desc "Multi-provider order CLI (Foodora, Deliveroo)"
   homepage "https://github.com/steipete/ordercli"
-  version "0.2.1"
+  version "0.2.2"
   license "MIT"
 
   on_macos do
     if Hardware::CPU.arm?
-      url "https://github.com/steipete/ordercli/releases/download/v0.2.1/ordercli_0.2.1_darwin_arm64.tar.gz"
-      sha256 "a5c9d177caf5ac4f19e69eab445ecf05b2418ea8a1efec21412ad3c4de4f17ec"
+      url "https://github.com/steipete/ordercli/releases/download/v0.2.2/ordercli_0.2.2_darwin_arm64.tar.gz"
+      sha256 "808933b0d86262f5ab36631757614e56dd60670eab8a97b4d15abda6afe20fef"
     else
-      url "https://github.com/steipete/ordercli/releases/download/v0.2.1/ordercli_0.2.1_darwin_amd64.tar.gz"
-      sha256 "add7ddb96a64cf85bbcf35d52d35ee67b632aae021530bccd9948b7466ca7d9b"
+      url "https://github.com/steipete/ordercli/releases/download/v0.2.2/ordercli_0.2.2_darwin_amd64.tar.gz"
+      sha256 "fc70f0915876ec0401eb7662572258f0c8071b9bace09776c553e81f0bc6b922"
     end
   end
 
   on_linux do
     if Hardware::CPU.arm?
-      url "https://github.com/steipete/ordercli/releases/download/v0.2.1/ordercli_0.2.1_linux_arm64.tar.gz"
-      sha256 "ad58d55b5e7593c4da66643588eee79a29121bdae5dd7a9c9d03bd1b31390d35"
+      url "https://github.com/steipete/ordercli/releases/download/v0.2.2/ordercli_0.2.2_linux_arm64.tar.gz"
+      sha256 "9415b8f75eb6f8d1a517ccff21196629136487d82bec0072eef8b532d6888790"
     else
-      url "https://github.com/steipete/ordercli/releases/download/v0.2.1/ordercli_0.2.1_linux_amd64.tar.gz"
-      sha256 "6727aff064b73783cc04b44ace644696ced331f75624a9f5abb723463adb0fbc"
+      url "https://github.com/steipete/ordercli/releases/download/v0.2.2/ordercli_0.2.2_linux_amd64.tar.gz"
+      sha256 "0d74d7660c304f5ed67957520be24597c2856d6149be681674e8e2e7c521485b"
     end
   end
 
