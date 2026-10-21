@@ -85,7 +85,7 @@
     "arm64_sequoia"
   ],
   "tap": "steipete/tap",
-  "tap_git_head": "d6bc03d8bf46a4d6319939f62c5fbd8831e182e6",
+  "tap_git_head": "5f66b3cb914e0229076e18a6bf98149f30e58550",
   "token": "nameplate",
   "url": "https://github.com/steipete/Nameplate/releases/download/v0.5.0/Nameplate-0.5.0.zip",
   "url_specs": {},
