@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Update Trimmy to 0.11.5 with existing-path quoting and synchronized standalone CLI version metadata.
+
 - Run tap tests and cask API generation on Xcode 27 runners; validate updater workflow changes on pull requests without publishing metadata.
 
 - Avoid starting Watchman when verifying the Poltergeist Homebrew dependency.
