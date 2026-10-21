@@ -1,26 +1,26 @@
 class Blucli < Formula
   desc "Play, group, and automate BluOS"
   homepage "https://github.com/steipete/blucli"
-  version "0.1.7"
+  version "0.1.8"
   license "MIT"
 
   on_macos do
     if Hardware::CPU.arm?
-      url "https://github.com/steipete/blucli/releases/download/v0.1.7/blucli_0.1.7_darwin_arm64.tar.gz"
-      sha256 "4a7305d991e5d0bdc2eaac752bee5e9921bba787f2649e6f04340b0c407f5507"
+      url "https://github.com/steipete/blucli/releases/download/v0.1.8/blucli_0.1.8_darwin_arm64.tar.gz"
+      sha256 "a1642062098b76af3dbc50365479420649b7c958b8e3336ca33460e413e620cf"
     else
-      url "https://github.com/steipete/blucli/releases/download/v0.1.7/blucli_0.1.7_darwin_amd64.tar.gz"
-      sha256 "98c3b0f0873e41f023c7c95cd1069b597bd6e5c376939d15df52fe42e50cfc5e"
+      url "https://github.com/steipete/blucli/releases/download/v0.1.8/blucli_0.1.8_darwin_amd64.tar.gz"
+      sha256 "2cc43ffb8739a19d0313483eb316d873b5dc0f7eb33b51220f06657469e7e6ed"
     end
   end
 
   on_linux do
     if Hardware::CPU.arm? && Hardware::CPU.is_64_bit?
-      url "https://github.com/steipete/blucli/releases/download/v0.1.7/blucli_0.1.7_linux_arm64.tar.gz"
-      sha256 "ccd2fe4005187b4ad07744b4e4bd571cf47585005065c3b8547dbb332cda5939"
+      url "https://github.com/steipete/blucli/releases/download/v0.1.8/blucli_0.1.8_linux_arm64.tar.gz"
+      sha256 "729b9b799cd0bb74a16adca2e9d8d49ffa39e38c203cf204a123c00ba53849ba"
     else
-      url "https://github.com/steipete/blucli/releases/download/v0.1.7/blucli_0.1.7_linux_amd64.tar.gz"
-      sha256 "436c4fc1960145709f48147a99670147fa1b77f0662002f7da4979cdb0dce0cb"
+      url "https://github.com/steipete/blucli/releases/download/v0.1.8/blucli_0.1.8_linux_amd64.tar.gz"
+      sha256 "81fce0203f9051cc77ac5862ea85c802537f978ebf2a9b43e72d5a4dcb15240d"
     end
   end
 
