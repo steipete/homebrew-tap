@@ -1,26 +1,26 @@
 class Canvas < Formula
   desc "Visual workspace for agents"
   homepage "https://github.com/steipete/canvas"
-  version "0.1.0"
+  version "0.2.0"
   license "MIT"
 
   on_macos do
     if Hardware::CPU.arm?
       url "https://github.com/steipete/canvas/releases/download/v#{version}/canvas_#{version}_darwin_arm64.tar.gz"
-      sha256 "2964787ec5dd3bcf0e2c4497ed3e0e01e46b1300dd250a153755e8e18f1c9b2e"
+      sha256 "d6dd56b523f872813522f1fa81499c2afd41313b11cfb26602331cc7a1ed161a"
     else
       url "https://github.com/steipete/canvas/releases/download/v#{version}/canvas_#{version}_darwin_amd64.tar.gz"
-      sha256 "6aeecfa7a7717de254e98952120a6a2f5802297d76f4662bfd52572fc254af53"
+      sha256 "abfa28d4db2b8cb77193ce4faa5ef55a219fdaf5ecc824477f135e8865e36318"
     end
   end
 
   on_linux do
     if Hardware::CPU.arm?
       url "https://github.com/steipete/canvas/releases/download/v#{version}/canvas_#{version}_linux_arm64.tar.gz"
-      sha256 "44d00e730aadd3814c6d945988cac0832ab2a079474cef04f0956460521b5dec"
+      sha256 "6352fec9027c5140a079df917a4c722d4f663a1d18cea8a02ff78fdb7ace9ec3"
     else
       url "https://github.com/steipete/canvas/releases/download/v#{version}/canvas_#{version}_linux_amd64.tar.gz"
-      sha256 "48615dc3a637765af64f9651f769cf41e3270b2ad36e6ab15c01397966ddfce1"
+      sha256 "d32bd31409981cc438a1fe0c567eff1df5931c5dd5ce1c80f5529988c9a5dfc5"
     end
   end
 
