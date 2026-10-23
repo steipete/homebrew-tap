@@ -84,7 +84,7 @@
     "arm64_sequoia"
   ],
   "tap": "steipete/tap",
-  "tap_git_head": "6cb6253c3864299363a62b021540cfcac2dcd7a6",
+  "tap_git_head": "c36b87bd647db637ec56cbdd3ae2db0e8ce22cdb",
   "token": "trimmy",
   "url": "https://github.com/steipete/Trimmy/releases/download/v0.11.5/Trimmy-0.11.5.zip",
   "url_specs": {},
