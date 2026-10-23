@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Update sonoscli to 0.3.5 with the Go 1.27.3 security fix, signed native macOS archives, Linux support, and compatibility with verified release handoffs.
+
 - Update Trimmy to 0.11.5 with existing-path quoting and synchronized standalone CLI version metadata.
 
 - Run tap tests and cask API generation on Xcode 27 runners; validate updater workflow changes on pull requests without publishing metadata.
