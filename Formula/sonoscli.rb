@@ -5,8 +5,6 @@ class Sonoscli < Formula
   license "MIT"
 
   on_macos do
-    depends_on macos: :ventura
-
     if Hardware::CPU.arm?
       url "https://github.com/steipete/sonoscli/releases/download/v0.3.5/sonoscli_0.3.5_darwin_arm64.tar.gz"
       sha256 "11c582ec4dced2c4d5399c6cc4e96bed423ddc04e85863b0e1d59de5448580b2"
