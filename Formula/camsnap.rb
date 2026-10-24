@@ -1,28 +1,28 @@
 class Camsnap < Formula
   desc "One command to grab frames, clips, or motion alerts from RTSP/ONVIF cams"
   homepage "https://github.com/steipete/camsnap"
-  version "0.6.1"
+  version "0.6.2"
   license "MIT"
 
   depends_on "ffmpeg"
 
   on_macos do
     if Hardware::CPU.arm?
-      url "https://github.com/steipete/camsnap/releases/download/v0.6.1/camsnap_0.6.1_darwin_arm64.tar.gz"
-      sha256 "273bff3d5ef0749e68742307c58724dc5e109b80c1c97cdd408e39aaa3d77dbd"
+      url "https://github.com/steipete/camsnap/releases/download/v0.6.2/camsnap_0.6.2_darwin_arm64.tar.gz"
+      sha256 "a3170a14682c75609413de92e12aedf31b9ef3049a5d379ea5687f93de418e60"
     else
-      url "https://github.com/steipete/camsnap/releases/download/v0.6.1/camsnap_0.6.1_darwin_amd64.tar.gz"
-      sha256 "b3b3b0f576e68239c7665760483fa9830d5c55ec73a308fd633b3157687ab4f2"
+      url "https://github.com/steipete/camsnap/releases/download/v0.6.2/camsnap_0.6.2_darwin_amd64.tar.gz"
+      sha256 "4db2cce743d12c7869c8988cb72a90c97c4864f967486b4b76ff3aceb520ab9e"
     end
   end
 
   on_linux do
     if Hardware::CPU.arm? && Hardware::CPU.is_64_bit?
-      url "https://github.com/steipete/camsnap/releases/download/v0.6.1/camsnap_0.6.1_linux_arm64.tar.gz"
-      sha256 "c39778d40bcb4a60141a1973e0260a24088e08bea89b09589ef0ee5618f95085"
+      url "https://github.com/steipete/camsnap/releases/download/v0.6.2/camsnap_0.6.2_linux_arm64.tar.gz"
+      sha256 "1d2f46457256ad4d8306628b5ffb9a82bc4e39f25c9dc6001394d7d80ba725ba"
     else
-      url "https://github.com/steipete/camsnap/releases/download/v0.6.1/camsnap_0.6.1_linux_amd64.tar.gz"
-      sha256 "57b9b85ec4575021e401f94fe9c54d669b7fdd2f92b8a744cebe9f5307977a7c"
+      url "https://github.com/steipete/camsnap/releases/download/v0.6.2/camsnap_0.6.2_linux_amd64.tar.gz"
+      sha256 "2c711d8654159b85b3c1ec37c4305b795a5c6f5c3e2142f8a99ca30816dcb35d"
     end
   end
 
