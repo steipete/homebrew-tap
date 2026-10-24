@@ -1,8 +1,8 @@
 class Nameplate < Formula
   desc "Brand Linux machines with click-through identity overlays"
   homepage "https://github.com/steipete/Nameplate"
-  url "https://github.com/steipete/Nameplate/archive/refs/tags/v0.5.0.tar.gz"
-  sha256 "f988e660cd18c189d582341bcf6ef8348f6cb5f10e406d7a3179af08b347ae7e"
+  url "https://github.com/steipete/Nameplate/archive/refs/tags/v0.5.1.tar.gz"
+  sha256 "d5261a2d889b94a4b8840c1ab5a8b3b5d0728b713e0cbafeb89393f2a1ecb714"
   license "MIT"
 
   depends_on "pkgconf" => :build
