@@ -1,6 +1,6 @@
 cask "nameplate" do
-  version "0.5.0"
-  sha256 "8cc62afdad561c9b511522a3fb26dfef9c1a7dc3d513ee0bcead96d0bfc8c07a"
+  version "0.5.1"
+  sha256 "73148ad57d13226d1ff2dda77c06c321b8930fb64099e91dfc38d26f3d2def56"
 
   url "https://github.com/steipete/Nameplate/releases/download/v#{version}/Nameplate-#{version}.zip"
   name "Nameplate"
