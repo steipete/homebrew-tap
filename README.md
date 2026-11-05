@@ -6,6 +6,7 @@ Homebrew tap for shipping my CLI tools + a few macOS apps.
 
 ```bash
 brew tap steipete/tap
+brew trust --tap steipete/tap
 ```
 
 ## Install Packages
@@ -64,7 +65,7 @@ New release assets may briefly return 404 while publishing; the updater waits wi
 
 Raw metadata for API-based consumers such as mise is published at `api/cask/<token>.json`. The `Update Cask API Metadata` workflow regenerates every cask after direct cask changes and after the release updater completes, including casks changed by that workflow's GitHub token.
 
-To regenerate locally, first make sure `steipete/tap` is tapped at the same commit as this checkout, then run:
+To regenerate locally, first make sure `steipete/tap` is tapped at the same commit as this checkout and trusted with `brew trust --tap steipete/tap`, then run:
 
 ```bash
 python3 .github/scripts/generate_cask_api.py
@@ -74,7 +75,7 @@ OpenClaw-owned formulae live in `openclaw/tap`; migrated names are listed in `ta
 
 ## Validation
 
-Both macOS workflows use the Apple Silicon `xcode-27` runner. Changes to the cask API updater workflow are also validated on pull requests; those runs generate metadata without committing or pushing it.
+Both macOS workflows use the Apple Silicon `xcode-27` runner and explicitly trust the checked-out tap before loading casks. Changes to the cask API updater workflow are also validated on pull requests; those runs generate metadata without committing or pushing it.
 
 Run `python3 -B -m unittest discover -s tests -v` and `brew style Casks/*.rb` before submitting changes. The `Tap Tests` workflow also loads every cask with Homebrew and generates its API metadata on pull requests and pushes to `main`.
 

@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Fix tap tests and cask API metadata generation with Homebrew's explicit third-party tap trust requirement.
+
 - Update sonoscli to 0.3.5 with the Go 1.27.3 security fix, signed native macOS archives, Linux support, and compatibility with verified release handoffs.
 
 - Update Trimmy to 0.11.5 with existing-path quoting and synchronized standalone CLI version metadata.
