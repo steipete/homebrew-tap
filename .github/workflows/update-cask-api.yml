@@ -36,6 +36,7 @@ jobs:
       - name: Load casks and validate API generation
         run: |
           brew tap --custom-remote steipete/tap "$GITHUB_WORKSPACE"
+          brew trust --tap steipete/tap
           python3 -B .github/scripts/generate_cask_api.py
 
   update-cask-api:
@@ -66,6 +67,7 @@ jobs:
           else
             brew tap --custom-remote steipete/tap "$GITHUB_WORKSPACE"
           fi
+          brew trust --tap steipete/tap
 
       - name: Generate cask API metadata
         run: python3 .github/scripts/generate_cask_api.py

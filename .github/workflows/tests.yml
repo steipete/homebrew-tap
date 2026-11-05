@@ -27,4 +27,5 @@ jobs:
       - name: Load casks with Homebrew and generate API metadata
         run: |
           brew tap --custom-remote steipete/tap "$GITHUB_WORKSPACE"
+          brew trust --tap steipete/tap
           python3 -B .github/scripts/generate_cask_api.py
