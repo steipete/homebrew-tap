@@ -1,18 +1,18 @@
 class Sag < Formula
   desc "Command-line ElevenLabs TTS with mac-style flags"
   homepage "https://github.com/steipete/sag"
-  version "0.4.5"
+  version "0.4.6"
   license "MIT"
 
   on_macos do
     depends_on macos: :sequoia
 
     if Hardware::CPU.arm?
-      url "https://github.com/steipete/sag/releases/download/v0.4.5/sag_0.4.5_darwin_arm64.tar.gz"
-      sha256 "59c22fe781acf298118fe9eae3aeecfd95b4ef5e258bda1a381bd2aaed4b136a"
+      url "https://github.com/steipete/sag/releases/download/v0.4.6/sag_0.4.6_darwin_arm64.tar.gz"
+      sha256 "bcd75399266b6b8a82c478a32bceee174d9eb745ed70afbcfa724b4fdc6812d2"
     else
-      url "https://github.com/steipete/sag/releases/download/v0.4.5/sag_0.4.5_darwin_amd64.tar.gz"
-      sha256 "782179a16dbfe9c8105049b6723e365e6dbdaf1a238dfbc3befb3b2d333da538"
+      url "https://github.com/steipete/sag/releases/download/v0.4.6/sag_0.4.6_darwin_amd64.tar.gz"
+      sha256 "6e3bb338912fd5c3e6207c2b9a18fa4060a6be17bdeb85b1f4e10796610d484c"
     end
   end
 
@@ -21,11 +21,11 @@ class Sag < Formula
     depends_on "alsa-lib"
 
     if Hardware::CPU.arm?
-      url "https://github.com/steipete/sag/releases/download/v0.4.5/sag_0.4.5_linux_arm64.tar.gz"
-      sha256 "8f85a15bcfca08622360569046194aadec07f9a13e38bc01bbb085effaa8765f"
+      url "https://github.com/steipete/sag/releases/download/v0.4.6/sag_0.4.6_linux_arm64.tar.gz"
+      sha256 "6dca984b54cde3efccb1960d8a5d5ef937d120ab08e99ebcc6f9e92bcbf731aa"
     else
-      url "https://github.com/steipete/sag/releases/download/v0.4.5/sag_0.4.5_linux_amd64.tar.gz"
-      sha256 "1b3a72a2c84b2ea572acdd9cc66da504a4cff318b8a26ad52eaa470753a2d789"
+      url "https://github.com/steipete/sag/releases/download/v0.4.6/sag_0.4.6_linux_amd64.tar.gz"
+      sha256 "075607d9e68063f525e7462d4bd5171f6e94b0b63d8d2f54a358d1ce0c38f15c"
     end
   end
 
